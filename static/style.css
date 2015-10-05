@@ -1,0 +1,56 @@
+.App__base___3WpmO {
+}
+
+
+.HexGrid__base___CBiHK {
+    background: teal;
+    position: relative;
+}
+
+.HexRow__base___VvHKj {
+    width: 100%;
+}
+
+.HexRow__base___VvHKj::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.HexRow__base___VvHKj * {
+    float: left;
+}
+
+.HexRow__even___3pknX {
+    position: absolute;
+}
+.Hex__base___30Sah {
+    background: bisque;
+    -webkit-transition: background 1s ease-in-out;
+            transition: background 1s ease-in-out;
+    display: block;
+    position: relative;
+    z-index: 1;
+    -webkit-clip-path: polygon(
+        25% 1%,
+        75% 1%,
+        99% 50%,
+        75% 99%,
+        25% 99%,
+        1% 50%);
+            clip-path: polygon(
+        25% 1%,
+        75% 1%,
+        99% 50%,
+        75% 99%,
+        25% 99%,
+        1% 50%);
+}
+.Hex__base___30Sah::after {
+    content: '';
+    display: block;
+    padding-bottom: 85%;
+}
+.Hex__base___30Sah:hover {
+    background: teal;
+}
