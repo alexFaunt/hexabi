@@ -1,0 +1,18 @@
+
+.base {
+    width: 100%;
+}
+
+.base::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.base * {
+    float: left;
+}
+
+.even {
+    position: absolute;
+}

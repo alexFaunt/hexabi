@@ -1,0 +1,29 @@
+$colour: bisque;
+$padding: 1%;
+$max-pos: calc(100% - $padding);
+$height-ratio: 0.85;
+
+.base {
+    background: $colour;
+    transition: background 1s ease-in-out;
+    display: block;
+    position: relative;
+    z-index: 1;
+    clip-path: polygon(
+        25% $padding,
+        75% $padding,
+        $max-pos 50%,
+        75% $max-pos,
+        25% $max-pos,
+        $padding 50%);
+
+    &::after {
+        content: '';
+        display: block;
+        padding-bottom: calc(100% * $height-ratio);
+    }
+
+    &:hover {
+        background: teal;
+    }
+}
