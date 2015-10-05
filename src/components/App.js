@@ -6,12 +6,12 @@ import HexGrid from './HexGrid/HexGrid';
 
 export default class App extends Component {
 
-    render() {
-        return (
-            <div className={styles.base}>
-                <HexGrid cols='5' rows='9'/>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className={styles.base}>
+        <HexGrid cols='5' rows='7'/>
+      </div>
+    );
+  }
 
 };

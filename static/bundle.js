@@ -20450,7 +20450,7 @@
 	'use strict';
 
 	Object.defineProperty(exports, '__esModule', {
-	    value: true
+	  value: true
 	});
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -20476,26 +20476,26 @@
 	var _HexGridHexGrid2 = _interopRequireDefault(_HexGridHexGrid);
 
 	var App = (function (_Component) {
-	    _inherits(App, _Component);
+	  _inherits(App, _Component);
 
-	    function App() {
-	        _classCallCheck(this, App);
+	  function App() {
+	    _classCallCheck(this, App);
 
-	        _get(Object.getPrototypeOf(App.prototype), 'constructor', this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(App.prototype), 'constructor', this).apply(this, arguments);
+	  }
+
+	  _createClass(App, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: _AppCss2['default'].base },
+	        _react2['default'].createElement(_HexGridHexGrid2['default'], { cols: '5', rows: '7' })
+	      );
 	    }
+	  }]);
 
-	    _createClass(App, [{
-	        key: 'render',
-	        value: function render() {
-	            return _react2['default'].createElement(
-	                'div',
-	                { className: _AppCss2['default'].base },
-	                _react2['default'].createElement(_HexGridHexGrid2['default'], { cols: '5', rows: '9' })
-	            );
-	        }
-	    }]);
-
-	    return App;
+	  return App;
 	})(_react.Component);
 
 	exports['default'] = App;
@@ -20748,7 +20748,6 @@
 	    _createClass(Hex, [{
 	        key: 'render',
 	        value: function render() {
-
 	            return _react2['default'].createElement('div', { className: _HexCss2['default'].base, style: {
 	                    width: this.props.width,
 	                    marginLeft: this.props.marginLeft

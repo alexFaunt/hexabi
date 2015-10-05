@@ -4,7 +4,7 @@
   "description": "amazing game",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server"
+    "start": "babel-node server/server.js | webpack --watch"
   },
   "repository": {
     "type": "git",
