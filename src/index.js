@@ -1,16 +1,16 @@
 import React from 'react';
-
-import { createHistory, useBasename } from 'history'
-import { Router, Route, Link, History, Lifecycle } from 'react-router'
+import { Router, Route } from 'react-router';
+import { createHistory } from 'history';
 
 import App from './components/App';
 
-const history = useBasename(createHistory)({
-  basename: '/transitions'
-})
+const history = createHistory();
 
 if (typeof document !== 'undefined') {
-    React.render(<App />, document.getElementById('content'));
-}
 
-export default App;
+    React.render((
+        <Router history={history}>
+            <Route path="/" component={App} />
+        </Router>
+    ), document.getElementById('content'));
+}
