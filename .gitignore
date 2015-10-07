@@ -2,3 +2,5 @@
 node_modules
 dist
 *.log
+static/bundle.css
+static/bundle.js
