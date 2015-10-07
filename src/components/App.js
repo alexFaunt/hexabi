@@ -9,7 +9,7 @@ export default class App extends Component {
   render() {
     return (
       <div className={styles.base}>
-        <HexGrid cols='5' rows='7'/>
+        <HexGrid cols='5' rows='8'/>
       </div>
     );
   }

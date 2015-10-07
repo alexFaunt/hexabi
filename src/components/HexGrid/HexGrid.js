@@ -30,8 +30,12 @@ export default class HexGrid extends Component {
             markup.push(hexRow);
         }
 
+        var paddBottom = 100/7;
+
         // content wrapped in a class
-        return <div className={styles.base}>{markup}</div>;
+        return <div className={styles.base} style={{
+            paddingBottom: 85 / rowCount + '%' // (100% / rows) * 0.85 < the hex ratio
+        }}>{markup}</div>;
     }
 
 };

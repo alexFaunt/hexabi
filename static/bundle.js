@@ -20490,7 +20490,7 @@
 	      return _react2['default'].createElement(
 	        'div',
 	        { className: _AppCss2['default'].base },
-	        _react2['default'].createElement(_HexGridHexGrid2['default'], { cols: '5', rows: '7' })
+	        _react2['default'].createElement(_HexGridHexGrid2['default'], { cols: '5', rows: '8' })
 	      );
 	    }
 	  }]);
@@ -20576,10 +20576,14 @@
 	                markup.push(hexRow);
 	            }
 
+	            var paddBottom = 100 / 7;
+
 	            // content wrapped in a class
 	            return _react2['default'].createElement(
 	                'div',
-	                { className: _HexGridCss2['default'].base },
+	                { className: _HexGridCss2['default'].base, style: {
+	                        paddingBottom: 85 / rowCount + '%' // (100% / rows) * 0.85 < the hex ratio
+	                    } },
 	                markup
 	            );
 	        }
