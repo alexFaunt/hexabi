@@ -21,11 +21,9 @@ export default class HexGrid extends Component {
 
         for (let i = 0; i < rowCount; i += 1) {
             // Lots of hexes in a row
-            const hexRow = <HexRow />;
-
-            hexRow.props.even = !!(i % 2);
-
-            hexRow.props.maxHexes = hexesPerRow;
+            // need to know if its even
+            // need to know the max hexes allowed in this row so we can calculate width
+            const hexRow = <HexRow key={i} even={i % 2} maxHexes={hexesPerRow} />;
 
             markup.push(hexRow);
         }

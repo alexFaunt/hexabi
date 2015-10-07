@@ -25,17 +25,14 @@ export default class HexRow extends Component {
         const hexCount = this.props.even ? maxHexes - 1 : maxHexes;
 
         for (let i = 0; i < hexCount; i += 1) {
-            // Lots of hexes in a row
-            const hex = <Hex />;
-
-            // We decide it's width
-            hex.props.width = hexWidth + '%';
 
             // Only if its not the first child, then it gets a left margin gap
-            if (i) {
-                // We move it accross a bit to allow for tesselation of next row.
-                hex.props.marginLeft = hexWidth/2 + '%';
-            }
+            // We move it accross a bit to allow for tesselation of next row.
+            const marginLeft = i ? hexWidth/2 + '%' : 0;
+
+            // Lots of hexes in a row
+            // We decide it's width
+            const hex = <Hex key={i} width={hexWidth + '%'} marginLeft={marginLeft}/>;
 
             markup.push(hex);
         }
