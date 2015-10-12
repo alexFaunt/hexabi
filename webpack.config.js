@@ -48,5 +48,7 @@ module.exports = {
         new ExtractTextPlugin('bundle.css', {
             allChunks: true
         })
-    ]
+    ],
+
+    devtool: '#source-map'
 };
