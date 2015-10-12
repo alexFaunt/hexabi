@@ -8,7 +8,8 @@ export default class Hex extends Component {
         return (
             <div className={styles.base} style={{
                 width: this.props.width,
-                marginLeft: this.props.marginLeft
+                marginLeft: this.props.marginLeft,
+                backgroundColor: this.props.background
             }}>
                 <div className={styles.content}>
                     {this.props.children}

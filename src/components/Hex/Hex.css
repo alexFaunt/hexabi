@@ -1,41 +1,36 @@
-$colour: bisque;
-$padding: 1%;
-$max-pos: calc(100% - $padding);
+$margin: 1%;
+$max-pos: calc(100% - $margin);
 $height-ratio: 0.85;
 
 .base {
-    background: $colour;
     transition: background 1s ease-in-out;
     display: block;
     position: relative;
     overflow: hidden;
     z-index: 1;
     clip-path: polygon(
-        25% $padding,
-        75% $padding,
+        25% $margin,
+        75% $margin,
         $max-pos 50%,
         75% $max-pos,
         25% $max-pos,
-        $padding 50%);
+        $margin 50%);
 
     &::after {
         content: '';
         display: block;
         padding-bottom: calc(100% * $height-ratio);
     }
-
-    &:hover {
-        background: teal;
-    }
 }
+
 .content {
     position: absolute;
     left: 0;
     top: 0;
     right: 0;
     bottom: 0;
-    clip-path: inherit;
     display: flex;
     justify-content: center;
     align-items: center;
+    clip-path: inherit;
 }
