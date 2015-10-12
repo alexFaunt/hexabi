@@ -23,7 +23,7 @@ export default class HexGrid extends Component {
             // Lots of hexes in a row
             // need to know if its even
             // need to know the max hexes allowed in this row so we can calculate width
-            const hexRow = <HexRow key={i} even={i % 2} maxHexes={hexesPerRow} />;
+            const hexRow = <HexRow key={i} even={i % 2} maxHexes={hexesPerRow}/>;
 
             markup.push(hexRow);
         }

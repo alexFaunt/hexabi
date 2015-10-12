@@ -12,13 +12,13 @@ export default class Card extends Component {
 
     render () {
         return (
-            <Hex width="100px" background="white">
+            <Hex width={this.props.width} marginLeft={this.props.marginLeft} background="white">
                 <div className={styles.base} onClick={this.onClick.bind(this)}>
                     <div className={styles.inner}
-                        style={{backgroundColor: this.props.background}}>
-                        <span className={styles.number} style={{color: "white"}}>{this.props.children}</span>
+                        style={{backgroundColor: this.props.colour}}>
+                        <span className={styles.number} style={{color: "white"}}>{this.props.number}</span>
                     </div>
-                    </div>
+                </div>
             </Hex>
         );
     }

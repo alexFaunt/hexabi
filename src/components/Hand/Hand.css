@@ -1,0 +1,21 @@
+
+.base {}
+
+.row {
+    width: 100%;
+    position: relative;
+}
+
+.row::after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.row * {
+    float: left;
+}
+
+.even {
+    position: absolute;
+}
