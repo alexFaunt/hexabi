@@ -32,7 +32,7 @@ export default class HexRow extends Component {
 
             // Lots of hexes in a row
             // We decide it's width
-            const hex = <Hex key={i} width={hexWidth + '%'} marginLeft={marginLeft}/>;
+            const hex = <Hex key={i} width={hexWidth + '%'} marginLeft={marginLeft} background="bisque"/>;
 
             markup.push(hex);
         }
