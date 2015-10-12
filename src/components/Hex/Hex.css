@@ -35,4 +35,7 @@ $height-ratio: 0.85;
     right: 0;
     bottom: 0;
     clip-path: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -6,7 +6,7 @@ import HexRow from '../HexRow/HexRow';
 
 export default class HexGrid extends Component {
 
-    render() {
+    render () {
         // Required property - we need to be passed this
         const colCount = parseInt(this.props.cols, 10);
 
