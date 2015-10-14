@@ -4,6 +4,7 @@
 .row {
     width: 100%;
     position: relative;
+    pointer-events: none;
 }
 
 .row::after {
@@ -14,6 +15,7 @@
 
 .row * {
     float: left;
+    pointer-events: all;
 }
 
 .even {
