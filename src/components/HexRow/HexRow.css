@@ -1,6 +1,8 @@
 
 .base {
     width: 100%;
+    position:relative;
+    pointer-events: none;
 }
 
 .base::after {
@@ -11,6 +13,7 @@
 
 .base * {
     float: left;
+    pointer-events: all;
 }
 
 .even {
