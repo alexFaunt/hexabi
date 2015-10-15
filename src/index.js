@@ -1,18 +1,9 @@
 import React from 'react';
-import { Router, Route } from 'react-router';
-import { createHistory } from 'history';
 
-import App from './components/App';
-import Menu from './components/Menu/Menu';
+import router from './router';
 
-const history = createHistory();
+if (typeof document === 'undefined') {
+    throw 'no document, wtf';
+};
 
-if (typeof document !== 'undefined') {
-
-    React.render((
-        <Router history={history}>
-            <Route path="/" component={App} />
-            <Route path="menu" component={Menu} />
-        </Router>
-    ), document.getElementById('content'));
-}
+React.render(router, document.getElementById('content'));

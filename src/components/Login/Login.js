@@ -1,13 +1,13 @@
-import styles from './Menu.css';
+import styles from './Login.css';
 
 import React, { Component } from 'react';
 
-export default class Menu extends Component {
+export default class Login extends Component {
 
   render() {
     return (
         <div className={styles.base}>
-            Menu Page
+            Login Page!!
         </div>
     );
   }

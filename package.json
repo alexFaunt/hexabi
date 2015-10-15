@@ -4,7 +4,7 @@
   "description": "amazing game",
   "main": "index.js",
   "scripts": {
-    "start": "babel-node server/server.js | webpack --watch"
+    "start": "webpack --watch --config=webpack.server.js --display-error-details | webpack --watch --config=webpack.client.js  "
   },
   "repository": {
     "type": "git",

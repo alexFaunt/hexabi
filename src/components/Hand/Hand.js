@@ -33,7 +33,7 @@ export default class Hand extends Component {
             // If its the 3rd row, and were doing a triangle, add an extra row
             // Same reason again Lol. Ugh. I'm tired.
             const hexes = [
-                <Card width={hexWidth + '%'}
+                <Card key='1' width={hexWidth + '%'}
                     colour={this.props.cards[cardIndex].colour}
                     number={this.props.cards[cardIndex].number} />
             ];
@@ -43,7 +43,7 @@ export default class Hand extends Component {
             let className = styles.row;
 
             if (i === 3 && cardCount > rowCount) {
-                hexes.push(<Card width={hexWidth + '%'}
+                hexes.push(<Card key='2' width={hexWidth + '%'}
                     marginLeft={hexWidth/2 + '%'}
                     colour={this.props.cards[cardIndex].colour}
                     number={this.props.cards[cardIndex].number} />);

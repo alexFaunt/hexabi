@@ -1,15 +1,28 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+var webpack = require('webpack');
 var path = require('path');
 var fs = require('fs');
 
+var nodeModules = {};
+fs.readdirSync('node_modules')
+  .filter(function(x) {
+    return ['.bin'].indexOf(x) === -1;
+  })
+  .forEach(function(mod) {
+    nodeModules[mod] = 'commonjs ' + mod;
+  });
+
 module.exports = {
-    entry: './src/index.js',
+    entry: 'server.js',
+
+    target: 'node',
 
     output: {
-        filename: 'bundle.js',
-        path: path.join(__dirname, 'static')
+        filename: 'server-bundle.js'
     },
+
+    externals: nodeModules,
 
     module: {
         loaders: [
@@ -20,7 +33,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('style-loader', 'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader')
+                loader: 'css-loader/locals?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss-loader'
             },
             {
                 test: /\.svg$/,
@@ -44,11 +57,9 @@ module.exports = {
         modulesDirectories: ['node_modules', 'components']
     },
 
-    plugins: [
-        new ExtractTextPlugin('bundle.css', {
-            allChunks: true
-        })
-    ],
+    node: {
+        __dirname: true
+    },
 
-    devtool: '#source-map'
+    plugins: []
 };
