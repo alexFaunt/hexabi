@@ -19,7 +19,8 @@ module.exports = {
     target: 'node',
 
     output: {
-        filename: 'server-bundle.js'
+        filename: 'server-bundle.js',
+        path: path.join(__dirname, 'build')
     },
 
     externals: nodeModules,

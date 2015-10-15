@@ -4,11 +4,11 @@ var path = require('path');
 var fs = require('fs');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './app/index.js',
 
     output: {
         filename: 'client-bundle.js',
-        path: path.join(__dirname, 'static')
+        path: path.join(__dirname, 'build')
     },
 
     module: {

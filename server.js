@@ -2,7 +2,7 @@
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
-import routes from './src/routes';
+import routes from './app/routes';
 import { match, RoutingContext } from 'react-router';
 import React from 'react';
 
@@ -15,10 +15,11 @@ function run() {
     const app = createApp();
 
     // Get the HTML file to dump content into
-    const htmlFile = fs.readFileSync(path.join(__dirname, './index.html'), {encoding: 'utf-8'});
+    const htmlFile = fs.readFileSync(path.join(__dirname, './app/index.html'), {encoding: 'utf-8'});
 
     // Static
     app.use('/static', express.static(path.join(__dirname, './static')));
+    app.use('/build', express.static(path.join(__dirname, './build')));
 
     // Routing
     app.get('*', (req, res) => {
@@ -34,7 +35,7 @@ function run() {
                 res.redirect(302, redirectLocation.pathname + redirectLocation.search);
             }
             else if (renderProps) {
-                res.send(200, htmlFile.replace(/__content__/,  React.renderToString(<RoutingContext {...renderProps} />)));
+                res.status(200).send(htmlFile.replace(/__content__/,  React.renderToString(<RoutingContext {...renderProps} />)));
             }
             else {
                 res.send(404, 'Not found');
