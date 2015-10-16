@@ -4,7 +4,7 @@
 
 This is a game I'm building, complete work in progress.
 
-## Getting Started
+## Getting Started 
 
 ### Initial set up
 Standard set up
