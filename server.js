@@ -6,10 +6,14 @@ import routes from './app/routes';
 import { match, RoutingContext } from 'react-router';
 import React from 'react';
 
-// Function defs
-function createApp() {return express();}
+import config from './server-config.js';
 
-function run() {
+// Function defs
+function createApp () {
+    return express();
+}
+
+function run () {
 
     // Create app
     const app = createApp();
@@ -17,11 +21,11 @@ function run() {
     // Get the HTML file to dump content into
     const htmlFile = fs.readFileSync(path.join(__dirname, './app/index.html'), {encoding: 'utf-8'});
 
-    // Static
+    // Static assets
     app.use('/static', express.static(path.join(__dirname, './static')));
     app.use('/build', express.static(path.join(__dirname, './build')));
 
-    // Routing
+    // Everything else - check against the react router + return it server rendered.
     app.get('*', (req, res) => {
 
         match({ routes, location: req.url}, (error, redirectLocation, renderProps) => {
@@ -43,7 +47,7 @@ function run() {
     });
 
     // Listen
-    app.listen(8080);
+    app.listen(config.port);
     console.log('SERVER IS LISTENING O_O');
 }
 

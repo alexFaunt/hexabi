@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack --config=webpack.server.js ; forever start forever.config.json ; webpack --watch --config=webpack.server.js & webpack --watch --config=webpack.client.js",
-    "stop": "forever stop hexabi"
+    "stop": "forever stop hexabi",
+    "serve": "webpack --config=webpack.server.js ; node build/server-bundle.js",
+    "watch": "webpack --watch --config=webpack.server.js & webpack --watch --config=webpack.client.js"
   },
   "repository": {
     "type": "git",
@@ -35,10 +37,9 @@
     "react-router": "^1.0.0-rc1",
     "style-loader": "^0.12.4",
     "webpack": "^1.12.2",
-    "webpack-dev-server": "^1.12.0"
+    "babel": "^5.8.23"
   },
   "dependencies": {
-    "babel": "^5.8.23",
     "express": "^4.13.3",
     "forever": "^0.15.1"
   }

@@ -2,3 +2,4 @@
 node_modules
 *.log
 build
+server-config.js
