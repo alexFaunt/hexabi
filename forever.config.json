@@ -1,0 +1,6 @@
+{
+    "uid": "hexabi",
+    "watch": true,
+    "script": "build/server-bundle.js",
+    "append": true
+}

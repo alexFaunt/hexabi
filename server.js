@@ -24,8 +24,6 @@ function run() {
     // Routing
     app.get('*', (req, res) => {
 
-        Router.run(routes, )
-
         match({ routes, location: req.url}, (error, redirectLocation, renderProps) => {
 
             if (error) {
@@ -38,7 +36,7 @@ function run() {
                 res.status(200).send(htmlFile.replace(/__content__/,  React.renderToString(<RoutingContext {...renderProps} />)));
             }
             else {
-                res.send(404, 'Not found');
+                res.send(404, 'Not found CHANGED');
             }
         });
 

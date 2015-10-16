@@ -4,7 +4,8 @@
   "description": "amazing game",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --watch --config=webpack.server.js --display-error-details | webpack --watch --config=webpack.client.js  "
+    "start": "webpack --config=webpack.server.js ; forever start forever.config.json ; webpack --watch --config=webpack.server.js & webpack --watch --config=webpack.client.js",
+    "stop": "forever stop hexabi"
   },
   "repository": {
     "type": "git",
@@ -38,6 +39,7 @@
   },
   "dependencies": {
     "babel": "^5.8.23",
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "forever": "^0.15.1"
   }
 }
