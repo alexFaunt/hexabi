@@ -27,7 +27,11 @@ function run() {
         console.log('request made to: ' + req.url);
 
         match({ routes, location: req.url}, (error, redirectLocation, renderProps) => {
+console.log('routes');
+console.log(routes);
+console.log('renderProps');
 
+console.log(renderProps);
             if (error) {
                 res.send(500, error.message);
             }

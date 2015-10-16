@@ -15,8 +15,9 @@ const requireAuth = function (nextState, replaceState) {
 };
 
 export default (
-    <Route path="/" component={App}>
-        <Route path="menu" component={Menu} onEnter={requireAuth}/>
+    <Route>
+        <Route path="/" component={App} />
+        <Route path="menu" component={Menu} onEnter={requireAuth} />
         <Route path="login" component={Login} />
     </Route>
 );
