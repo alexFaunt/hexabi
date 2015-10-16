@@ -24,14 +24,10 @@ function run() {
     // Routing
     app.get('*', (req, res) => {
 
-        console.log('request made to: ' + req.url);
+        Router.run(routes, )
 
         match({ routes, location: req.url}, (error, redirectLocation, renderProps) => {
-console.log('routes');
-console.log(routes);
-console.log('renderProps');
 
-console.log(renderProps);
             if (error) {
                 res.send(500, error.message);
             }
@@ -52,7 +48,7 @@ console.log(renderProps);
     app.listen(8080);
     console.log('SERVER IS LISTENING O_O');
 }
-console.log('IM HERE OR SOMETHING');
+
 // Run
 if (require.main === module) {
     run();
