@@ -8,9 +8,35 @@ import React from 'react';
 
 import config from './server-config.js';
 
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import counter from './app/reducers/counter';
+
 // Function defs
 function createApp () {
     return express();
+}
+
+// Get the HTML file to dump content into
+const htmlFile = fs.readFileSync(path.join(__dirname, './app/index.html'), {encoding: 'utf-8'});
+
+// Given the render props - reutrn the page to render.
+function getPayload (renderProps) {
+    let payload = htmlFile;
+
+    const store = createStore(counter);
+
+    const app = React.renderToString(
+        <Provider store={store}>
+            <RoutingContext {...renderProps} />
+        </Provider>
+    );
+
+    payload = payload.replace(/__content__/,  app);
+
+    payload = payload.replace(/__state__/, JSON.stringify(store.getState()));
+
+    return payload;
 }
 
 function run () {
@@ -18,8 +44,6 @@ function run () {
     // Create app
     const app = createApp();
 
-    // Get the HTML file to dump content into
-    const htmlFile = fs.readFileSync(path.join(__dirname, './app/index.html'), {encoding: 'utf-8'});
 
     // Static assets
     app.use('/static', express.static(path.join(__dirname, './static')));
@@ -37,7 +61,7 @@ function run () {
                 res.redirect(302, redirectLocation.pathname + redirectLocation.search);
             }
             else if (renderProps) {
-                res.status(200).send(htmlFile.replace(/__content__/,  React.renderToString(<RoutingContext {...renderProps} />)));
+                res.status(200).send(getPayload(renderProps));
             }
             else {
                 res.send(404, 'Not found CHANGED');

@@ -13,6 +13,8 @@ import Hand from './Hand/Hand';
 export default class App extends Component {
 
     render() {
+        const { counter } = this.props;
+
         return (
             <div className={styles.base}>
                 <HexGrid cols='5' rows='8'/>
