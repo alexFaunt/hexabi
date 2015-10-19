@@ -11,9 +11,10 @@ import { createLocation } from 'history';
 
 import config from './server-config.js';
 
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import * as reducers from './app/reducers';
+import promiseMiddleware   from 'app/core/lib/promiseMiddleware';
 
 // Function defs
 function createApp () {
@@ -56,7 +57,7 @@ function run () {
 
         const location = createLocation(req.url);
         const reducer = combineReducers(reducers);
-        const store = createStore(reducer);
+        const store = applyMiddleware(promiseMiddleware)(createStore)(reducer);
 
         match({ routes, location }, (error, redirectLocation, renderProps) => {
 
