@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 import * as Todo from '../actions/Todo';
 
 const defaultState = new Immutable.List();
-
+ 
 export default function todoReducer(state = defaultState, action) {
 
     switch (action.type) {

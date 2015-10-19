@@ -14,7 +14,7 @@ if (typeof document === 'undefined') {
 
 // Grab the state from a global injected into server-generated HTML
 const initialState = window.__INITIAL_STATE__;
-console.log(initialState);
+
 // Transform into Immutable.js collections,
 // but leave top level keys untouched for Redux
 Object
@@ -22,7 +22,6 @@ Object
     .forEach(key => {
         initialState[key] = fromJS(initialState[key]);
     });
-console.log(initialState);
 
 const reducer = combineReducers(reducers);
 const store   = createStore(reducer, initialState);

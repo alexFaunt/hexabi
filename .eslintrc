@@ -125,7 +125,7 @@
 		// Use the one true indentation scheme which just so happens to be
 		// tabs.
 		// See: http://programmers.stackexchange.com/questions/57
-		"indent": [2, "tab"],
+		"indent": [2, 4],
 
 		// Things look nice "{ like: this }" and not "{like:this}".
 		"key-spacing": [2, { "beforeColon": false, "afterColon": true }],
@@ -178,7 +178,7 @@
 	    "blockBindings": true,                      // enable let and const (aka block bindings)
 	    "defaultParams": true,                     // enable default function parameters
 	    "forOf": false,                             // enable for-of loops
-	    "generators": false,                        // enable generators
+	    "generators": true,                        // enable generators
 	    "objectLiteralComputedProperties": false,   // enable computed object literal property names
 	    "objectLiteralDuplicateProperties": false,  // enable duplicate object literal properties in strict mode
 	    "objectLiteralShorthandMethods": false,     // enable object literal shorthand methods
