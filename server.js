@@ -5,6 +5,7 @@ import path from 'path';
 import routes from './app/routes';
 import { match, RoutingContext } from 'react-router';
 import React from 'react';
+import { createLocation } from 'history';
 
 import config from './server-config.js';
 
@@ -51,8 +52,11 @@ function run () {
 
     // Everything else - check against the react router + return it server rendered.
     app.get('*', (req, res) => {
+console.log(req.url);
 
-        match({ routes, location: req.url}, (error, redirectLocation, renderProps) => {
+console.log(createLocation(req.url))
+
+        match({ routes, location: createLocation(req.url)}, (error, redirectLocation, renderProps) => {
 
             if (error) {
                 res.send(500, error.message);
