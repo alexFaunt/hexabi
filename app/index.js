@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import router from './router';
 
-import { createStore } from 'redux';
+import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
-import counter from './reducers/counter';
+import * as reducers from './reducers';
+
+import { fromJS } from 'immutable';
 
 if (typeof document === 'undefined') {
     throw 'no document, wtf';
@@ -12,9 +14,17 @@ if (typeof document === 'undefined') {
 
 // Grab the state from a global injected into server-generated HTML
 const initialState = window.__INITIAL_STATE__;
+console.log(initialState);
+// Transform into Immutable.js collections,
+// but leave top level keys untouched for Redux
+Object
+    .keys(initialState)
+    .forEach(key => {
+        initialState[key] = fromJS(initialState[key]);
+    });
+console.log(initialState);
 
-// Create Redux store with initial state
-const store = createStore(counter, initialState);
-
+const reducer = combineReducers(reducers);
+const store   = createStore(reducer, initialState);
 
 ReactDOM.render(<Provider store={store}>{router}</Provider>, document.getElementById('content'));

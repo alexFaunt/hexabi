@@ -1,11 +1,11 @@
 import React from 'react';
 import { Router } from 'react-router';
 
-import { createHistory } from 'history';
+import createBrowserHistory from 'history/lib/createBrowserHistory';
 
 import routes from './routes';
 
-const history = createHistory();
+const history = createBrowserHistory();
 
 export default (
     <Router history={history}>{routes}</Router>
