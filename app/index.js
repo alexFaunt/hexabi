@@ -28,4 +28,8 @@ Object
 const reducer = combineReducers(reducers);
 const store = applyMiddleware(promiseMiddleware)(createStore)(reducer, initialState);
 
-ReactDOM.render(<Provider store={store}>{router}</Provider>, document.getElementById('content'));
+ReactDOM.render(
+    <Provider store={store}>
+        {router}
+    </Provider>,
+document.getElementById('content'));

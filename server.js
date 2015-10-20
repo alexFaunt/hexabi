@@ -1,21 +1,31 @@
-// Imports
+// set up config
+import config from './server-config.js';
+
+// Standard imports
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
+
+// Routes
 import routes from './app/routes';
 import { match, RoutingContext } from 'react-router';
+import { createLocation } from 'history';
+
+// Rendering
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
-import { createLocation } from 'history';
-
-import config from './server-config.js';
-
+// Flux stuff
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import * as reducers from './app/reducers';
 import promiseMiddleware   from 'app/core/lib/promiseMiddleware';
 import fetchComponentData from 'app/core/lib/fetchComponentData';
+
+// Api
+import { graphql } from 'graphql';
+import bodyParser from 'body-parser';
+import schema from './api/schema';
 
 // Function defs
 function createApp () {
@@ -30,10 +40,25 @@ function run () {
     // Create app
     const app = createApp();
 
-
     // Static assets
     app.use('/static', express.static(path.join(__dirname, './static')));
     app.use('/build', express.static(path.join(__dirname, './build')));
+
+    // parse POST body as text
+    app.use(bodyParser.text({ type: 'application/graphql' }));
+
+    // Api
+    app.post('/api', (req, res) => {
+
+        // execute GraphQL!
+        graphql(schema, req.body)
+            .then((result) => {
+                res.status(200).send(JSON.stringify(result, null, 2));
+            })
+            .catch((err) => {
+                res.status(500).send(err.message);
+            });
+    });
 
     // Everything else - check against the react router + return it server rendered.
     app.get('*', (req, res) => {
