@@ -1,22 +1,49 @@
 import {
-  GraphQLObjectType,
-  GraphQLSchema,
-  GraphQLInt
+    GraphQLObjectType,
+    GraphQLSchema,
+    GraphQLInt,
+    GraphQLString,
+    GraphQLID
 } from 'graphql';
 
 let count = 0;
 
-export default new GraphQLSchema({
-  query: new GraphQLObjectType({
-    name: 'RootQueryType',
+const user = new GraphQLObjectType({
+    name: 'User',
+    type: user,
     fields: {
-      count: {
-        type: GraphQLInt,
-        description: 'The count!',
-        resolve: function() {
-          return count;
+        id: {
+            type: GraphQLID
+        },
+        name: {
+            type: GraphQLString
         }
-      }
     }
-  })
+});
+
+
+const query = new GraphQLObjectType({
+    name: 'Query',
+    fields: {
+        count: {
+            type: GraphQLInt,
+            description: 'The count!',
+            resolve: function () {
+                return count;
+            }
+        },
+        user: {
+            type: user,
+            resolve () {
+                return {
+                    id: '123',
+                    name: 'Person name'
+                }
+            }
+        }
+    }
+});
+
+export default new GraphQLSchema({
+    query: query
 });
