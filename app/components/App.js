@@ -13,7 +13,6 @@ import Hand from './Hand/Hand';
 export default class App extends Component {
 
     render() {
-        const { counter } = this.props;
 
         return (
             <div className={styles.base}>

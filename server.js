@@ -15,6 +15,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import * as reducers from './app/reducers';
 import promiseMiddleware   from 'app/core/lib/promiseMiddleware';
+import fetchComponentData from 'app/core/lib/fetchComponentData';
 
 // Function defs
 function createApp () {
@@ -23,24 +24,6 @@ function createApp () {
 
 // Get the HTML file to dump content into
 const htmlFile = fs.readFileSync(path.join(__dirname, './app/index.html'), {encoding: 'utf-8'});
-
-// Given the render props - reutrn the page to render.
-function getPayload (renderProps, store) {
-    let payload = htmlFile;
-
-    const app = ReactDOMServer.renderToString(
-        <Provider store={store}>
-            <RoutingContext {...renderProps} />
-        </Provider>
-    );
-
-    payload = payload.replace(/__content__/,  app);
-
-
-    payload = payload.replace(/__state__/, JSON.stringify(store.getState()));
-
-    return payload;
-}
 
 function run () {
 
@@ -56,23 +39,49 @@ function run () {
     app.get('*', (req, res) => {
 
         const location = createLocation(req.url);
-        const reducer = combineReducers(reducers);
-        const store = applyMiddleware(promiseMiddleware)(createStore)(reducer);
 
         match({ routes, location }, (error, redirectLocation, renderProps) => {
 
             if (error) {
-                res.status(500).send(error.message);
+                console.log(error);
+                return res.status(500).send(error.message);
             }
-            else if (redirectLocation) {
-                res.redirect(302, redirectLocation.pathname + redirectLocation.search);
+
+            if (redirectLocation) {
+                return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
             }
-            else if (renderProps) {
-                res.status(200).send(getPayload(renderProps, store));
+
+            if (!renderProps) {
+                return res.status(404).send('Not found');
             }
-            else {
-                res.status(404).send('Not found');
+
+            const reducer = combineReducers(reducers);
+
+            const store = applyMiddleware(promiseMiddleware)(createStore)(reducer);
+
+            // Closure gives it store + renderProps
+            function getPayload () {
+                let payload = htmlFile;
+
+                const app = ReactDOMServer.renderToString(
+                    <Provider store={store}>
+                        <RoutingContext {...renderProps} />
+                    </Provider>
+                );
+
+                // Put in the content
+                payload = payload.replace(/__content__/,  app);
+
+                // Put in the initial state
+                payload = payload.replace(/__state__/, JSON.stringify(store.getState()));
+
+                return payload;
             }
+
+            fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
+                .then(getPayload)
+                .then(html => res.status(200).end(html))
+                .catch(err => res.status(500).end(err.message));
         });
 
     });

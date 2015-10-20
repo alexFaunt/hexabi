@@ -9,6 +9,11 @@ import * as TodoActions from '../../actions/Todo';
 @connect(state => ({ todos: state.Todo }))
 
 export default class Todo extends Component {
+
+    static required = [
+        TodoActions.getTodos
+    ]
+
     render() {
         const { todos, dispatch } = this.props;
 

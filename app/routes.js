@@ -5,6 +5,7 @@ import App from './components/App';
 import Login from './components/Login/Login';
 import Menu from './components/Menu/Menu';
 import Todo from './components/Todo/Todo';
+import Page from './components/Page/Page';
 
 import auth from './core/auth';
 const requireAuth = function (nextState, replaceState) {
@@ -16,7 +17,7 @@ const requireAuth = function (nextState, replaceState) {
 };
 
 export default (
-    <Route>
+    <Route component={Page}>
         <Route path="/" component={App} />
         <Route path="menu" component={Menu} onEnter={requireAuth} />
         <Route path="login" component={Login} />

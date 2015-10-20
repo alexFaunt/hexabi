@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 
 export default class TodoView extends Component {
 
+    componentDidMount () {
+        // This is now done server side.
+        // this.props.getTodos();
+    }
+
     handleDelete = (e) => {
         const id = Number(e.target.dataset.id);
 
