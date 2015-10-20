@@ -27,18 +27,18 @@ import { graphql } from 'graphql';
 import bodyParser from 'body-parser';
 import schema from './api/schema';
 
-import User from './api/User';
+// import * as User from './api/defs/User';
 
 // Get the HTML file to dump content into
 const htmlFile = fs.readFileSync(path.join(__dirname, './app/index.html'), {encoding: 'utf-8'});
 
 function createDB () {
-
-    User.where('id', 1).fetch().then(function(user) {
-        console.log(user.toJSON());
-    }).catch(function(err) {
-        console.error(err);
-    });
+    //
+    // User.table.where('id', 1).fetch().then(function(user) {
+    //     console.log(user.toJSON());
+    // }).catch(function(err) {
+    //     console.error(err);
+    // });
 }
 
 createDB();

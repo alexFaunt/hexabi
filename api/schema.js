@@ -6,42 +6,13 @@ import {
     GraphQLID
 } from 'graphql';
 
+import * as fields from './defs';
+
 let count = 0;
-
-const user = new GraphQLObjectType({
-    name: 'User',
-    type: user,
-    fields: {
-        id: {
-            type: GraphQLID
-        },
-        name: {
-            type: GraphQLString
-        }
-    }
-});
-
 
 const query = new GraphQLObjectType({
     name: 'Query',
-    fields: {
-        count: {
-            type: GraphQLInt,
-            description: 'The count!',
-            resolve: function () {
-                return count;
-            }
-        },
-        user: {
-            type: user,
-            resolve () {
-                return {
-                    id: '123',
-                    name: 'Person name'
-                }
-            }
-        }
-    }
+    fields: () => (fields)
 });
 
 export default new GraphQLSchema({
