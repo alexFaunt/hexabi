@@ -27,14 +27,28 @@ import { graphql } from 'graphql';
 import bodyParser from 'body-parser';
 import schema from './api/schema';
 
+import User from './api/User';
+
+// Get the HTML file to dump content into
+const htmlFile = fs.readFileSync(path.join(__dirname, './app/index.html'), {encoding: 'utf-8'});
+
+function createDB () {
+
+    User.where('id', 1).fetch().then(function(user) {
+        console.log(user.toJSON());
+    }).catch(function(err) {
+        console.error(err);
+    });
+}
+
+createDB();
+
 // Function defs
 function createApp () {
     return express();
 }
 
-// Get the HTML file to dump content into
-const htmlFile = fs.readFileSync(path.join(__dirname, './app/index.html'), {encoding: 'utf-8'});
-
+// start the app
 function run () {
 
     // Create app
