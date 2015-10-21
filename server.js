@@ -32,17 +32,6 @@ import schema from './api/schema';
 // Get the HTML file to dump content into
 const htmlFile = fs.readFileSync(path.join(__dirname, './app/index.html'), {encoding: 'utf-8'});
 
-function createDB () {
-    //
-    // User.table.where('id', 1).fetch().then(function(user) {
-    //     console.log(user.toJSON());
-    // }).catch(function(err) {
-    //     console.error(err);
-    // });
-}
-
-createDB();
-
 // Function defs
 function createApp () {
     return express();
@@ -63,6 +52,8 @@ function run () {
 
     // Api
     app.post('/api', (req, res) => {
+
+        console.log(req.body);
 
         // execute GraphQL!
         graphql(schema, req.body)

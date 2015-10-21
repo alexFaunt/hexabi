@@ -18,25 +18,31 @@ const postgre = `CREATE TABLE users (
     name text
 )`;
 
+// Define the fields
+const fields = {
+    id: {
+        type: GraphQLID
+    },
+    name: {
+        type: GraphQLString
+    }
+};
+
 // Our graph QL object
 const schema = new GraphQLObjectType({
     name: 'User',
-    fields: () => ({
-        id: {
-            type: GraphQLID
-        },
-        name: {
-            type: GraphQLString
-        }
-    })
+    fields
 });
 
 export default {
     type: schema,
-    resolve () {
-        // TODO - I can't seem to pass in the id and get what i want.
-        //"message": "Unknown argument \"id\" on field \"user\" of type \"Query\"."
-        return table.where('id', 2).fetch().then(function (user) {
+    args: {
+        id: fields.id
+    },
+    resolve: (_, {id}) => {
+        console.log(id);
+
+        return table.where('id', id).fetch().then(function (user) {
             return user.toJSON();
         });
     }

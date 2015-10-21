@@ -12,7 +12,7 @@ let count = 0;
 
 const query = new GraphQLObjectType({
     name: 'Query',
-    fields: () => (fields)
+    fields
 });
 
 export default new GraphQLSchema({
