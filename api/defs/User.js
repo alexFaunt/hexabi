@@ -8,6 +8,8 @@ import {
     GraphQLNonNull
 } from 'graphql';
 
+export const DEFAULT_SCORE = 0;
+
 // our mapping to the DB
 const table = database.Model.extend({
     tableName: 'users'
@@ -20,7 +22,7 @@ const postgre = `CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name text NOT NULL,
     avatar text,
-    score numeric DEFAULT 0
+    score numeric DEFAULT ` + DEFAULT_SCORE + `
 );`;
 
 // Define the fields
@@ -63,7 +65,9 @@ export const queries = {
         type: new GraphQLList(type),
         description: 'get all users',
         resolve: () => {
+            console.log('GET ALL USERS FROM TABLE');
             return table.fetchAll().then(function (users) {
+                console.log(users.toJSON());
                 return users.toJSON();
             });
         }
@@ -77,11 +81,19 @@ export const mutations = {
             name: {
                 name: 'name',
                 type: new GraphQLNonNull(GraphQLString)
+            },
+            avatar: {
+                name: 'avatar',
+                type: GraphQLString
             }
         },
-        resolve: (obj, {name}) => {
-            console.log('do a save with ' + name);
-            return (new table()).save({name});
+        resolve: (obj, {name, avatar}) => {
+            return (new table()).save({name, avatar}).then((model) => {
+                console.log('User created', model.id, name, avatar, DEFAULT_SCORE);
+                return {
+                    id: model.id, name, avatar, score: DEFAULT_SCORE
+                };
+            })
         }
       }
 }

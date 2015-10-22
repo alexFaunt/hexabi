@@ -8,11 +8,15 @@ import RegisterForm from '../RegisterForm/RegisterForm';
 
 import * as UserActions from '../../actions/User';
 
-@connect(state => ({ users: state.Users }))
+@connect(state => ({ user: state.User }))
 export default class Register extends Component {
+    static required = [
+        UserActions.getUsers
+    ]
 
     render () {
-        const { dispatch } = this.props;
+        const { user, dispatch } = this.props;
+        console.log('bitch');
 
         return (
             <div>
