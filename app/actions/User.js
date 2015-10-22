@@ -1,11 +1,22 @@
+import axios from 'axios';
+
+import config from '../../server-config';
+
 export const CREATE_USER = 'CREATE_USER';
+export const GET_USERS = 'GET_USERS';
 
-import request from 'axios';
+const API = 'http://localhost:' + config.port + '/api'
 
-const BACKEND_URL = 'https://webtask.it.auth0.com/api/run/wt-milomord-gmail_com-0/redux-tutorial-backend?webtask_no_cache=1';
 export function createUser (name) {
     return {
         type: CREATE_USER,
-        promise: request.post(BACKEND_URL, { name })
+        promise: axios({
+            url: API,
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/graphql'
+            },
+            data: 'mutation { createUser (name: "' + name + '") {id} }'
+        })
     }
-}
+};
