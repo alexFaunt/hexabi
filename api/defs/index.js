@@ -11,8 +11,8 @@ import * as Game from './Game'; append(Game);
 export default defs;
 
 function append (item) {
-    for (let prop in item) {
-        if (!item.hasOwnProperty(prop)) {
+    for (let prop in defs) {
+        if (!defs.hasOwnProperty(prop) || !item.hasOwnProperty(prop)) {
             continue;
         }
         for (let value in item[prop]) {

@@ -58,7 +58,7 @@ function run () {
         // execute GraphQL!
         graphql(schema, req.body)
             .then((result) => {
-                res.status(200).send(JSON.stringify(result, null, 2));
+                res.status(200).send(JSON.stringify(result.data, null, 2));
             })
             .catch((err) => {
                 res.status(500).send(err.message);

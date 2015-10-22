@@ -4,12 +4,18 @@ import {
     GraphQLString,
     GraphQLID,
     GraphQLInt,
-    GraphQLList
+    GraphQLList,
+    GraphQLNonNull
 } from 'graphql';
+import * as User from './User';
+
 
 // our mapping to the DB
 const table = database.Model.extend({
-    tableName: 'games'
+    tableName: 'games',
+    creator: function () {
+        return this.hasOne(User.Model, 'id');
+    }
 });
 
 // the PostgreSQL string to create it just for doccing sake,
@@ -18,11 +24,12 @@ const table = database.Model.extend({
 const postgre = `CREATE TABLE games (
     id SERIAL PRIMARY KEY,
     status text NOT NULL DEFAULT 'PENDING',
-    lives numeric DEFAULT 3,
-    infos numeric DEFAULT 8,
-    deck text NOT NULL,
-    played text NOT NULL,
-    discard text NOT NULL
+    lives integer DEFAULT 3,
+    infos integer DEFAULT 8,
+    deck text,
+    played text,
+    discard text,
+    creator integer references users(id)
 );`;
 
 // Define the fields
@@ -31,7 +38,7 @@ const fields = {
         type: GraphQLID
     },
     status: {
-        type: GraphQLString
+        type: new GraphQLNonNull(GraphQLString)
     },
     lives: {
         type: GraphQLInt
@@ -47,8 +54,10 @@ const fields = {
     },
     discard: {
         type: GraphQLString
+    },
+    creator: {
+        type: User.type
     }
-    //creator TODO - FK
 };
 
 // Our graph QL object
@@ -64,8 +73,8 @@ export const queries = {
             id: fields.id
         },
         resolve: (_, {id}) => {
-            return table.where('id', id).fetch().then(function (user) {
-                return user.toJSON();
+            return table.where('id', id).fetch().then(function (game) {
+                return game.toJSON();
             });
         }
     },
@@ -74,7 +83,7 @@ export const queries = {
         type: new GraphQLList(schema),
         description: 'get all games',
         resolve: () => {
-            return table.fetchAll().then(function (games) {
+            return table.fetchAll({withRelated: ['creator']}).then(function (games) {
                 return games.toJSON();
             });
         }

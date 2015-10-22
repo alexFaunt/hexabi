@@ -11,7 +11,7 @@ import {
 export const DEFAULT_SCORE = 0;
 
 // our mapping to the DB
-const table = database.Model.extend({
+export const Model = database.Model.extend({
     tableName: 'users'
 });
 
@@ -22,7 +22,7 @@ const postgre = `CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name text NOT NULL,
     avatar text,
-    score numeric DEFAULT ` + DEFAULT_SCORE + `
+    score integer DEFAULT ` + DEFAULT_SCORE + `
 );`;
 
 // Define the fields
@@ -42,7 +42,7 @@ const fields = {
 };
 
 // Our graph QL object
-const type = new GraphQLObjectType({
+export const type = new GraphQLObjectType({
     name: 'User',
     fields
 });
@@ -55,7 +55,7 @@ export const queries = {
             id: fields.id
         },
         resolve: (_, {id}) => {
-            return table.where('id', id).fetch().then(function (user) {
+            return Model.where('id', id).fetch().then(function (user) {
                 return user.toJSON();
             });
         }
@@ -66,7 +66,7 @@ export const queries = {
         description: 'get all users',
         resolve: () => {
             console.log('GET ALL USERS FROM TABLE');
-            return table.fetchAll().then(function (users) {
+            return Model.fetchAll().then(function (users) {
                 console.log(users.toJSON());
                 return users.toJSON();
             });
@@ -88,7 +88,7 @@ export const mutations = {
             }
         },
         resolve: (obj, {name, avatar}) => {
-            return (new table()).save({name, avatar}).then((model) => {
+            return (new Model()).save({name, avatar}).then((model) => {
                 console.log('User created', model.id, name, avatar, DEFAULT_SCORE);
                 return {
                     id: model.id, name, avatar, score: DEFAULT_SCORE
