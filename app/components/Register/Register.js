@@ -10,19 +10,16 @@ import * as UserActions from '../../actions/User';
 
 @connect(state => ({ user: state.User }))
 export default class Register extends Component {
-    static required = [
-        UserActions.getUsers
-    ]
-
     render () {
-        const { user, dispatch } = this.props;
-        console.log('bitch');
+        const { dispatch } = this.props;
 
         return (
             <div>
-                Jooooin us.
-                Im working on the sign up form...
-                for now, just give me your name
+                <p>
+                    Jooooin us.
+                    Im working on the sign up form...
+                    for now, just give me your name
+                </p>
 
                 <RegisterForm {...bindActionCreators(UserActions, dispatch)} />
             </div>

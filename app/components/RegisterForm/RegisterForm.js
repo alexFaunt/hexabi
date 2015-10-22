@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 
-export default class TodoForm extends Component {
+export default class RegisterForm extends Component {
     handleSubmit = () => {
         let node = this.refs['name'];
 
-        this.props.createUser(node.value).then(function (args) {
-            console.log(args);
-        });
+        this.props.createUser(node.value);
     }
 
     render () {
