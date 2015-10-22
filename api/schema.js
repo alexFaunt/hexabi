@@ -6,15 +6,21 @@ import {
     GraphQLID
 } from 'graphql';
 
-import { queries, mutations } from './defs';
+import defs from './defs';
 
 let count = 0;
 
 const query = new GraphQLObjectType({
     name: 'Query',
-    fields: queries
+    fields: defs.queries
+});
+
+const mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    fields: defs.mutations
 });
 
 export default new GraphQLSchema({
-    query: query
+    query,
+    mutation
 });

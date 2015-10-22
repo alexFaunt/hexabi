@@ -4,7 +4,8 @@ import {
     GraphQLString,
     GraphQLID,
     GraphQLInt,
-    GraphQLList
+    GraphQLList,
+    GraphQLNonNull
 } from 'graphql';
 
 // our mapping to the DB
@@ -39,14 +40,14 @@ const fields = {
 };
 
 // Our graph QL object
-const schema = new GraphQLObjectType({
+const type = new GraphQLObjectType({
     name: 'User',
     fields
 });
 
 export const queries = {
     user: {
-        type: schema,
+        type: type,
         description: 'Return user by id',
         args: {
             id: fields.id
@@ -59,7 +60,7 @@ export const queries = {
     },
 
     users: {
-        type: new GraphQLList(schema),
+        type: new GraphQLList(type),
         description: 'get all users',
         resolve: () => {
             return table.fetchAll().then(function (users) {
@@ -69,4 +70,18 @@ export const queries = {
     }
 }
 
-export const mutations = {}
+export const mutations = {
+    createUser: {
+        type: type,
+        args: {
+            name: {
+                name: 'name',
+                type: new GraphQLNonNull(GraphQLString)
+            }
+        },
+        resolve: (obj, {name}) => {
+            console.log('do a save with ' + name);
+            return (new table()).save({name});
+        }
+      }
+}
