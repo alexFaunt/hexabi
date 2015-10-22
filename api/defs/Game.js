@@ -9,17 +9,20 @@ import {
 
 // our mapping to the DB
 const table = database.Model.extend({
-    tableName: 'users'
+    tableName: 'games'
 });
 
 // the PostgreSQL string to create it just for doccing sake,
 // maybe we can use it to auto generate the DB or something, or we can map
 // between graphQL and postgre with graffiti when it's ready
-const postgre = `CREATE TABLE users (
+const postgre = `CREATE TABLE games (
     id SERIAL PRIMARY KEY,
-    name text NOT NULL,
-    avatar text,
-    score numeric DEFAULT 0
+    status text NOT NULL DEFAULT 'PENDING',
+    lives numeric DEFAULT 3,
+    infos numeric DEFAULT 8,
+    deck text NOT NULL,
+    played text NOT NULL,
+    discard text NOT NULL
 );`;
 
 // Define the fields
@@ -27,27 +30,36 @@ const fields = {
     id: {
         type: GraphQLID
     },
-    name: {
+    status: {
         type: GraphQLString
     },
-    avatar: {
-        type: GraphQLString
-    },
-    score: {
+    lives: {
         type: GraphQLInt
+    },
+    infos: {
+        type: GraphQLInt
+    },
+    deck: {
+        type: GraphQLString
+    },
+    played: {
+        type: GraphQLString
+    },
+    discard: {
+        type: GraphQLString
     }
+    //creator TODO - FK
 };
 
 // Our graph QL object
 const schema = new GraphQLObjectType({
-    name: 'User',
+    name: 'Game',
     fields
 });
 
 export const queries = {
-    user: {
+    game: {
         type: schema,
-        description: 'Return user by id',
         args: {
             id: fields.id
         },
@@ -58,15 +70,15 @@ export const queries = {
         }
     },
 
-    users: {
+    games: {
         type: new GraphQLList(schema),
-        description: 'get all users',
+        description: 'get all games',
         resolve: () => {
-            return table.fetchAll().then(function (users) {
-                return users.toJSON();
+            return table.fetchAll().then(function (games) {
+                return games.toJSON();
             });
         }
     }
-}
+};
 
-export const mutations = {}
+export const mutations = {};
