@@ -6,7 +6,8 @@ import bookshelf from 'bookshelf';
 
 const knexConfig = knex({
     client: 'pg',
-    connection: config.postgres
+    connection: config.postgres,
+    debug: true
 });
 
 export default bookshelf(knexConfig);

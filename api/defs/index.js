@@ -5,8 +5,9 @@ const defs = {
     mutations: {}
 };
 
-import * as User from './User'; append(User);
+import * as Member from './Member'; append(Member);
 import * as Game from './Game'; append(Game);
+import * as Player from './Player'; append(Player);
 
 export default defs;
 

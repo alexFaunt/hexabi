@@ -3,9 +3,9 @@ import Promise from 'promise';
 
 import config from '../../server-config';
 
-export const CREATE_USER = 'CREATE_USER';
-export const GET_USER = 'GET_USER';
-export const GET_USERS = 'GET_USERS';
+export const CREATE_MEMBER = 'CREATE_MEMBER';
+export const GET_MEMBER = 'GET_MEMBER';
+export const GET_MEMBERS = 'GET_MEMBERS';
 
 const API = 'http://localhost:' + config.port + '/api'
 
@@ -23,12 +23,12 @@ function createRequest (data) {
     return requestData;
 }
 
-export function createUser (name, avatar) {
+export function createMember (name, avatar) {
 
     // Cause it's required need to check it.
     if (!name) {
         return {
-            type: CREATE_USER,
+            type: CREATE_MEMBER,
             promise: Promise.reject(false)
         }
     }
@@ -40,30 +40,30 @@ export function createUser (name, avatar) {
     }
 
     return {
-        type: CREATE_USER,
-        promise: axios(createRequest('mutation { createUser (' + params + ') {id, name, avatar, score} }'))
+        type: CREATE_MEMBER,
+        promise: axios(createRequest('mutation { createMember (' + params + ') {id, name, avatar, score} }'))
     }
 };
 
-export function getUser (id) {
+export function getMember (id) {
 
     // Cause it's required need to check it.
     if (!id) {
         return {
-            type: GET_USER,
+            type: GET_MEMBER,
             promise: Promise.reject(false)
         }
     }
 
     return {
-        type: GET_USER,
-        promise: axios(createRequest('query { user ( id: "' + id + '" ) {id, name, avatar, score} }'))
+        type: GET_MEMBER,
+        promise: axios(createRequest('query { member ( id: "' + id + '" ) {id, name, avatar, score} }'))
     }
 };
 
-export function getUsers () {
+export function getMembers () {
     return {
-        type: GET_USERS,
-        promise: axios(createRequest('query { users {id, name, avatar, score} }'))
+        type: GET_MEMBERS,
+        promise: axios(createRequest('query { members {id, name, avatar, score} }'))
     }
 };

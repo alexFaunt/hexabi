@@ -7,14 +7,14 @@ import {
     GraphQLList,
     GraphQLNonNull
 } from 'graphql';
-import * as User from './User';
+import * as Member from './Member';
 
 
 // our mapping to the DB
-const table = database.Model.extend({
+export const Model = database.Model.extend({
     tableName: 'games',
     creator: function () {
-        return this.hasOne(User.Model, 'id');
+        return this.belongsTo(Member.Model, 'creator');
     }
 });
 
@@ -29,8 +29,9 @@ const postgre = `CREATE TABLE games (
     deck text,
     played text,
     discard text,
-    creator integer references users(id)
+    creator integer NOT NULL references members(id)
 );`;
+// INSERT INTO games (deck, creator) VALUES ('decktest', 1)
 
 // Define the fields
 const fields = {
@@ -56,38 +57,64 @@ const fields = {
         type: GraphQLString
     },
     creator: {
-        type: User.type
+        type: Member.type
     }
 };
 
 // Our graph QL object
-const schema = new GraphQLObjectType({
+export const type = new GraphQLObjectType({
     name: 'Game',
     fields
 });
 
 export const queries = {
     game: {
-        type: schema,
+        type,
         args: {
             id: fields.id
         },
         resolve: (_, {id}) => {
-            return table.where('id', id).fetch().then(function (game) {
+            console.log('Fetch a gamE!');
+            return Model.where('id', id).fetch().then(function (game) {
                 return game.toJSON();
             });
         }
     },
 
     games: {
-        type: new GraphQLList(schema),
+        type: new GraphQLList(type),
         description: 'get all games',
         resolve: () => {
-            return table.fetchAll({withRelated: ['creator']}).then(function (games) {
+            return Model.fetchAll({withRelated: ['creator']}).then(function (games) {
                 return games.toJSON();
             });
         }
     }
 };
 
-export const mutations = {};
+export const mutations = {
+    createGame: {
+        type: type,
+        args: {
+            deck: {
+                name: 'deck',
+                type: GraphQLString
+            },
+            creator: {
+                name: 'creator',
+                type: GraphQLID // TODO - get type from MEmber
+            }
+        },
+        resolve: (obj, {deck, creator}) => {
+            console.log('create game', deck, creator);
+            return (new Model()).save({deck, creator}).then((model) => {
+                console.log('Game created', model.id, deck, creator);
+                return {
+                    id: model.id, deck, creator
+                };
+            }, function () {
+                console.log(arguments);
+            })
+        }
+      }
+}

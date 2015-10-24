@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 
 import RegisterForm from '../RegisterForm/RegisterForm';
 
-import * as UserActions from '../../actions/User';
+import * as MemberActions from '../../actions/Member';
 
-@connect(state => ({ user: state.User }))
+@connect(state => ({ member: state.Member }))
 export default class Register extends Component {
     render () {
         const { dispatch } = this.props;
@@ -21,7 +21,7 @@ export default class Register extends Component {
                     for now, just give me your name
                 </p>
 
-                <RegisterForm {...bindActionCreators(UserActions, dispatch)} />
+                <RegisterForm {...bindActionCreators(MemberActions, dispatch)} />
             </div>
         );
     }
