@@ -11,6 +11,12 @@ import {
 import GameModel from '../models/Game';
 import GameType from '../schema/GameType';
 
+const fetchProps = {
+    withRelated: [
+        'creator', 'players', 'players.member'
+    ]
+};
+
 export const queries = {
     game: {
         type: GameType,
@@ -21,25 +27,21 @@ export const queries = {
                 description: 'id of the game to fetch.'
             },
         },
-        resolve: (_, {id}) => {
-            console.log('Fetch a gamE!');
-            return (new GameModel()).where('id', id).fetch().then(function (game) {
-                return game.toJSON();
-            });
+        resolve: function (_, {id}) {
+            return (new GameModel())
+                .where('id', id)
+                .fetch(fetchProps)
+                .then((games) => games.toJSON());
         }
     },
 
     games: {
         type: new GraphQLList(GameType),
         description: 'get all games',
-        resolve: () => {
-            return (new GameModel()).fetchAll({
-                withRelated: [
-                    'creator', 'players', 'players.member'
-                ]
-            }).then(function (games) {
-                return games.toJSON();
-            });
+        resolve: function () {
+            return (new GameModel())
+                .fetchAll(fetchProps)
+                .then((games) => games.toJSON());
         }
     }
 };
@@ -57,16 +59,16 @@ export const mutations = {
                 type: GraphQLID
             }
         },
-        resolve: (obj, {deck, creator}) => {
-            console.log('create game', deck, creator);
-            return (new GameModel()).save({deck, creator}).then((model) => {
-                console.log('Game created', model.id, deck, creator);
-                return {
-                    id: model.id, deck, creator
-                };
-            }, function () {
-                console.log(arguments);
-            })
+        resolve: function (obj, {deck, creator}) {
+            return (new GameModel())
+                .save({deck, creator})
+                .then(function (model) {
+                    return {
+                        id: model.id, deck, creator
+                    };
+                }, function () {
+                    console.error(arguments);
+                });
         }
       }
 }

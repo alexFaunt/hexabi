@@ -21,22 +21,21 @@ export const queries = {
                 name: 'id'
             }
         },
-        resolve: (_, {id}) => {
-            return PlayerModel.where('id', id).fetch().then(function (player) {
-                return player.toJSON();
-            });
+        resolve: function (_, {id}) {
+            return PlayerModel
+                .where('id', id)
+                .fetch()
+                .then((player) => player.toJSON());
         }
     },
 
     players: {
         type: new GraphQLList(PlayerType),
         description: 'get all players',
-        resolve: () => {
-            console.log('try get all players');
-            return PlayerModel.fetchAll({withRelated: ['member']}).then(function (players) {
-                console.log(players.toJSON());
-                return players.toJSON();
-            });
+        resolve: function () {
+            return PlayerModel
+                .fetchAll({withRelated: ['member']})
+                .then((players) => players.toJSON());
         }
     }
 };
@@ -54,15 +53,16 @@ export const mutations = {
                 type: GraphQLString
             }
         },
-        resolve: (obj, {member, hand}) => {
-            console.log('create player', member, hand);
-            return (new PlayerModel()).save({member, hand}).then((model) => {
-                return {
-                    id: model.id, member, hand
-                };
-            }, function () {
-                console.log(arguments);
-            })
+        resolve: function (obj, {member, hand}) {
+            return (new PlayerModel())
+                .save({member, hand})
+                .then(function (model) {
+                    return {
+                        id: model.id, member, hand
+                    };
+                }, function () {
+                    console.error(arguments);
+                });
         }
-      }
+    }
 }

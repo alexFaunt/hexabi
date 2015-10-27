@@ -23,22 +23,21 @@ export const queries = {
                 name: 'id'
             }
         },
-        resolve: (_, {id}) => {
-            return MemberModel.where('id', id).fetch().then(function (member) {
-                return member.toJSON();
-            });
+        resolve: function (_, {id}) {
+            return MemberModel
+                .where('id', id)
+                .fetch()
+                .then((member) => member.toJSON());
         }
     },
 
     members: {
         type: new GraphQLList(MemberType),
         description: 'get all members',
-        resolve: () => {
-            console.log('GET ALL USERS FROM TABLE');
-            return MemberModel.fetchAll().then(function (members) {
-                console.log(members.toJSON());
-                return members.toJSON();
-            });
+        resolve: function () {
+            return MemberModel
+                .fetchAll()
+                .then((members) => members.toJSON());
         }
     }
 }
@@ -56,16 +55,16 @@ export const mutations = {
                 type: GraphQLString
             }
         },
-        resolve: (obj, {name, avatar}) => {
-            console.log('create member', name, avatar);
-            return (new MemberModel()).save({name, avatar}).then((model) => {
-                console.log('Member created', model.id, name, avatar, DEFAULT_SCORE);
-                return {
-                    id: model.id, name, avatar, score: DEFAULT_SCORE
-                };
-            }, function () {
-                console.log(arguments);
-            })
+        resolve: function (obj, {name, avatar}) {
+            return (new MemberModel())
+                .save({name, avatar})
+                .then(function (model) {
+                    return {
+                        id: model.id, name, avatar, score: DEFAULT_SCORE
+                    };
+                }, function () {
+                    console.error(arguments);
+                });
         }
       }
 }
