@@ -3,16 +3,17 @@ import {
     GraphQLSchema
 } from 'graphql';
 
-import defs from '../queries';
+import queries from '../queries';
+import mutations from '../mutations';
 
 const query = new GraphQLObjectType({
     name: 'Query',
-    fields: defs.queries
+    fields: queries
 });
 
 const mutation = new GraphQLObjectType({
     name: 'Mutation',
-    fields: defs.mutations
+    fields: mutations
 });
 
 export default new GraphQLSchema({

@@ -1,4 +1,4 @@
-const queries = {};
+const mutations = {};
 
 import * as member from './Member'; append(member);
 import * as game from './Game'; append(game);
@@ -11,12 +11,12 @@ function append (model) {
         }
 
         // if it's already there then we have a problem.
-        if (queries.hasOwnProperty(endpoint)) {
-            throw 'ERROR! two queries points with same name. Not allowed...' + endpoint;
+        if (mutations.hasOwnProperty(endpoint)) {
+            throw 'ERROR! two mutations points with same name. Not allowed...' + endpoint;
         }
 
-        queries[endpoint] = model[endpoint];
+        mutations[endpoint] = model[endpoint];
     }
 }
 
-export default queries;
+export default mutations;

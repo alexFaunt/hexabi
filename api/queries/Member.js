@@ -11,60 +11,31 @@ import {
 import MemberType from '../schema/MemberType';
 import MemberModel from '../models/Member';
 
-export const DEFAULT_SCORE = 0;
+const DEFAULT_SCORE = 0;
 
-export const queries = {
-    member: {
-        type: MemberType,
-        description: 'Return member by id',
-        args: {
-            id: {
-                type: GraphQLString,
-                name: 'id'
-            }
-        },
-        resolve: function (_, {id}) {
-            return MemberModel
-                .where('id', id)
-                .fetch()
-                .then((member) => member.toJSON());
+export const member = {
+    type: MemberType,
+    description: 'Return member by id',
+    args: {
+        id: {
+            type: GraphQLString,
+            name: 'id'
         }
     },
-
-    members: {
-        type: new GraphQLList(MemberType),
-        description: 'get all members',
-        resolve: function () {
-            return MemberModel
-                .fetchAll()
-                .then((members) => members.toJSON());
-        }
+    resolve: function (_, {id}) {
+        return MemberModel
+            .where('id', id)
+            .fetch()
+            .then((member) => member.toJSON());
     }
-}
+};
 
-export const mutations = {
-    createMember: {
-        type: MemberType,
-        args: {
-            name: {
-                name: 'name',
-                type: new GraphQLNonNull(GraphQLString)
-            },
-            avatar: {
-                name: 'avatar',
-                type: GraphQLString
-            }
-        },
-        resolve: function (obj, {name, avatar}) {
-            return (new MemberModel())
-                .save({name, avatar})
-                .then(function (model) {
-                    return {
-                        id: model.id, name, avatar, score: DEFAULT_SCORE
-                    };
-                }, function () {
-                    console.error(arguments);
-                });
-        }
-      }
-}
+export const members = {
+    type: new GraphQLList(MemberType),
+    description: 'get all members',
+    resolve: function () {
+        return MemberModel
+            .fetchAll()
+            .then((members) => members.toJSON());
+    }
+};
