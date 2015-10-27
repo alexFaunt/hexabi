@@ -9,7 +9,6 @@ import {
 } from 'graphql';
 import * as Member from './Member';
 
-
 // our mapping to the DB
 export const Model = database.Model.extend({
     tableName: 'games',

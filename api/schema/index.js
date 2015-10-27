@@ -1,14 +1,9 @@
 import {
     GraphQLObjectType,
-    GraphQLSchema,
-    GraphQLInt,
-    GraphQLString,
-    GraphQLID
+    GraphQLSchema
 } from 'graphql';
 
-import defs from './defs';
-
-let count = 0;
+import defs from '../queries';
 
 const query = new GraphQLObjectType({
     name: 'Query',
