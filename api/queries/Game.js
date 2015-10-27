@@ -34,7 +34,9 @@ export const queries = {
         description: 'get all games',
         resolve: () => {
             return (new GameModel()).fetchAll({
-                withRelated: ['creator', 'players']
+                withRelated: [
+                    'creator', 'players', 'players.member'
+                ]
             }).then(function (games) {
                 return games.toJSON();
             });
