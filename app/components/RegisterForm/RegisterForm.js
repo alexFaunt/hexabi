@@ -4,7 +4,7 @@ export default class RegisterForm extends Component {
     handleSubmit = () => {
         let node = this.refs['name'];
 
-        this.props.createMember(node.value);
+        this.props.createMember({name: node.value});
     }
 
     render () {

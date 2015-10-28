@@ -1,54 +1,36 @@
-import axios from 'axios';
-import Promise from 'promise';
-
-import config from '../../server-config';
+import api from '../services/api';
 
 export const CREATE_MEMBER = 'CREATE_MEMBER';
 export const GET_MEMBER = 'GET_MEMBER';
 export const GET_MEMBERS = 'GET_MEMBERS';
 
-const API = 'http://localhost:' + config.port + '/api'
-
-const request = {
-    url: API,
-    method: 'post',
-    headers: {
-        'Content-Type': 'application/graphql'
-    }
+const response = {
+    id: true,
+    name: true,
+    avatar: true,
+    score: true
 };
 
-function createRequest (data) {
-    const requestData = request;
-    requestData.data = data;
-    return requestData;
-}
-
-export function createMember (name, avatar) {
+export function createMember (params) {
 
     // Cause it's required need to check it.
-    if (!name) {
+    if (!params || !params.name) {
         return {
             type: CREATE_MEMBER,
             promise: Promise.reject(false)
         }
     }
 
-    let params = 'name: "' + name + '"';
-
-    if (avatar) {
-        params += ', avatar: "' + avatar + '"';
-    }
-
     return {
         type: CREATE_MEMBER,
-        promise: axios(createRequest('mutation { createMember (' + params + ') {id, name, avatar, score} }'))
+        promise: api.mutation('createMember', params, response)
     }
 };
 
-export function getMember (id) {
+export function getMember (params) {
 
     // Cause it's required need to check it.
-    if (!id) {
+    if (!params || !params.id) {
         return {
             type: GET_MEMBER,
             promise: Promise.reject(false)
@@ -57,13 +39,13 @@ export function getMember (id) {
 
     return {
         type: GET_MEMBER,
-        promise: axios(createRequest('query { member ( id: "' + id + '" ) {id, name, avatar, score} }'))
+        promise: api.query('member', params, response)
     }
 };
 
 export function getMembers () {
     return {
         type: GET_MEMBERS,
-        promise: axios(createRequest('query { members {id, name, avatar, score} }'))
+        promise: api.query('members', null, response)
     }
 };
