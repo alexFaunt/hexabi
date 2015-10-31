@@ -1,66 +1,46 @@
 import api from '../services/api';
 
-export const CREATE_GAME = 'CREATE_GAME';
-export const GET_GAME = 'GET_GAME';
-export const GET_GAMES = 'GET_GAMES';
+export const CREATE_GAME = 'createGame';
+export const GET_GAME = 'game';
+export const GET_GAMES = 'games';
 
-const API = 'http://localhost:' + config.port + '/api'
-
-const request = {
-    url: API,
-    method: 'post',
-    headers: {
-        'Content-Type': 'application/graphql'
-    }
-};
-
-function createRequest (data) {
-    const requestData = request;
-    requestData.data = data;
-    return requestData;
-}
-
-export function createMember (name, avatar) {
-
-    // Cause it's required need to check it.
-    if (!name) {
-        return {
-            type: CREATE_MEMBER,
-            promise: Promise.reject(false)
+const response = {
+    id: true,
+    creator: {
+        id: true,
+        name: true
+    },
+    players: {
+        hand: true,
+        member: {
+            id: true,
+            name: true
         }
     }
+};
 
-    let params = 'name: "' + name + '"';
+export function createGame (params) {
 
-    if (avatar) {
-        params += ', avatar: "' + avatar + '"';
-    }
+    // params.creator = current user.
 
     return {
-        type: CREATE_MEMBER,
-        promise: axios(createRequest('mutation { createMember (' + params + ') {id, name, avatar, score} }'))
+        type: CREATE_GAME,
+        promise: api.mutation(CREATE_GAME, params, {
+            id: true
+        })
+    };
+};
+
+export function getGame (id) {
+    return {
+        type: GET_GAME,
+        promise: api.query(GET_GAME, {id}, response)
     }
 };
 
-export function getMember (id) {
-
-    // Cause it's required need to check it.
-    if (!id) {
-        return {
-            type: GET_MEMBER,
-            promise: Promise.reject(false)
-        }
-    }
-
+export function getGames () {
     return {
-        type: GET_MEMBER,
-        promise: axios(createRequest('query { member ( id: "' + id + '" ) {id, name, avatar, score} }'))
-    }
-};
-
-export function getMembers () {
-    return {
-        type: GET_MEMBERS,
-        promise: axios(createRequest('query { members {id, name, avatar, score} }'))
+        type: GET_GAMES,
+        promise: api.query(GET_GAMES, null, response)
     }
 };

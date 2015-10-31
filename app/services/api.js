@@ -62,3 +62,10 @@ export default {
     query: (...args) => { return createRequest('query', ...args); },
     mutation: (...args) => { return createRequest('mutation', ...args); }
 }
+
+if (typeof(window) !== 'undefined') {
+    window.api = {
+        query: (...args) => { return createRequest('query', ...args); },
+        mutation: (...args) => { return createRequest('mutation', ...args); }
+    };
+}

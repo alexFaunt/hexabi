@@ -5,7 +5,9 @@ export default function fetchComponentData(dispatch, components, params) {
             .concat((current.WrappedComponent ? current.WrappedComponent.required : []) || [])
             .concat(prev);
     }, []);
-
+    console.log('==================')
+console.log(required);
+    console.log('==================')
     const promises = required.map(need => dispatch(need(params)));
     return Promise.all(promises);
 }

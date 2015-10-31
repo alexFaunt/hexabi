@@ -4,7 +4,7 @@ import * as Member from '../actions/Member';
 
 const defaultState = new Immutable.List();
 
-export default function userReducer(state = defaultState, action) {
+export default function memberReducer(state = defaultState, action) {
 
     switch (action.type) {
         case Member.CREATE_MEMBER:
