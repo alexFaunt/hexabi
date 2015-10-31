@@ -1,8 +1,6 @@
-import Immutable from 'immutable';
-
 import * as Member from '../actions/Member';
 
-const defaultState = new Immutable.List();
+const defaultState = [];
 
 export default function memberReducer(state = defaultState, action) {
 

@@ -12,7 +12,7 @@ export default class GameStub extends Component {
     handleDelete = (e) => {
         const id = Number(e.target.dataset.id);
 
-        if (!id) {
+        if (isNaN(id)) {
             return;
         }
 
@@ -24,7 +24,10 @@ export default class GameStub extends Component {
 
         return (
             <div>
-                { JSON.stringify(game) }
+                <span>id: {game.id}</span>
+                <span>creator: {game.creator && game.creator.name}</span>
+                <span>players: {game.players && game.players.length}</span>
+                <span>status: {game.status}</span>
             </div>
         );
     }

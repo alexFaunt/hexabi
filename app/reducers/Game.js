@@ -1,8 +1,6 @@
-import Immutable from 'immutable';
-
 import * as Game from '../actions/Game';
 
-const defaultState = new Immutable.List();
+const defaultState = [];
 
 export default function gameReducer (state = defaultState, action) {
 
