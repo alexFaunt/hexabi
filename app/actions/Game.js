@@ -25,22 +25,26 @@ export function createGame (params) {
 
     return {
         type: CREATE_GAME,
-        promise: api.mutation(CREATE_GAME, params, {
-            id: true
-        })
+        query: {
+            params,
+            response: { id }
+        }
     };
 };
 
 export function getGame (id) {
     return {
         type: GET_GAME,
-        promise: api.query(GET_GAME, {id}, response)
+        query: {
+            params: {id},
+            response
+        }
     }
 };
 
 export function getGames () {
     return {
         type: GET_GAMES,
-        promise: api.query(GET_GAMES, null, response)
+        query: { response }
     }
 };

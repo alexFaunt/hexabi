@@ -25,7 +25,7 @@ export const createPlayer = {
     },
     resolve: function (obj, {member, hand}) {
         return (new PlayerModel())
-            .save({member, hand})
+            .save({ member, hand })
             .then(function (model) {
                 return {
                     id: model.id, member, hand

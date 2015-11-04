@@ -8,7 +8,6 @@ import GameList from './components/GameList/GameList';
 import Page from './components/Page/Page';
 import Register from './components/Register/Register';
 
-import auth from './core/auth';
 const requireAuth = function (nextState, replaceState) {
     // if (!auth.loggedIn()) {
     //     replaceState({

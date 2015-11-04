@@ -4,6 +4,11 @@ export default {
         secret: ''
     },
 
+    auth: {
+        secret: 'uhoh'
+        // expires:
+    },
+
     postgres: { // TODO - this can be done with a connString, and thats how old wasabi did it
         host     : 'localhost',
         user     : 'admin',

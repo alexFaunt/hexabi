@@ -22,7 +22,9 @@ function getResponseString (obj) {
     return '{ ' + resp.join(', ') + ' }';
 }
 
-function createRequest (type, method, params, response) {
+export default function (opts) {
+
+    const { type, method, params, response, token } = opts;
 
     let data = type + ' { ' + method + ' ';
 
@@ -51,21 +53,14 @@ function createRequest (type, method, params, response) {
         url: 'http://localhost:' + config.port + '/api',
         method: 'post',
         headers: {
-            'Content-Type': 'application/graphql'
+            'Content-Type': 'application/graphql',
+            token
         },
         data
-    });
-
+    }).then(function (res) {
+        return res;
+    }, function () {
+        console.log('TODO REJECTED API CALL, NEED TO REDIRECT SOME HOW, THIS IS BECAUSE YOUR TOKEN SUCKS NOW PROBS? DNo.');
+        return false;
+    })
 };
-
-export default {
-    query: (...args) => { return createRequest('query', ...args); },
-    mutation: (...args) => { return createRequest('mutation', ...args); }
-}
-
-if (typeof(window) !== 'undefined') {
-    window.api = {
-        query: (...args) => { return createRequest('query', ...args); },
-        mutation: (...args) => { return createRequest('mutation', ...args); }
-    };
-}

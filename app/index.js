@@ -6,7 +6,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import * as reducers from './reducers';
 
-import promiseMiddleware   from './core/lib/promiseMiddleware';
+import api from 'middleware/api';
 
 if (typeof document === 'undefined') {
     throw 'no document, wtf';
@@ -16,7 +16,7 @@ if (typeof document === 'undefined') {
 const initialState = window.__INITIAL_STATE__;
 
 const reducer = combineReducers(reducers);
-const store = applyMiddleware(promiseMiddleware)(createStore)(reducer, initialState);
+const store = applyMiddleware(api)(createStore)(reducer, initialState);
 
 ReactDOM.render(
     <Provider store={store}>
