@@ -6,7 +6,7 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import * as reducers from './reducers';
 
-import api from 'middleware/api';
+import api from './middleware/api';
 
 if (typeof document === 'undefined') {
     throw 'no document, wtf';

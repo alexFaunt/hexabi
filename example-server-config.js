@@ -1,18 +1,13 @@
 export default {
-    facebook: {
-        id: '',
-        secret: ''
-    },
-
     auth: {
-        secret: 'uhoh'
+        secret: 'yoursecretkey'
         // expires:
     },
 
     postgres: { // TODO - this can be done with a connString, and thats how old wasabi did it
-        host     : 'localhost',
-        user     : 'admin',
-        password : 'sa',
+        host     : 'test',
+        user     : 'test',
+        password : 'test',
         database : 'hexabi',
         charset  : 'utf8'
     },
