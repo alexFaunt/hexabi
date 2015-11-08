@@ -10,6 +10,7 @@ export default store => next => action => {
     const SUCCESS = type;
     const FAILURE = type + '_FAILURE';
 
+    // See comments in api middleware
     next({ ...rest, type: type + '_PENDING' });
 
     const session = store.getState().Session;
@@ -19,7 +20,7 @@ export default store => next => action => {
 
     return authService[type](auth)
         .then(function (res) {
-            next({ ...rest, res, type: SUCCESS });
+            next({ ...rest, res, type });
             return true;
         })
         .catch(function (error) {

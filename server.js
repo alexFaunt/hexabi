@@ -10,6 +10,7 @@ import path from 'path';
 import routes from './app/routes';
 import { match, RoutingContext } from 'react-router';
 import { createLocation } from 'history';
+import storeFactory from './app/factories/store';
 
 // Rendering
 import React from 'react';
@@ -28,7 +29,6 @@ import bodyParser from 'body-parser';
 import schema from './api/schema';
 
 // Auth
-import jwt from 'express-jwt';
 import cookieParser from 'cookie-parser';
 import jwtToken from 'jsonwebtoken';
 
@@ -49,27 +49,36 @@ function run () {
     // Static assets
     app.use('/static', express.static(path.join(__dirname, './static')));
     app.use('/build', express.static(path.join(__dirname, './build')));
-
+    function fromHeaderOrQuerystring (req) {
+        return null;
+    };
     // parse POST body as text
-    app.use('/api', bodyParser.text({ type: 'application/graphql' }));
+    app.use(
+        '/api',
+        cookieParser(),
+        bodyParser.text({ type: 'application/graphql' }),
+        function (req, res, next) {
+            let token = null;
+            if (req.cookies.token) {
+                token = req.cookies.token;
+            }
+            if (req.headers.token) {
+                token = req.headers.token;
+            }
+            if (token === null) {
+                return res.status(401).send('fuck off chump');
+            }
+            const decoded = jwtToken.verify(token, config.auth.secret);
+            // TODO - check it?
+            req.member = decoded;
+            return next();
+        }
+    );
 
     // Api
     app.post('/api',
-        cookieParser(),
-        jwt({
-            secret: config.auth.secret,
-            requestProperty: 'token',
-            getToken: function fromHeaderOrQuerystring (req, res, next) {
-                if (req.cookies.token) {
-                    return next();
-                }
-                if (req.headers.token) {
-                    return next();
-                }
-                return res.status(401).send('No token');
-            }
-        }),
-        function (err, req, res, next) {
+        function (req, res) {
+            console.log(req.member);
 
             // execute GraphQL!
             graphql(schema, req.body)
@@ -77,6 +86,7 @@ function run () {
                     res.status(200).send(JSON.stringify(result.data, null, 2));
                 })
                 .catch(function (err) {
+                    console.error(err);
                     res.status(500).send(err.message);
                 });
         });
@@ -93,11 +103,10 @@ function run () {
     // TODO - LOGOUT
     app.use('/auth/login', bodyParser.json());
     app.post('/auth/login', function (req, res) {
-        console.log('Auth end point set');
-        console.log(JSON.stringify(req.body));
 
         // TODO check if it's a good login
-        if (req.body.username !== "alex" || req.body.username !== "pass") {
+        if (req.body.username !== "alex" || req.body.password !== "pass") {
+            console.log('NO AUTHED', req.body.username, req.body.password);
             return res.status(401).send();
         }
 
@@ -151,7 +160,8 @@ function run () {
             // Then redirect if needed when no token
             // Or continue, but now the Session Store has the logged in token
             // req.cookies.token
-            const store = applyMiddleware(api)(createStore)(reducer);
+            const store = storeFactory(reducer);
+
             // I'm very sorry for this. But I have no idea how to do this cleanly.
             store.getState().Session.token = req.cookies.token;
 

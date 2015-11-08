@@ -1,4 +1,6 @@
 import api from '../services/api';
+import * as Router from '../actions/Router';
+import * as ErrorConstants from '../constants/Errors';
 
 export default store => next => action => {
     const { query, mutation, type, ...rest } = action;
@@ -16,12 +18,11 @@ export default store => next => action => {
         return next(action);
     }
 
-    const SUCCESS = type;
-    const FAILURE = type + '_FAILURE';
-
+    // This isn't used, and needs enumifying before it is
+    // but this is how to show loading states
     next({ ...rest, type: type + '_PENDING' });
 
-    requestData.method = SUCCESS;
+    requestData.method = type;
 
     const session = store.getState().Session;
     if (session.token) {
@@ -30,11 +31,18 @@ export default store => next => action => {
 
     return api(requestData)
         .then(function (res) {
-            next({ ...rest, res, type: SUCCESS });
+            console.log('SUCCESS GAMES', res);
+            next({ ...rest, res, type });
             return true;
         })
         .catch(function (error) {
-            next({ ...rest, error, type: FAILURE });
+            // TODO - it's possible to have other error types other than auth failures
+            // They can go here and decide what action to pass on.
+
+            next({
+                type: ErrorConstants.AUTH_ERROR,
+                error
+            });
 
             // Another benefit is being able to log all failures here
             console.log(error);

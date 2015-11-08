@@ -10,6 +10,8 @@ export default function gameReducer (state = defaultState, action) {
         case Game.GET_GAME:
             return action.res.data.game;
         case Game.GET_GAMES:
+        console.log('hiiiii')
+            console.log(action.res.data)
             return action.res.data.games;
         default:
             return state;

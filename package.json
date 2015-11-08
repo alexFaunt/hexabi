@@ -31,7 +31,6 @@
     "cookie-parser": "^1.4.0",
     "css-loader": "^0.19.0",
     "express-graphql": "^0.4.0",
-    "express-jwt": "^3.1.0",
     "extract-text-webpack-plugin": "^0.8.2",
     "graphql": "^0.4.9",
     "history": "^1.12.5",
@@ -56,6 +55,7 @@
   "dependencies": {
     "express": "^4.13.3",
     "forever": "^0.15.1",
-    "pg": "^4.4.3"
+    "pg": "^4.4.3",
+    "redux-router": "^1.0.0-beta3"
   }
 }

@@ -2,12 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import router from './router';
 
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import * as reducers from './reducers';
-
-import auth from './middleware/auth';
-import api from './middleware/api';
+import storeFactory from './factories/store';
 
 if (typeof document === 'undefined') {
     throw 'no document, wtf';
@@ -17,7 +15,9 @@ if (typeof document === 'undefined') {
 const initialState = window.__INITIAL_STATE__;
 
 const reducer = combineReducers(reducers);
-const store = applyMiddleware(auth, api)(createStore)(reducer, initialState);
+const store = storeFactory(reducer, initialState);
+
+store.history = router.props.history;
 
 ReactDOM.render(
     <Provider store={store}>

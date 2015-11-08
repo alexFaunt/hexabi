@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route } from 'react-router';
+import { Route } from 'react-router';
 
 import Landing from './components/Landing/Landing';
 import Login from './components/Login/Login';

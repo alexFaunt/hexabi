@@ -48,19 +48,19 @@ export default function (opts) {
 
     data += ' }';
 
+    const headers = {
+        'Content-Type': 'application/graphql',
+    };
+
+    if (token) {
+        headers.token = token;
+    }
+
     // Return axios to the api end point
     return axios({
         url: 'http://localhost:' + config.port + '/api',
         method: 'post',
-        headers: {
-            'Content-Type': 'application/graphql',
-            token
-        },
+        headers,
         data
-    }).then(function (res) {
-        return res;
-    }, function () {
-        console.log('TODO REJECTED API CALL, NEED TO REDIRECT SOME HOW, THIS IS BECAUSE YOUR TOKEN SUCKS NOW PROBS? DNo.');
-        return false;
-    })
+    });
 };
