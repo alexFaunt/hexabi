@@ -3,7 +3,13 @@ export default function fetchComponentData(dispatch, components, params) {
         const newRequired = [];
         newRequired.concat(prev);
 
-        const currentRequired = current.required || [];
+        let currentRequired = [];
+        if (current) {
+            currentRequired = current.required || [];
+        }
+        else {
+            return newRequired;
+        }
 
         let wrappedRequired = [];
         if (current.WrappedComponent) {

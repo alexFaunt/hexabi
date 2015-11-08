@@ -68,6 +68,7 @@ function run () {
             if (token === null) {
                 return res.status(401).send('fuck off chump');
             }
+            // TODO - TEST UNVERIFIED TOKEN
             const decoded = jwtToken.verify(token, config.auth.secret);
             // TODO - check it?
             req.member = decoded;
@@ -107,7 +108,7 @@ function run () {
         // TODO check if it's a good login
         if (req.body.username !== "alex" || req.body.password !== "pass") {
             console.log('NO AUTHED', req.body.username, req.body.password);
-            return res.status(401).send();
+            return res.status(200).send(JSON.stringify({result: 'failure'}));
         }
 
         // make a token
@@ -152,6 +153,14 @@ function run () {
 
             if (!renderProps) {
                 return res.status(404).send('Not found');
+            }
+
+            if (location.pathname !== '/login/' && !req.cookies.token) {
+                return res.redirect(302, '/login/');
+            }
+
+            if (location.pathname === '/login/' && req.cookies.token) {
+                return res.redirect(302, '/');
             }
 
             const reducer = combineReducers(reducers);
