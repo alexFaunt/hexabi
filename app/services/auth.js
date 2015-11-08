@@ -3,6 +3,8 @@ import Promise from 'promise';
 
 import config from '../../server-config';
 
+const ENDPOINT = 'http://localhost:' + config.port + '/auth/';
+
 function shallowValidate (username, password) {
     if (!username || !password) {
         return false;
@@ -13,7 +15,8 @@ function shallowValidate (username, password) {
     return true;
 }
 
-export function login (username, password) {
+export function login (data) {
+    const { username, password } = data;
 
     if (!shallowValidate(username, password)) {
         console.log('INVALID')
@@ -22,12 +25,17 @@ export function login (username, password) {
 
     // Return axios to the api end point
     return axios({
-        url: 'http://localhost:' + config.port + '/auth/login',
+        url: ENDPOINT + 'login',
         method: 'post',
-        data: { username, password }
+        data
     });
 }
 
-export function isLoggedIn () {
-    return true;
+export function logout (data) {
+    // Return axios to the api end point
+    return axios({
+        url: ENDPOINT + 'logout',
+        method: 'post',
+        data
+    });
 }

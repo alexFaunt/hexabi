@@ -2,7 +2,7 @@ import * as Session from '../actions/Session';
 
 const defaultState = {
     token: null,
-    user: null
+    member: null
 };
 
 export default function sessionReducer (state = defaultState, action) {
@@ -10,7 +10,7 @@ export default function sessionReducer (state = defaultState, action) {
     switch (action.type) {
         case Session.LOGIN:
             state.token = action.res.data.token;
-            state.user = action.res.data.user;
+            state.member = action.res.data.member;
 
             // TODO - redirect to something else?! I Really don't get this shit.
             return state;

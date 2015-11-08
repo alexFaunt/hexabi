@@ -1,18 +1,18 @@
 import * as auth from '../services/auth';
 
-export const LOGIN = 'LOGIN';
-export const LOGOUT = 'LOGOUT';
+export const LOGIN = 'login';
+export const LOGOUT = 'logout';
 
 export function login (username, password) {
     return {
         type: LOGIN,
-        promise: auth.login(username, password)
+        auth: { username, password }
     };
 };
 
-export function logout () {
+export function logout (username) {
     return {
         type: LOGOUT,
-        promise: auth.logout()
+        auth: { username }
     };
 };

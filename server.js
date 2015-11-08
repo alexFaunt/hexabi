@@ -86,16 +86,20 @@ function run () {
         const payload = { username, password };
         return jwtToken.sign(payload, config.auth.secret);
         // , {
-        //     expiresInMinutes: config.auth.expires
+        //     expiresInMinutes: config.auth.expires // TODO - this
         // }
     }
 
+    // TODO - LOGOUT
     app.use('/auth/login', bodyParser.json());
     app.post('/auth/login', function (req, res) {
         console.log('Auth end point set');
         console.log(JSON.stringify(req.body));
 
         // TODO check if it's a good login
+        if (req.body.username !== "alex" || req.body.username !== "pass") {
+            return res.status(401).send();
+        }
 
         // make a token
         const token = generateToken(req.body.username, req.body.password);
@@ -110,7 +114,8 @@ function run () {
                     .cookie('token', token)
                     .send(JSON.stringify({
                         result: 'success',
-                        member: response.data.member
+                        member: response.data.member,
+                        token
                     }, null, 2));
             })
             .catch(function (err) {

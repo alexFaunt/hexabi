@@ -1,18 +1,9 @@
-import api from '../services/api';
+import * as authService from '../services/auth';
 
 export default store => next => action => {
-    const { query, mutation, type, ...rest } = action;
+    const { auth, type, ...rest } = action;
 
-    let requestData;
-    if (query) {
-        requestData = query;
-        requestData.type = 'query';
-    }
-    else if (mutation) {
-        requestData = mutation;
-        requestData.type = 'mutation';
-    }
-    else {
+    if (!auth) {
         return next(action);
     }
 
@@ -21,14 +12,12 @@ export default store => next => action => {
 
     next({ ...rest, type: type + '_PENDING' });
 
-    requestData.method = SUCCESS;
-
     const session = store.getState().Session;
     if (session.token) {
-        requestData.token = session.token
+        auth.token = session.token
     }
 
-    return api(requestData)
+    return authService[type](auth)
         .then(function (res) {
             next({ ...rest, res, type: SUCCESS });
             return true;
