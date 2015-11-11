@@ -8,20 +8,34 @@ import GameList from './components/GameList/GameList';
 import Page from './components/Page/Page';
 import Register from './components/Register/Register';
 
-const requireAuth = function (nextState, replaceState) {
-    // if (!auth.loggedIn()) {
-    //     replaceState({
-    //         nextPathname: nextState.location.pathname
-    //     }, '/login')
-    // }
-};
+export default (store) => {
 
-export default (
-    <Route component={Page}>
-        <Route path="/" component={Landing} />
-        <Route path="join-us" component={Register} />
-        <Route path="menu" component={Menu} onEnter={requireAuth} />
-        <Route path="login" component={Login} />
-        <Route path="games" component={GameList} />
-    </Route>
-);
+    // onEnter requireAuth
+    function requireAuth (nextState, replaceState) {
+        if (__SERVER__) { return; }
+        if (!store.getState().Session.isLoggedIn) {
+            replaceState(null, '/login');
+        }
+    };
+
+    function requireNoAuth (nextState, replaceState) {
+        if (__SERVER__) { return; }
+        if (store.getState().Session.isLoggedIn) {
+            replaceState(null, '/');
+        }
+    };
+
+    return (
+        <Route component={Page}>
+            <Route onEnter={requireAuth}>
+                <Route path="/" component={Landing} />
+                <Route path="join-us" component={Register} />
+                <Route path="menu" component={Menu} />
+                <Route path="games" component={GameList} />
+            </Route>
+            <Route onEnter={requireNoAuth}>
+                <Route path="login" component={Login} />
+            </Route>
+        </Route>
+    );
+};

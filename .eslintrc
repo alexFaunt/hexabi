@@ -16,7 +16,7 @@
 	// replaced by webpack is handy (e.g. __CLIENT__, __SERVER__). Things
 	// like that should be listed here.
 	"globals": {
-
+		__SERVER__: true
 	},
 
 	// For complete listing of rules and what they do, check out the docs.

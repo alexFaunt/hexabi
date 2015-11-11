@@ -1,26 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import router from './router';
 
+import createHistory from 'history/lib/createBrowserHistory';
 import { combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import * as reducers from './reducers';
 import storeFactory from './factories/store';
+import makeRouteHooksSafe from './core/lib/makeRouteHooksSafe';
+import { reduxReactRouter, ReduxRouter } from 'redux-router';
+import createStore from './create';
+import getRoutes from './routes';
 
 if (typeof document === 'undefined') {
     throw 'no document, wtf';
 };
 
 // Grab the state from a global injected into server-generated HTML
-const initialState = window.__INITIAL_STATE__;
+const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), createHistory, window.__INITIAL_STATE__);
 
-const reducer = combineReducers(reducers);
-const store = storeFactory(reducer, initialState);
-
-store.history = router.props.history;
+const component = (
+    <ReduxRouter routes={getRoutes(store)} />
+);
 
 ReactDOM.render(
-    <Provider store={store}>
-        {router}
+    <Provider store={store} key="provider">
+        {component}
     </Provider>,
-document.getElementById('content'));
+    document.getElementById('content')
+);

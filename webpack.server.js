@@ -62,5 +62,7 @@ module.exports = {
         __dirname: true
     },
 
-    plugins: []
+    plugins: [
+		new webpack.DefinePlugin({__SERVER__: true})
+    ]
 };

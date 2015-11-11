@@ -31,7 +31,6 @@ export default store => next => action => {
 
     return api(requestData)
         .then(function (res) {
-            console.log('SUCCESS GAMES', res);
             next({ ...rest, res, type });
             return true;
         })
