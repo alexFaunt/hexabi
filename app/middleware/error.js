@@ -1,5 +1,4 @@
 import * as ErrorConstants from '../constants/Errors';
-import * as Router from '../actions/Router';
 
 export default store => next => action => {
     const { type, error } = action;

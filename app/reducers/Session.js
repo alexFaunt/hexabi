@@ -10,17 +10,17 @@ export default function sessionReducer (state = defaultState, action) {
 
     switch (action.type) {
         case Session.LOGIN:
-            state.token = action.res.data.token;
-            state.member = action.res.data.member;
-            state.isLoggedIn = true;
+            return {
+                token: action.res.data.token,
+                member: action.res.data.member,
+                isLoggedIn: true
+            };
 
             // TODO - redirect to something else?! I Really don't get this shit.
-            return state;
+            // return state;
 
         case Session.LOGOUT:
-            state = defaultState;
-
-            return state;
+            return defaultState;
 
         default:
             return state;

@@ -10,16 +10,18 @@ import Register from './components/Register/Register';
 
 export default (store) => {
 
+    const session = store.getState().Session;
+
     // onEnter requireAuth
     function requireAuth (nextState, replaceState) {
-        if (__SERVER__) { return; }
+        if (!session.isLoaded()) { return; };
         if (!store.getState().Session.isLoggedIn) {
             replaceState(null, '/login');
         }
     };
 
     function requireNoAuth (nextState, replaceState) {
-        if (__SERVER__) { return; }
+        if (!session.isLoaded()) { return; };
         if (store.getState().Session.isLoggedIn) {
             replaceState(null, '/');
         }

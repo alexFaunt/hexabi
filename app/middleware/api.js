@@ -1,5 +1,4 @@
 import api from '../services/api';
-import * as Router from '../actions/Router';
 import * as ErrorConstants from '../constants/Errors';
 
 export default store => next => action => {
