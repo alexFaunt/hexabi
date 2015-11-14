@@ -1,5 +1,4 @@
 import api from '../services/api';
-import * as Router from '../actions/Router';
 import * as ErrorConstants from '../constants/Errors';
 
 export default store => next => action => {
@@ -31,11 +30,12 @@ export default store => next => action => {
 
     return api(requestData)
         .then(function (res) {
-            console.log('SUCCESS GAMES', res);
+            console.log('API RES', res);
             next({ ...rest, res, type });
             return true;
         })
         .catch(function (error) {
+            console.log('API RES err', error);
             // TODO - it's possible to have other error types other than auth failures
             // They can go here and decide what action to pass on.
 

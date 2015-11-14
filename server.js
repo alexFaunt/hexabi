@@ -40,6 +40,16 @@ function createApp () {
     return express();
 }
 
+function getTokenFromRequest (req) {
+    if (req.cookies.token) {
+        return req.cookies.token;
+    }
+    if (req.headers.token) {
+        return req.headers.token;
+    }
+    return null;
+}
+
 // start the app
 function run () {
 
@@ -58,15 +68,12 @@ function run () {
         cookieParser(),
         bodyParser.text({ type: 'application/graphql' }),
         function (req, res, next) {
-            let token = null;
-            if (req.cookies.token) {
-                token = req.cookies.token;
-            }
-            if (req.headers.token) {
-                token = req.headers.token;
-            }
+            let token = getTokenFromRequest(req);
             if (token === null) {
-                return res.status(401).send('fuck off chump');
+                return res.status(200).send({
+                    result: 'failure',
+                    data: 'fuck off chump'
+                });
             }
             // TODO - TEST UNVERIFIED TOKEN
             const decoded = jwtToken.verify(token, config.auth.secret);
@@ -123,7 +130,7 @@ function run () {
                 res.status(200)
                     .cookie('token', token)
                     .send(JSON.stringify({
-                        result: 'success',
+                        result: 'success', // TODO variable
                         member: response.data.member,
                         token
                     }, null, 2));
@@ -136,7 +143,8 @@ function run () {
 
     app.post('/auth/initSession', cookieParser(), function (req, res) {
         const token = getTokenFromRequest(req);
-
+        console.log(req.cookies)
+console.log('INIT SESSION', token);
         // TODO - validate token
         // const decoded = jwtToken.verify(token, config.auth.secret);
         if (!token) {
@@ -175,7 +183,6 @@ function run () {
         match({ routes, location }, function (error, redirectLocation, renderProps) {
 
             if (error) {
-                console.log('errrorororororor');
                 console.log(error);
                 return res.status(500).send(error.message);
             }
@@ -188,24 +195,21 @@ function run () {
                 return res.status(404).send('Not found');
             }
 
-            if (location.pathname !== '/login/' && !req.cookies.token) {
+            const token = getTokenFromRequest(req);
+
+            if (location.pathname !== '/login/' && !token) {
                 return res.redirect(302, '/login/');
             }
 
-            if (location.pathname === '/login/' && req.cookies.token) {
+            if (location.pathname === '/login/' && token) {
                 return res.redirect(302, '/');
             }
 
             const reducer = combineReducers(reducers);
-
-            // Given the cookies - i need to populate the session store
-            // Then redirect if needed when no token
-            // Or continue, but now the Session Store has the logged in token
-            // req.cookies.token
             const store = storeFactory(reducer);
 
-            // I'm very sorry for this. But I have no idea how to do this cleanly.
-            store.getState().Session.token = req.cookies.token;
+            // CANNOT WORK OUT HOW TO FORWARD THE COOKIE.
+            store.getState().Session.token = token;
 
             // Closure gives it store + renderProps
             function getPayload () {
