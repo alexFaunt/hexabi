@@ -5,23 +5,18 @@ import config from './server-config.js';
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
+import favicon from 'serve-favicon';
 
 // Routes
-import routes from './app/routes';
-import { match, RoutingContext } from 'react-router';
-import { createLocation } from 'history';
-import storeFactory from './app/factories/store';
+import { RoutingContext } from 'react-router';
 
 // Rendering
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 
 // Flux stuff
-import { createStore, combineReducers, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
+import { combineReducers, applyMiddleware } from 'redux';
 import * as reducers from './app/reducers';
-import api from 'app/middleware/api';
-import fetchComponentData from 'app/core/lib/fetchComponentData';
 
 // Api
 import { graphql } from 'graphql';
@@ -31,6 +26,11 @@ import schema from './api/schema';
 // Auth
 import cookieParser from 'cookie-parser';
 import jwtToken from 'jsonwebtoken';
+
+import { match } from 'redux-router/server';
+import { Provider } from 'react-redux';
+import { ReduxRouter } from 'redux-router';
+import createServerStore from './app/createServerStore';
 
 // Get the HTML file to dump content into
 const htmlFile = fs.readFileSync(path.join(__dirname, './app/index.html'), {encoding: 'utf-8'});
@@ -57,36 +57,30 @@ function run () {
     const app = createApp();
 
     // Static assets
+    app.use(favicon(path.join(__dirname, './static', 'favicon.ico')));
     app.use('/static', express.static(path.join(__dirname, './static')));
     app.use('/build', express.static(path.join(__dirname, './build')));
     function fromHeaderOrQuerystring (req) {
         return null;
     };
     // parse POST body as text
-    app.use(
+    app.post(
         '/api',
         cookieParser(),
         bodyParser.text({ type: 'application/graphql' }),
         function (req, res, next) {
-            let token = getTokenFromRequest(req);
+            const token = getTokenFromRequest(req);
             if (token === null) {
-                return res.status(200).send({
-                    result: 'failure',
-                    data: 'fuck off chump'
-                });
+                return res.redirect(302, '/login');
             }
             // TODO - TEST UNVERIFIED TOKEN
             const decoded = jwtToken.verify(token, config.auth.secret);
             // TODO - check it?
             req.member = decoded;
             return next();
-        }
-    );
-
-    // Api
-    app.post('/api',
+        },
         function (req, res) {
-            console.log(req.member);
+            // TODO - validate req.member token
 
             // execute GraphQL!
             graphql(schema, req.body)
@@ -130,7 +124,7 @@ function run () {
                 res.status(200)
                     .cookie('token', token)
                     .send(JSON.stringify({
-                        result: 'success', // TODO variable
+                        result: 'success',
                         member: response.data.member,
                         token
                     }, null, 2));
@@ -143,8 +137,7 @@ function run () {
 
     app.post('/auth/initSession', cookieParser(), function (req, res) {
         const token = getTokenFromRequest(req);
-        console.log(req.cookies)
-console.log('INIT SESSION', token);
+
         // TODO - validate token
         // const decoded = jwtToken.verify(token, config.auth.secret);
         if (!token) {
@@ -175,67 +168,62 @@ console.log('INIT SESSION', token);
 
     });
 
-    // Everything else - check against the react router + return it server rendered.
-    app.get('*', cookieParser(), function (req, res) {
+    app.use('*', cookieParser(), function (req, res) {
 
-        const location = createLocation(req.url);
+        const token = getTokenFromRequest(req);
+        const isLogin = req.originalUrl.match('login')
 
-        match({ routes, location }, function (error, redirectLocation, renderProps) {
+        if (token && isLogin) {
+            return res.redirect(302, '/');
+        }
 
-            if (error) {
-                console.log(error);
-                return res.status(500).send(error.message);
-            }
+        if (!token && !isLogin) {
+            return res.redirect(302, '/login');
+        }
 
+        const store = createServerStore();
+
+        // I'm very sorry for this. But I have no idea how to do this cleanly.
+        store.getState().Session.token = req.cookies.token;
+
+        store.dispatch(match(req.originalUrl, function (error, redirectLocation, routerState) {
             if (redirectLocation) {
                 return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
             }
 
-            if (!renderProps) {
-                return res.status(404).send('Not found');
+            if (error) {
+                return res.status(500).send();
             }
 
-            const token = getTokenFromRequest(req);
-
-            if (location.pathname !== '/login/' && !token) {
-                return res.redirect(302, '/login/');
+            if (!routerState) {
+                return res.status(500).send();
             }
 
-            if (location.pathname === '/login/' && token) {
-                return res.redirect(302, '/');
+            // Workaround redux-router query string issue:
+            // https://github.com/rackt/redux-router/issues/106
+            if (routerState.location.search && !routerState.location.query) {
+                routerState.location.query = qs.parse(routerState.location.search);
             }
 
-            const reducer = combineReducers(reducers);
-            const store = storeFactory(reducer);
-
-            // CANNOT WORK OUT HOW TO FORWARD THE COOKIE.
-            store.getState().Session.token = token;
-
-            // Closure gives it store + renderProps
-            function getPayload () {
-                let payload = htmlFile;
-
-                const app = ReactDOMServer.renderToString(
-                    <Provider store={store}>
-                        <RoutingContext {...renderProps} />
+            store.getState().router.then(function () {
+                const content = ReactDOMServer.renderToString(
+                    <Provider store={store} key="provider">
+                        <ReduxRouter/>
                     </Provider>
                 );
 
+                let payload = htmlFile;
+
                 // Put in the content
-                payload = payload.replace(/__content__/,  app);
+                payload = payload.replace(/__content__/,  content);
 
                 // Put in the initial state
                 payload = payload.replace(/__state__/, JSON.stringify(store.getState()));
 
-                return payload;
-            }
+                res.status(200).send(payload);
+            });
 
-            fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
-                .then(getPayload)
-                .then(html => res.status(200).end(html))
-                .catch(err => res.status(500).end(err.message));
-        });
-
+        }));
     });
 
     // Listen

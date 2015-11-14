@@ -24,13 +24,16 @@ export default function sessionReducer (state = defaultState, action) {
             return defaultState;
 
         case Session.INIT_SESSION:
-        console.log('INIT SESSION COMPLETE', action.res.data);
-            return {
-                token: action.res.data.token,
-                member: action.res.data.member,
-                isLoggedIn: action.res.data.isLoggedIn,
-                isLoaded: true
-            };
+            if (action.res && action.res.data) {
+                console.log('INIT SESSION COMPLETE', action.res.data);
+                return {
+                    token: action.res.data.token,
+                    member: action.res.data.member,
+                    isLoggedIn: action.res.data.isLoggedIn,
+                    isLoaded: true
+                };
+            }
+            return state;
 
         default:
             return state;

@@ -31,7 +31,7 @@ export default function fetchComponentData(dispatch, components, params) {
             }
         }
     }
-
+console.log('REQUIREd', required);
     const promises = required.map(need => dispatch(need(params)));
     return Promise.all(promises);
 }

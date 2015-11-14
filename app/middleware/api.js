@@ -30,22 +30,26 @@ export default store => next => action => {
 
     return api(requestData)
         .then(function (res) {
-            console.log('API RES', res);
             next({ ...rest, res, type });
             return true;
+        }, function () {
+            
+                next({
+                    type: ErrorConstants.AUTH_ERROR,
+                    error
+                });
         })
-        .catch(function (error) {
-            console.log('API RES err', error);
-            // TODO - it's possible to have other error types other than auth failures
-            // They can go here and decide what action to pass on.
-
-            next({
-                type: ErrorConstants.AUTH_ERROR,
-                error
-            });
-
-            // Another benefit is being able to log all failures here
-            console.log(error);
-            return false;
-        });
+        // .catch(function (error) {
+        //     // TODO - it's possible to have other error types other than auth failures
+        //     // They can go here and decide what action to pass on.
+        //
+        //     next({
+        //         type: ErrorConstants.AUTH_ERROR,
+        //         error
+        //     });
+        //
+        //     // Another benefit is being able to log all failures here
+        //     console.log(error);
+        //     return false;
+        // });
 };

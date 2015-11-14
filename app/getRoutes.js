@@ -7,27 +7,24 @@ import Menu from './components/Menu/Menu';
 import GameList from './components/GameList/GameList';
 import Page from './components/Page/Page';
 import Register from './components/Register/Register';
-
 import Server from './components/Server';
 
-export default (store) => {
+export default function (store) {
 
-    // onEnter requireAuth
-    function requireAuth (nextState, replaceState) {
-        // if (!store.getState().Session.isLoaded) { return; };
+    function requireAuth (){//newState, replaceState) {
+        // if (!store.getState().Session.isLoaded) { return; }
         // if (!store.getState().Session.isLoggedIn) {
         //     replaceState(null, '/login');
         // }
-    };
+    }
+    function requireNoAuth (){//newState, replaceState) {
+            // if (!store.getState().Session.isLoaded) { return; }
+            // if (store.getState().Session.isLoggedIn) {
+            //     replaceState(null, '/');
+            // }
+    }
 
-    function requireNoAuth (nextState, replaceState) {
-        // if (!store.getState().Session.isLoaded) { return; };
-        // if (store.getState().Session.isLoggedIn) {
-        //     replaceState(null, '/');
-        // }
-    };
-
-    let routes = (
+    return (
         <Route component={Page}>
             <Route onEnter={requireAuth}>
                 <Route path="/" component={Landing} />
@@ -40,10 +37,4 @@ export default (store) => {
             </Route>
         </Route>
     );
-
-    if (typeof(__SERVER__) !== 'undefined') {
-        routes = <Route component={Server}>{routes}</Route>;
-    }
-
-    return routes
-};
+}

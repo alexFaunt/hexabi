@@ -52,7 +52,6 @@ export default function (opts) {
         'Content-Type': 'application/graphql',
     };
 
-    console.log('API CALL', token);
     if (token) {
         headers.token = token;
     }

@@ -11,7 +11,8 @@ export default class Landing extends Component {
             <div>
                 Login Form goes here
                 <HexLink width="100px" to="/join-us" background="red">Join us.</HexLink>
-                <HexLink width="100px" to="/games" background="bisque">Games.</HexLink>
+                <HexLink width="100px" to="/games" background="green">Games.</HexLink>
+                <HexLink width="100px" to="/login" background="blue">Games.</HexLink>
             </div>
         );
     }

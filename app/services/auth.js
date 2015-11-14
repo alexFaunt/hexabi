@@ -32,6 +32,7 @@ export function login (data) {
 }
 
 export function logout (data) {
+
     // Return axios to the api end point
     return axios({
         url: ENDPOINT + 'logout',
@@ -40,10 +41,17 @@ export function logout (data) {
     });
 }
 
-export function initSession () {
+export function initSession (data) {
+    const headers = {};
+
+    if (data.token) {
+        headers.token = data.token;
+    }
+
     // Return axios to the api end point
     return axios({
         url: ENDPOINT + 'initSession',
-        method: 'post'
+        method: 'post',
+        headers
     });
 }
