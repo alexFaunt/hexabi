@@ -39,3 +39,11 @@ export function logout (data) {
         data
     });
 }
+
+export function initSession () {
+    // Return axios to the api end point
+    return axios({
+        url: ENDPOINT + 'initSession',
+        method: 'post'
+    });
+}

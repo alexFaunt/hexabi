@@ -134,6 +134,39 @@ function run () {
 
     });
 
+    app.post('/auth/initSession', cookieParser(), function (req, res) {
+        const token = getTokenFromRequest(req);
+
+        // TODO - validate token
+        // const decoded = jwtToken.verify(token, config.auth.secret);
+        if (!token) {
+            res.status(200).send(JSON.stringify({
+                token: null,
+                member: null,
+                isLoggedIn: false
+            }))
+        }
+
+        // TODO - pick member from decoded token
+        const id = '1';
+
+        // Get a graphql
+        graphql(schema, 'query { member (id: "' + id + '") { id, name } }')
+            .then(function (response) {
+                // Check against DB
+                res.status(200)
+                    .send(JSON.stringify({
+                        isLoggedIn: true,
+                        member: response.data.member,
+                        token
+                    }, null, 2));
+            })
+            .catch(function (err) {
+                res.status(500).send(err.message);
+            });
+
+    });
+
     // Everything else - check against the react router + return it server rendered.
     app.get('*', cookieParser(), function (req, res) {
 

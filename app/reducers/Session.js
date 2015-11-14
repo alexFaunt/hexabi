@@ -3,24 +3,34 @@ import * as Session from '../actions/Session';
 const defaultState = {
     token: null,
     member: null,
-    isLoggedIn: false
+    isLoggedIn: false,
+    isLoaded: false
 };
 
 export default function sessionReducer (state = defaultState, action) {
 
     switch (action.type) {
         case Session.LOGIN:
-            state.token = action.res.data.token;
-            state.member = action.res.data.member;
-            state.isLoggedIn = true;
+            return {
+                token: action.res.data.token,
+                member: action.res.data.member,
+                isLoggedIn: true
+            };
 
             // TODO - redirect to something else?! I Really don't get this shit.
-            return state;
+            // return state;
 
         case Session.LOGOUT:
-            state = defaultState;
+            return defaultState;
 
-            return state;
+        case Session.INIT_SESSION:
+        console.log('INIT SESSION COMPLETE', action.res.data);
+            return {
+                token: action.res.data.token,
+                member: action.res.data.member,
+                isLoggedIn: action.res.data.isLoggedIn,
+                isLoaded: true
+            };
 
         default:
             return state;
