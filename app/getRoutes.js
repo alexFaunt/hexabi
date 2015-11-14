@@ -11,17 +11,17 @@ import Server from './components/Server';
 
 export default function (store) {
 
-    function requireAuth (){//newState, replaceState) {
-        // if (!store.getState().Session.isLoaded) { return; }
-        // if (!store.getState().Session.isLoggedIn) {
-        //     replaceState(null, '/login');
-        // }
+    function requireAuth (routerState, replaceState) {
+        if (!store.getState().Session.isLoaded) { return; }
+        if (!store.getState().Session.isLoggedIn) {
+            replaceState(null, '/login');
+        }
     }
-    function requireNoAuth (){//newState, replaceState) {
-            // if (!store.getState().Session.isLoaded) { return; }
-            // if (store.getState().Session.isLoggedIn) {
-            //     replaceState(null, '/');
-            // }
+    function requireNoAuth (routerState, replaceState) {
+        if (!store.getState().Session.isLoaded) { return; }
+        if (store.getState().Session.isLoggedIn) {
+            replaceState(null, '/');
+        }
     }
 
     return (

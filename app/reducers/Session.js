@@ -14,26 +14,29 @@ export default function sessionReducer (state = defaultState, action) {
             return {
                 token: action.res.data.token,
                 member: action.res.data.member,
-                isLoggedIn: true
+                isLoggedIn: true,
+                isLoaded: true
             };
 
             // TODO - redirect to something else?! I Really don't get this shit.
             // return state;
 
         case Session.LOGOUT:
-            return defaultState;
+            return {
+                token: defaultState.token,
+                member: defaultState.member,
+                isLoggedIn: defaultState.isLoggedIn,
+                isLoaded: true
+            };
 
         case Session.INIT_SESSION:
-            if (action.res && action.res.data) {
-                console.log('INIT SESSION COMPLETE', action.res.data);
-                return {
-                    token: action.res.data.token,
-                    member: action.res.data.member,
-                    isLoggedIn: action.res.data.isLoggedIn,
-                    isLoaded: true
-                };
-            }
-            return state;
+        console.log('INIT SESSION COMPLETE', action.res.data);
+            return {
+                token: action.res.data.token,
+                member: action.res.data.member,
+                isLoggedIn: action.res.data.isLoggedIn,
+                isLoaded: true
+            };
 
         default:
             return state;

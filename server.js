@@ -109,7 +109,7 @@ function run () {
         // TODO check if it's a good login
         if (req.body.username !== "alex" || req.body.password !== "pass") {
             console.log('NO AUTHED', req.body.username, req.body.password);
-            return res.status(200).send(JSON.stringify({result: 'failure'}));
+            return res.status(401).send(JSON.stringify({result: 'failure'}));
         }
 
         // make a token
@@ -137,7 +137,7 @@ function run () {
 
     app.post('/auth/initSession', cookieParser(), function (req, res) {
         const token = getTokenFromRequest(req);
-
+console.log('INIT SESSION CALLED ', req.headers, req.cookies);
         // TODO - validate token
         // const decoded = jwtToken.verify(token, config.auth.secret);
         if (!token) {
