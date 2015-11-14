@@ -183,7 +183,10 @@ function run () {
 
         const store = createServerStore();
 
-        // I'm very sorry for this. But I have no idea how to do this cleanly.
+        // This is hack number 1
+        // The server doesn't forward the cookie, so we have to set it
+        // in the store, so it can be passed into the api calls.
+        // I cannot workout a workaround for this.
         store.getState().Session.token = req.cookies.token;
 
         store.dispatch(match(req.originalUrl, function (error, redirectLocation, routerState) {

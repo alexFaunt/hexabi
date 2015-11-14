@@ -13,15 +13,15 @@ export default ({getState, dispatch}) => next => action => {
 
         const {components, params} = action.payload;
 
-console.log('TRANSITON MIDDLE WARE FETCHING ');
         const promise = fetchComponentData(dispatch, components, params)
             .then(function () {
                 next(action);
             })
             .catch(function (error) {
+                // IF server is down this is what happens
                 // TODO: You may want to handle errors for fetchData here
                 console.warn('Warning: Error in fetchData', error);
-                return doTransition();
+                next(action);
             });
 
         return promise;

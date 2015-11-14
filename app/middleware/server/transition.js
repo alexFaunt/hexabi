@@ -13,22 +13,16 @@ export default ({getState, dispatch}) => next => action => {
 
         const {components, params} = action.payload;
 
-console.log('TRANSITON MIDDLE WARE FETCHING ');
         const promise = fetchComponentData(dispatch, components, params)
             .then(function () {
                 next(action);
-            })
-            .catch(function (error) {
-                // TODO: You may want to handle errors for fetchData here
-                console.warn('Warning: Error in fetchData', error);
-                return doTransition();
             });
 
         // Taken from redux example - it so we can wait for the router
         // before we render server side.
-            console.log('SET ROUTER = promise');
-            getState().router = promise;
-            // console.log(getState());
+
+        // This one line is a super important hack.
+        getState().router = promise;
 
         return promise;
   }
