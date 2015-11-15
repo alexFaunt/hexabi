@@ -1,4 +1,3 @@
-// set up config
 import config from '../server-config.js';
 
 import knex from 'knex';

@@ -6,13 +6,13 @@ This is a game I'm building, complete work in progress, using a bunch of new stu
 
 It has in it...
 
-React for the rendering
-Redux for the data flow
-Redux-router for the routing
-Express for the Server
-GraphQL for the Api
-PostgreSQL for the DB
-Bookshelf & knex for the Models
+* React for the rendering
+* Redux for the data flow
+* Redux-router for the routing
+* Express for the Server
+* GraphQL for the Api
+* PostgreSQL for the DB
+* Bookshelf & knex for the Models
 
 I've mashed it together from a lot of demo's and brute force. And there are few hacks.
 But at the time of writing it's bang up to date with the latest versions of everything.
@@ -42,3 +42,14 @@ To finally kill it.
 ### dev Server
 You might want server logs. I've not sorted the scripts for this properly yet,
 I just use __npm run-script watch__, and __npm run-script serve__ in a separate tab.
+
+## TODO
+So much stuff.
+
+* Sort out authentication
+* Sort out an SSL
+* CRUD for users
+* CRUD for games
+* Spin off at this point as boilerplate example
+
+* BUILD GAME...
