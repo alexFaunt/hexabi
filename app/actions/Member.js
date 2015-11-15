@@ -1,8 +1,6 @@
-// import { API } from '../middleware/api'
-
-export const CREATE_MEMBER = 'createMember';
-export const GET_MEMBER = 'member';
-export const GET_MEMBERS = 'members';
+export const CREATE_MEMBER = 'CREATE_MEMBER';
+export const GET_MEMBER = 'MEMBER';
+export const GET_MEMBERS = 'MEMBERS';
 
 const response = {
     id: true,

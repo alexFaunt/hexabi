@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Promise from 'promise';
 
 import config from '../../server-config';
 
@@ -19,7 +18,6 @@ export function login (data) {
     const { username, password } = data;
 
     if (!shallowValidate(username, password)) {
-        console.log('INVALID')
         return Promise.reject();
     }
 

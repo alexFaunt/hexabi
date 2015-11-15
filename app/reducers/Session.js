@@ -1,4 +1,5 @@
-import * as Session from '../actions/Session';
+import { INIT_SESSION, LOGIN, LOGOUT } from '../actions/Session';
+import { SUCCESS, FAILURE } from '../constants/Response';
 
 const defaultState = {
     token: null,
@@ -7,36 +8,33 @@ const defaultState = {
     isLoaded: false
 };
 
-export default function sessionReducer (state = defaultState, action) {
+const LOGGED_OUT = Object.assign({}, defaultState, {
+    isLoaded: true
+});
 
-    switch (action.type) {
-        case Session.LOGIN:
-            return {
-                token: action.res.data.token,
-                member: action.res.data.member,
-                isLoggedIn: true,
+export default function sessionReducer (state = defaultState, { type, status, data }) {
+    // If it's an auth error - log out.
+    if (status === FAILURE && data && data.code === 401) {
+        return LOGGED_OUT;
+    }
+
+    if (status !== SUCCESS) {
+        return state;
+    }
+
+    switch (type) {
+        case LOGIN:
+            return Object.assign({}, state, data, {
+                isLoggedIn: true
+            });
+
+        case LOGOUT:
+            return LOGGED_OUT;
+
+        case INIT_SESSION:
+            return Object.assign({}, data, {
                 isLoaded: true
-            };
-
-            // TODO - redirect to something else?! I Really don't get this shit.
-            // return state;
-
-        case Session.LOGOUT:
-            return {
-                token: defaultState.token,
-                member: defaultState.member,
-                isLoggedIn: defaultState.isLoggedIn,
-                isLoaded: true
-            };
-
-        case Session.INIT_SESSION:
-        console.log('INIT SESSION COMPLETE', action.res.data);
-            return {
-                token: action.res.data.token,
-                member: action.res.data.member,
-                isLoggedIn: action.res.data.isLoggedIn,
-                isLoaded: true
-            };
+            });
 
         default:
             return state;

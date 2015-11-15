@@ -30,7 +30,7 @@ import jwtToken from 'jsonwebtoken';
 import { match } from 'redux-router/server';
 import { Provider } from 'react-redux';
 import { ReduxRouter } from 'redux-router';
-import createServerStore from './app/createServerStore';
+import createServerStore from './app/stores/createServerStore';
 
 // Get the HTML file to dump content into
 const htmlFile = fs.readFileSync(path.join(__dirname, './app/index.html'), {encoding: 'utf-8'});
@@ -71,9 +71,9 @@ function run () {
         function (req, res, next) {
             const token = getTokenFromRequest(req);
             if (token === null) {
-                return res.redirect(302, '/login');
+                return res.status(401).send(JSON.stringify({result: 'failure'}));
             }
-            // TODO - TEST UNVERIFIED TOKEN
+            // TODO - TEST UNVERIFIED TOKEN + 401 if bad
             const decoded = jwtToken.verify(token, config.auth.secret);
             // TODO - check it?
             req.member = decoded;
@@ -137,7 +137,7 @@ function run () {
 
     app.post('/auth/initSession', cookieParser(), function (req, res) {
         const token = getTokenFromRequest(req);
-console.log('INIT SESSION CALLED ', req.headers, req.cookies);
+
         // TODO - validate token
         // const decoded = jwtToken.verify(token, config.auth.secret);
         if (!token) {
@@ -146,6 +146,7 @@ console.log('INIT SESSION CALLED ', req.headers, req.cookies);
                 member: null,
                 isLoggedIn: false
             }))
+            return;
         }
 
         // TODO - pick member from decoded token

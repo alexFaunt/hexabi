@@ -1,7 +1,7 @@
+import config from '../../server-config';
 import axios from 'axios';
 import Promise from 'promise';
-
-import config from '../../server-config';
+import morph from 'morph';
 
 function getResponseString (obj) {
     const resp = [];
@@ -23,10 +23,9 @@ function getResponseString (obj) {
 }
 
 export default function (opts) {
-
     const { type, method, params, response, token } = opts;
 
-    let data = type + ' { ' + method + ' ';
+    let data = morph.toCamel(type) + ' { ' + morph.toCamel(method) + ' ';
 
     if (params) {
         // For each of the params

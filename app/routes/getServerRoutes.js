@@ -4,11 +4,11 @@ import { Route } from 'react-router';
 
 import getRoutes from './getRoutes';
 
-import Server from './components/Server';
+import Server from '../components/App/Server';
 
 export default function (store) {
     return (
-        <Route component={Server}>
+        <Route component={ Server }>
             { getRoutes(store) }
         </Route>
     );

@@ -11,26 +11,28 @@ import * as GameActions from '../../actions/Game';
 @connect(state => ({ games: state.Game }))
 export default class GameList extends Component {
 
-    static required = [
-        GameActions.getGames
-    ]
+    static required = [ GameActions.getGames ]
 
     render () {
         const { games, dispatch } = this.props;
 
-        const gamesList = games.map(function (game, index) {
-            return (
-                <GameStub
-                    key={index}
-                    game={game}
+        const gamesList = [];
 
-                    {...bindActionCreators(GameActions, dispatch)}
-                />);
-        });
+        for (let id in games) {
+            if (games.hasOwnProperty(id)) {
+                gamesList.push(
+                    <GameStub
+                        key = { id }
+                        game = { games[id] }
+
+                        { ...bindActionCreators(GameActions, dispatch) }
+                    />);
+            }
+        }
 
         return (
             <div>
-                {gamesList}
+                { gamesList }
             </div>
         );
     }

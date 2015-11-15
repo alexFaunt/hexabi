@@ -1,8 +1,6 @@
-import api from '../services/api';
-
-export const CREATE_GAME = 'createGame';
-export const GET_GAME = 'game';
-export const GET_GAMES = 'games';
+export const CREATE_GAME = 'CREATE_GAME';
+export const GET_GAME = 'GAME';
+export const GET_GAMES = 'GAMES';
 
 const response = {
     id: true,
@@ -20,7 +18,6 @@ const response = {
 };
 
 export function createGame (params) {
-
     // params.creator = current user.
 
     return {
@@ -36,7 +33,7 @@ export function getGame (id) {
     return {
         type: GET_GAME,
         query: {
-            params: {id},
+            params: { id },
             response
         }
     }

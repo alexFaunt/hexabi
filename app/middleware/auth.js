@@ -1,4 +1,6 @@
+import morph from 'morph';
 import * as authService from '../services/auth';
+import { PENDING, SUCCESS, FAILURE } from '../constants/Response';
 
 export default store => next => action => {
     const { auth, type, ...rest } = action;
@@ -7,11 +9,8 @@ export default store => next => action => {
         return next(action);
     }
 
-    const SUCCESS = type;
-    const FAILURE = type + '_FAILURE';
-
     // See comments in api middleware
-    next({ ...rest, type: type + '_PENDING' });
+    next({ ...rest, type: type, status: PENDING });
 
     const session = store.getState().Session;
 
@@ -19,12 +18,10 @@ export default store => next => action => {
         auth.token = session.token
     }
 
-    return authService[type](auth)
+    return authService[morph.toCamel(type)](auth)
         .then(function (res) {
-            next({ ...rest, res, type });
-            return true;
+            next({ ...rest, data: res.data, type, status: SUCCESS });
         }, function (res) {
-            next({ ...rest, type: FAILURE });
-            return false;
+            next({ ...rest, type, status: FAILURE });
         });
 };

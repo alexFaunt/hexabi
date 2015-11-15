@@ -1,8 +1,6 @@
-import * as auth from '../services/auth';
-
-export const INIT_SESSION = 'initSession';
-export const LOGIN = 'login';
-export const LOGOUT = 'logout';
+export const INIT_SESSION = 'INIT_SESSION';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';
 
 export function login (username, password) {
     return {

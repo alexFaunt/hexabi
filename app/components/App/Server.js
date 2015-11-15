@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 
-import * as SessionActions from '../actions/Session';
+import * as SessionActions from '../../actions/Session';
 
 export default class Server extends Component {
 

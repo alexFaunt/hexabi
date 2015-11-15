@@ -6,8 +6,8 @@ import { Provider } from 'react-redux';
 import * as reducers from './reducers';
 import makeRouteHooksSafe from './utils/makeRouteHooksSafe';
 import { ReduxRouter } from 'redux-router';
-import createClientStore from './createClientStore';
-import getClientRoutes from './getClientRoutes';
+import createClientStore from './stores/createClientStore';
+import getClientRoutes from './routes/getClientRoutes';
 
 // Grab the state from a global injected into server-generated HTML
 const store = createClientStore(makeRouteHooksSafe(getClientRoutes));

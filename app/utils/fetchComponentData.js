@@ -1,37 +1,33 @@
-export default function fetchComponentData(dispatch, components, params) {
-    const required = [];
+function addRequired (required, component) {
+    if (!component) {
+        return required;
+    }
 
-// TODO make this recursive
-    for (let i = 0; i < components.length; i += 1) {
-        const current = components[i];
+    if (component.WrappedComponent) {
+        return addRequired(required, component.WrappedComponent);
+    }
 
-        let currentRequired = [];
-        if (current) {
-            currentRequired = current.required || [];
-        }
-        else {
-            continue;
-        }
+    if (!component.required) {
+        return required;
+    }
 
-        let wrappedRequired = [];
-        if (current.WrappedComponent) {
-            wrappedRequired = current.WrappedComponent.required || [];
-        }
-
-        //  I modified the original to only return unique things - it might fuck it up but i hope not.
-        for (let k = 0; k < currentRequired.length; k += 1) {
-            if (required.indexOf(currentRequired[k]) === -1) {
-                required.push(currentRequired[k]);
-            }
-        }
-
-        for (let j = 0; j < wrappedRequired.length; j += 1) {
-            if (required.indexOf(wrappedRequired[j]) === -1) {
-                required.push(wrappedRequired[j]);
-            }
+    // only return unique things.
+    for (let i = 0; i < component.required.length; i += 1) {
+        if (required.indexOf(component.required[i]) === -1) {
+            required.push(component.required[i]);
         }
     }
-    
+
+    return required;
+}
+
+export default function fetchComponentData(dispatch, components, params) {
+    let required = [];
+
+    for (let i = 0; i < components.length; i += 1) {
+        addRequired(required, components[i]);
+    }
+
     const promises = required.map(need => dispatch(need(params)));
     return Promise.all(promises);
 }

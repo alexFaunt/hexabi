@@ -1,16 +1,25 @@
-import * as Member from '../actions/Member';
+import { CREATE_MEMBER, GET_MEMBER, GET_MEMBERS } from '../actions/Member';
+import { SUCCESS } from '../constants/Response';
 
+// Need to decide what to do with this store.
 const defaultState = [];
 
-export default function memberReducer(state = defaultState, action) {
+export default function memberReducer(state = defaultState, { type, status, data }) {
+    // Will deal later.
+    if (status !== SUCCESS) {
+        return state;
+    }
 
-    switch (action.type) {
-        case Member.CREATE_MEMBER:
-            return state.concat(action.res.data.createMember);
-        case Member.GET_MEMBER:
-            return action.res.data.member;
-        case Member.GET_MEMBERS:
-            return action.res.data.members;
+    switch (type) {
+        case CREATE_MEMBER:
+            return state.concat(data.createMember);
+
+        case GET_MEMBER:
+            return data.member;
+
+        case GET_MEMBERS:
+            return data.members;
+
         default:
             return state;
     }
