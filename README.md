@@ -18,9 +18,13 @@ I've mashed it together from a lot of demo's and brute force. And there are few 
 But at the time of writing it's bang up to date with the latest versions of everything.
 
 ## Getting Started
-Still working on this - You need a postgresSQL db set up to run it currently...
-The SQL to create the tables is in api/tables/* so you can create if it you like.
-I will set it up so knex can create it for you at somepoint.
+Install node
+Install postgreSQL Server
+connect to it, and set it up with the tables
+You can find the raw SQL in api/tables/*
+Create a server-config.js from the example-server-config.js which connects to your db
+
+I will create DB scripts for this at some point...
 
 ### Initial set up
 Standard set up
@@ -50,6 +54,7 @@ So much stuff.
 * Sort out an SSL
 * CRUD for users
 * CRUD for games
+* DB scripts for knex
 * Spin off at this point as boilerplate example
 
 * BUILD GAME...
