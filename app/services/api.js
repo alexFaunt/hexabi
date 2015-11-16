@@ -1,4 +1,4 @@
-import config from '../../server-config';
+import config from '../../server/config/server-config';
 import axios from 'axios';
 import Promise from 'promise';
 import morph from 'morph';

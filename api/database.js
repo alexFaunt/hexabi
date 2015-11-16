@@ -1,4 +1,4 @@
-import config from '../server-config.js';
+import config from '../server/config/server-config.js';
 
 import knex from 'knex';
 import bookshelf from 'bookshelf';

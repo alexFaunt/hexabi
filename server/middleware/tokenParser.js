@@ -13,7 +13,8 @@ export default () => (req, res, next) => {
             req.token = req.headers.token;
         }
 
+        // TODO - verify token here.
+
         next();
     });
-
 };

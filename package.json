@@ -4,7 +4,7 @@
   "description": "amazing game",
   "main": "index.js",
   "scripts": {
-    "start": "webpack --config=webpack.server.js ; forever start forever.config.json ; webpack --watch --config=webpack.server.js & webpack --watch --config=webpack.client.js",
+    "start": "webpack --config=webpack.server.js ; forever start server/config/forever.config.json ; webpack --watch --config=webpack.server.js & webpack --watch --config=webpack.client.js",
     "stop": "forever stop hexabi",
     "serve": "webpack --config=webpack.server.js ; node build/server-bundle.js",
     "serve-debug": "webpack --config=webpack.server.js ; node-debug build/server-bundle.js",

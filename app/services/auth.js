@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import config from '../../server-config';
+import config from '../../server/config/server-config';
 
 const ENDPOINT = 'http://localhost:' + config.port + '/auth/';
 

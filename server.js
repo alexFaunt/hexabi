@@ -1,220 +1,42 @@
 // set up config
-import config from './server-config.js';
+import config from './server/config/server-config.js';
 
 // Standard imports
 import express from 'express';
-import fs from 'fs';
-import path from 'path';
 import favicon from 'serve-favicon';
+import path from 'path';
 
-// Routes
-import { RoutingContext } from 'react-router';
-
-// Rendering
-import React from 'react'; // We still need this even though not accesing directly
-import ReactDOMServer from 'react-dom/server';
-
-// Flux stuff
-import { combineReducers, applyMiddleware } from 'redux';
-import * as reducers from './app/reducers';
-
-// Api
-import { graphql } from 'graphql';
+// Middleware
 import bodyParser from 'body-parser';
-import schema from './api/schema';
-
-// Auth
 import tokenParser from './server/middleware/tokenParser';
 import jwtToken from 'jsonwebtoken';
 
-import { match } from 'redux-router/server';
-import { Provider } from 'react-redux';
-import { ReduxRouter } from 'redux-router';
-import createServerStore from './app/stores/createServerStore';
-
-// Get the HTML file to dump content into
-const htmlFile = fs.readFileSync(path.join(__dirname, './app/index.html'), {encoding: 'utf-8'});
-
-// Function defs
-function createApp () {
-    return express();
-}
+// endpoints
+import api from './server/endpoints/api';
+import login from './server/endpoints/login';
+import initSession from './server/endpoints/initSession';
+import routes from './server/endpoints/routes';
 
 // start the app
 function run () {
-
     // Create app
-    const app = createApp();
+    const app = express();
 
     // Static assets
     app.use(favicon(path.join(__dirname, './static', 'favicon.ico')));
     app.use('/static', express.static(path.join(__dirname, './static')));
     app.use('/build', express.static(path.join(__dirname, './build')));
-    function fromHeaderOrQuerystring (req) {
-        return null;
-    };
-    // parse POST body as text
-    app.post(
-        '/api',
-        tokenParser(),
-        bodyParser.text({ type: 'application/graphql' }),
-        function (req, res, next) {
-            if (req.token === null) {
-                return res.status(401).send(JSON.stringify({result: 'failure'}));
-            }
-            // TODO - TEST UNVERIFIED TOKEN + 401 if bad
-            const decoded = jwtToken.verify(req.token, config.auth.secret);
-            // TODO - check it?
-            req.member = decoded;
-            return next();
-        },
-        function (req, res) {
-            // TODO - validate req.member token
 
-            // execute GraphQL!
-            graphql(schema, req.body)
-                .then(function (result) {
-                    res.status(200).send(JSON.stringify(result.data, null, 2));
-                })
-                .catch(function (err) {
-                    console.error(err);
-                    res.status(500).send(err.message);
-                });
-        });
-
-    // Auth
-    function generateToken(username, password) {
-        const payload = { username, password };
-        return jwtToken.sign(payload, config.auth.secret);
-        // , {
-        //     expiresInMinutes: config.auth.expires // TODO - this
-        // }
-    }
+    // Graph QL end point works as our api
+    app.post('/api', bodyParser.text({ type: 'application/graphql' }), tokenParser(), api);
 
     // TODO - LOGOUT
-    app.use('/auth/login', bodyParser.json());
-    app.post('/auth/login', function (req, res) {
+    app.post('/auth/login',  bodyParser.json(), login);
+    app.post('/auth/initSession', tokenParser(), initSession);
 
-        // TODO check if it's a good login
-        if (req.body.username !== "alex" || req.body.password !== "pass") {
-            console.log('NO AUTHED', req.body.username, req.body.password);
-            return res.status(401).send(JSON.stringify({result: 'failure'}));
-        }
-
-        // make a token
-        const token = generateToken(req.body.username, req.body.password);
-
-        const id = '1';
-
-        // Get a graphql
-        graphql(schema, 'query { member (id: "' + id + '") { id, name } }')
-            .then(function (response) {
-                // Check against DB
-                res.status(200)
-                    .cookie('token', token)
-                    .send(JSON.stringify({
-                        result: 'success',
-                        member: response.data.member,
-                        token
-                    }, null, 2));
-            })
-            .catch(function (err) {
-                res.status(500).send(err.message);
-            });
-
-    });
-
-    app.post('/auth/initSession', tokenParser(), function ({ token }, res) {
-
-        // TODO - validate token
-        // const decoded = jwtToken.verify(token, config.auth.secret);
-        if (!token) {
-            res.status(200).send(JSON.stringify({
-                token: null,
-                member: null,
-                isLoggedIn: false
-            }))
-            return;
-        }
-
-        // TODO - pick member from decoded token
-        const id = '1';
-
-        // Get a graphql
-        graphql(schema, 'query { member (id: "' + id + '") { id, name } }')
-            .then(function (response) {
-                // Check against DB
-                res.status(200)
-                    .send(JSON.stringify({
-                        isLoggedIn: true,
-                        member: response.data.member,
-                        token
-                    }, null, 2));
-            })
-            .catch(function (err) {
-                res.status(500).send(err.message);
-            });
-
-    });
-
-    app.use('*', tokenParser(), function ({ token, originalUrl }, res) {
-        const isLogin = originalUrl.match('login')
-
-        if (token && isLogin) {
-            return res.redirect(302, '/');
-        }
-
-        if (!token && !isLogin) {
-            return res.redirect(302, '/login');
-        }
-
-        const store = createServerStore();
-
-        // This is hack number 1
-        // The server doesn't forward the cookie, so we have to set it
-        // in the store, so it can be passed into the api calls.
-        // I cannot workout a workaround for this.
-        store.getState().Session.token = token;
-
-        store.dispatch(match(originalUrl, function (error, redirectLocation, routerState) {
-            if (redirectLocation) {
-                return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
-            }
-
-            if (error) {
-                return res.status(500).send();
-            }
-
-            if (!routerState) {
-                return res.status(500).send();
-            }
-
-            // Workaround redux-router query string issue:
-            // https://github.com/rackt/redux-router/issues/106
-            if (routerState.location.search && !routerState.location.query) {
-                routerState.location.query = qs.parse(routerState.location.search);
-            }
-
-            store.getState().router.then(function () {
-                const content = ReactDOMServer.renderToString(
-                    <Provider store={store} key="provider">
-                        <ReduxRouter/>
-                    </Provider>
-                );
-
-                let payload = htmlFile;
-
-                // Put in the content
-                payload = payload.replace(/__content__/,  content);
-
-                // Put in the initial state
-                payload = payload.replace(/__state__/, JSON.stringify(store.getState()));
-
-                res.status(200).send(payload);
-            });
-
-        }));
-    });
+    // All other routes hit this and return the app.
+    // TODO - 404
+    app.use('*', tokenParser(), routes);
 
     // Listen
     app.listen(config.port);
