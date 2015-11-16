@@ -11,7 +11,7 @@ import favicon from 'serve-favicon';
 import { RoutingContext } from 'react-router';
 
 // Rendering
-import React from 'react';
+import React from 'react'; // We still need this even though not accesing directly
 import ReactDOMServer from 'react-dom/server';
 
 // Flux stuff
@@ -24,7 +24,7 @@ import bodyParser from 'body-parser';
 import schema from './api/schema';
 
 // Auth
-import cookieParser from 'cookie-parser';
+import tokenParser from './server/middleware/tokenParser';
 import jwtToken from 'jsonwebtoken';
 
 import { match } from 'redux-router/server';
@@ -38,16 +38,6 @@ const htmlFile = fs.readFileSync(path.join(__dirname, './app/index.html'), {enco
 // Function defs
 function createApp () {
     return express();
-}
-
-function getTokenFromRequest (req) {
-    if (req.cookies.token) {
-        return req.cookies.token;
-    }
-    if (req.headers.token) {
-        return req.headers.token;
-    }
-    return null;
 }
 
 // start the app
@@ -66,15 +56,14 @@ function run () {
     // parse POST body as text
     app.post(
         '/api',
-        cookieParser(),
+        tokenParser(),
         bodyParser.text({ type: 'application/graphql' }),
         function (req, res, next) {
-            const token = getTokenFromRequest(req);
-            if (token === null) {
+            if (req.token === null) {
                 return res.status(401).send(JSON.stringify({result: 'failure'}));
             }
             // TODO - TEST UNVERIFIED TOKEN + 401 if bad
-            const decoded = jwtToken.verify(token, config.auth.secret);
+            const decoded = jwtToken.verify(req.token, config.auth.secret);
             // TODO - check it?
             req.member = decoded;
             return next();
@@ -135,8 +124,7 @@ function run () {
 
     });
 
-    app.post('/auth/initSession', cookieParser(), function (req, res) {
-        const token = getTokenFromRequest(req);
+    app.post('/auth/initSession', tokenParser(), function ({ token }, res) {
 
         // TODO - validate token
         // const decoded = jwtToken.verify(token, config.auth.secret);
@@ -169,10 +157,8 @@ function run () {
 
     });
 
-    app.use('*', cookieParser(), function (req, res) {
-
-        const token = getTokenFromRequest(req);
-        const isLogin = req.originalUrl.match('login')
+    app.use('*', tokenParser(), function ({ token, originalUrl }, res) {
+        const isLogin = originalUrl.match('login')
 
         if (token && isLogin) {
             return res.redirect(302, '/');
@@ -188,9 +174,9 @@ function run () {
         // The server doesn't forward the cookie, so we have to set it
         // in the store, so it can be passed into the api calls.
         // I cannot workout a workaround for this.
-        store.getState().Session.token = req.cookies.token;
+        store.getState().Session.token = token;
 
-        store.dispatch(match(req.originalUrl, function (error, redirectLocation, routerState) {
+        store.dispatch(match(originalUrl, function (error, redirectLocation, routerState) {
             if (redirectLocation) {
                 return res.redirect(302, redirectLocation.pathname + redirectLocation.search);
             }
