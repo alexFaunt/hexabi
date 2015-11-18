@@ -9,7 +9,6 @@ import path from 'path';
 // Middleware
 import bodyParser from 'body-parser';
 import tokenParser from './server/middleware/tokenParser';
-import jwtToken from 'jsonwebtoken';
 
 // endpoints
 import api from './server/endpoints/api';

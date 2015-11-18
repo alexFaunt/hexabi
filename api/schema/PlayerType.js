@@ -36,6 +36,6 @@ export default new GraphQLObjectType({
         finished: {
             type: GraphQLBoolean,
             description: 'The finished of this player.',
-        },
+        }
     }
 });

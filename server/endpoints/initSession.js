@@ -2,10 +2,9 @@ import jwtToken from 'jsonwebtoken';
 import config from '../config/server-config';
 import api from '../../api';
 
-export default function ({ token }, res) {
-    // TODO - validate token
-    // const decoded = jwtToken.verify(token, config.auth.secret);
-    if (!token) {
+export default function ({ auth }, res) {
+    console.log('init session', auth);
+    if (!auth) {
         res.status(200).send(JSON.stringify({
             token: null,
             member: null,
@@ -25,7 +24,7 @@ export default function ({ token }, res) {
                 .send(JSON.stringify({
                     isLoggedIn: true,
                     member: data.member,
-                    token
+                    token: auth.token
                 }, null, 2));
         },
         ({ message }) => res.status(500).send(err.message)

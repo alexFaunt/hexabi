@@ -10,14 +10,14 @@ import createServerStore from '../../app/stores/createServerStore';
 
 const htmlFile = fs.readFileSync(path.join(__dirname, '../../app/index.html'), { encoding: 'utf-8' });
 
-export default function ({ token, originalUrl }, res) {
+export default function ({ auth, originalUrl }, res) {
     const isLogin = originalUrl.match('login')
 
-    if (token && isLogin) {
+    if (auth && isLogin) {
         return res.redirect(302, '/');
     }
 
-    if (!token && !isLogin) {
+    if (!auth && !isLogin) {
         return res.redirect(302, '/login');
     }
 
@@ -27,7 +27,9 @@ export default function ({ token, originalUrl }, res) {
     // The server doesn't forward the cookie, so we have to set it
     // in the store, so it can be passed into the api calls.
     // I cannot workout a workaround for this.
-    store.getState().Session.token = token;
+    if (auth) {
+        store.getState().Session.token = auth.token;
+    }
 
     store.dispatch(match(originalUrl, function (error, redirectLocation, routerState) {
         if (redirectLocation) {

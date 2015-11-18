@@ -5,28 +5,28 @@ import api from '../../api';
 export default function ({ body }, res) {
     const { username, password } = body;
 
-    // TODO check if it's a good login
-    if (username !== "alex" || password !== "pass") {
-        console.log('NO AUTHED', username, password);
-        return res.status(401).send(JSON.stringify({result: 'failure'}));
-    }
+    api('query { login (username: "' + username + '", secret: "' + password + '") { member { name } } }',
+        function ({ errors, data }) {
 
-    // make a token
-    const token = jwtToken.sign({ username, password }, config.auth.secret, {
-        expiresIn: config.auth.expires // TODO - KEEP ALIVE
-    });
+            if (errors) {
+                return res.status(500).clearCookie('token').send(errors);
+            }
 
-    // TODO - LOGIN TABLE + SESSION TABLE
-    const id = '1';
+            if (!data.login) {
+                return res.status(401).clearCookie('token').send({});
+            }
 
-    api('query { member (id: "' + id + '") { id, name } }',
-        function ({ data }) {
+            // make a token
+            const token = jwtToken.sign({ username, password }, config.auth.secret, {
+                expiresIn: config.auth.expires
+            });
+
             // Check against DB
             res.status(200).cookie('token', token).send(JSON.stringify({
-                member: data.member,
+                member: data.login.member,
                 token
             }, null, 2));
         },
-        ({ message }) => res.status(500).send(message)
+        ({ message }) => res.status(500).clearCookie('token').send(message)
     );
 }
