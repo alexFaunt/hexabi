@@ -5,8 +5,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { pushState } from 'redux-router';
 
-import * as SessionActions from '../../actions/Session';
-
 @connect(
     state => ({ session: state.Session }),
     { pushState }

@@ -2,12 +2,12 @@
 
 import React, { Component } from 'react';
 
-import * as SessionActions from '../../actions/Session';
+import { initSession } from '../../actions/Session';
 
 export default class Server extends Component {
 
     static required = [
-        SessionActions.initSession
+        initSession
     ]
 
     render () {
