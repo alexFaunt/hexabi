@@ -1,4 +1,4 @@
-import { INIT_SESSION, LOGIN, LOGOUT } from '../actions/Session';
+import { INIT_SESSION, LOGIN, LOGOUT, REGISTER } from '../actions/Session';
 import { SUCCESS, FAILURE } from '../constants/Response';
 
 const defaultState = {
@@ -23,6 +23,12 @@ export default function sessionReducer (state = defaultState, { type, status, da
     }
 
     switch (type) {
+        case REGISTER:
+        // TODO - i'm not returning data yet.
+            return Object.assign({}, state, data, {
+                isLoggedIn: true
+            });
+
         case LOGIN:
             return Object.assign({}, state, data, {
                 isLoggedIn: true

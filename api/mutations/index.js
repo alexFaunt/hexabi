@@ -3,6 +3,7 @@ const mutations = {};
 import * as member from './Member'; append(member);
 import * as game from './Game'; append(game);
 import * as player from './Player'; append(player);
+import * as login from './Login'; append(login);
 
 function append (model) {
     for (let endpoint in model) {

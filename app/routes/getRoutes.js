@@ -2,6 +2,7 @@ import React from 'react';
 import { Route } from 'react-router';
 
 import Landing from '../components/Landing/Landing';
+import Register from '../components/Register/Register';
 import Login from '../components/Login/Login';
 import GameList from '../components/GameList/GameList';
 import Page from '../components/Page/Page';
@@ -30,6 +31,7 @@ export default function (store) {
             </Route>
             <Route onEnter={ requireNoAuth } >
                 <Route path="login" component={ Login } />
+                <Route path="register" component={ Register } />
             </Route>
         </Route>
     );

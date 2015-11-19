@@ -13,6 +13,7 @@ import tokenParser from './server/middleware/tokenParser';
 // endpoints
 import api from './server/endpoints/api';
 import login from './server/endpoints/login';
+import register from './server/endpoints/register';
 import initSession from './server/endpoints/initSession';
 import routes from './server/endpoints/routes';
 
@@ -31,6 +32,7 @@ function run () {
 
     // TODO - LOGOUT
     app.post('/auth/login',  bodyParser.json(), login);
+    app.post('/auth/register',  bodyParser.json(), register);
     app.post('/auth/initSession', tokenParser(), initSession);
 
     // All other routes hit this and return the app.

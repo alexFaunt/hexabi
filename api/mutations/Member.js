@@ -25,7 +25,7 @@ export const createMember = {
             type: GraphQLString
         }
     },
-    resolve: function (obj, {name, avatar}) {
+    resolve: function (_, {name, avatar}) {
         return (new MemberModel())
             .save({name, avatar})
             .then(function (model) {

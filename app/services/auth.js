@@ -14,6 +14,21 @@ function shallowValidate (username, password) {
     return true;
 }
 
+export function register (data) {
+    const { username, password } = data;
+
+    if (!shallowValidate(username, password)) {
+        return Promise.reject();
+    }
+
+    // Return axios to the api end point
+    return axios({
+        url: ENDPOINT + 'register',
+        method: 'post',
+        data
+    });
+}
+
 export function login (data) {
     const { username, password } = data;
 

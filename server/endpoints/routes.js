@@ -11,7 +11,7 @@ import createServerStore from '../../app/stores/createServerStore';
 const htmlFile = fs.readFileSync(path.join(__dirname, '../../app/index.html'), { encoding: 'utf-8' });
 
 export default function ({ auth, originalUrl }, res) {
-    const isLogin = originalUrl.match('login')
+    const isLogin = originalUrl.match('login') || originalUrl.match('register');
 
     if (auth && isLogin) {
         return res.redirect(302, '/');
