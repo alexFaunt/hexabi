@@ -1,9 +1,9 @@
+// TODO - REPLACE ALL THIS SHIT WITH PASSPORT.JS AND ENABLE ALL SORTS OF SOCIAL MEDIA SIGN UP
 import config from '../config/server-config';
 import cookieParser from 'cookie-parser';
 import jwtToken from 'jsonwebtoken';
 
 const parser = cookieParser();
-
 const decode = function (token) {
     if (!token) {
         return token;

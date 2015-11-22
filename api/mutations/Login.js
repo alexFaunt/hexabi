@@ -48,24 +48,20 @@ console.log('REgister end point', secret === config.auth.secret, username, passw
 
         // generating a hash
         return new Promise(function (resolve, reject) {
-            bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(password, 10, function (err, secret) {
                 if (err) {reject();}
-
-                bcrypt.hash(config.auth.secret, salt, function (err, secret) {
-                    if (err) {reject();}
 console.log('ATTEMPT SAVE', member, username, secret);
 
-                    return (new LoginModel())
-                        .save({ member, username, secret })
-                        .then(function (model) {
-                            resolve({
-                                id: model.id
-                            })
-                        }, function () {
-                            console.error(arguments);
-                            reject(arguments);
-                        });
-                });
+                return (new LoginModel())
+                    .save({ member, username, secret })
+                    .then(function (model) {
+                        resolve({
+                            id: model.id
+                        })
+                    }, function () {
+                        console.error(arguments);
+                        reject(arguments);
+                    });
             });
         });
     }

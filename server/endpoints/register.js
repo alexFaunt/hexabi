@@ -5,14 +5,12 @@ import bcrypt from 'bcrypt';
 
 export default function ({ body }, res) {
     const { username, password, member } = body;
-console.log('endpoint:',username, password, member);
+
     // TODO - CAN I MAKE THIS LIKE JSON.toString() ?
     // FOR SURE I CAN PASS SOMETHING TO API AND DECONSTRUCT IT.
     // DO that
     // LIKE NOW
 
-    console.log('HELL', `mutation { register (secret: "${config.auth.secret}", username: "${username}",
-            password:"${password}", member: "${member}") { id } }`);
     api(`mutation { register (secret: "${config.auth.secret}", username: "${username}",
             password:"${password}", member: ${member}) { id } }`,
         function ({ errors, data }) {
