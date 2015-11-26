@@ -1,8 +1,8 @@
 export default {
-    title: 'Alfa Glam',
+    title: 'Title',
     login: 'login',
     tagLine: 'Treat yourself!',
-    hairdressing: 'hairdressing',
-    skinTreatments: 'Skin Treatments',
-    glamTreatments: 'Glam Treatments'
+    hairdressing: 'one',
+    skinTreatments: 'two',
+    glamTreatments: 'three'
 };
