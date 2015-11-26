@@ -11,15 +11,16 @@ import createServerStore from '../../app/stores/createServerStore';
 const htmlFile = fs.readFileSync(path.join(__dirname, '../../app/index.html'), { encoding: 'utf-8' });
 
 export default function ({ auth, originalUrl }, res) {
-    const isLogin = originalUrl.match('login') || originalUrl.match('register');
+    // const isLogin = originalUrl.match('login') || originalUrl.match('register');
 
-    if (auth && isLogin) {
-        return res.redirect(302, '/');
-    }
-
-    if (!auth && !isLogin) {
-        return res.redirect(302, '/login');
-    }
+    // TODO - move this into the match below, if the user group doesn't match the group needed from router, redirect
+    // if (auth && isLogin) {
+    //     return res.redirect(302, '/');
+    // }
+    //
+    // if (!auth && !isLogin) {
+    //     return res.redirect(302, '/login');
+    // }
 
     const store = createServerStore();
 
@@ -52,21 +53,27 @@ export default function ({ auth, originalUrl }, res) {
         }
 
         store.getState().router.then(function () {
-            const content = ReactDOMServer.renderToString(
-                <Provider store={store} key="provider">
-                    <ReduxRouter/>
-                </Provider>
-            );
+            // TODO - this is probably slower than wihtout try catch, remove it when not in dev mode.
+            try {
+                const content = ReactDOMServer.renderToString(
+                    <Provider store={ store } key="provider">
+                        <ReduxRouter/>
+                    </Provider>
+                );
 
-            let payload = htmlFile;
+                let payload = htmlFile;
+                // Put in the content
+                payload = payload.replace(/__content__/,  content);
 
-            // Put in the content
-            payload = payload.replace(/__content__/,  content);
+                // Put in the initial state
+                payload = payload.replace(/__state__/, JSON.stringify(store.getState()));
 
-            // Put in the initial state
-            payload = payload.replace(/__state__/, JSON.stringify(store.getState()));
-
-            res.status(200).send(payload);
+                res.status(200).send(payload);
+            }
+            catch (e) {
+                console.log('RENDER FAILED', e);
+                res.status(500).send(e);
+            }
         });
 
     }));

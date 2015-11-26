@@ -1,0 +1,21 @@
+.base {
+    overflow: hidden;
+    display: block;
+    border: 1px black solid;
+    height: 100%;
+    position: relative;
+
+    &::after {
+        content: '';
+        display: block;
+        padding-bottom: 100%;
+    }
+}
+
+.content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}

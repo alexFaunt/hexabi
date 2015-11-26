@@ -44,13 +44,14 @@ module.exports = {
     },
 
     postcss: [
+        require('postcss-import'),
         require('autoprefixer'),
         require('postcss-color-rebeccapurple'),
         require('postcss-inline-comment'),
         require('postcss-for'),
         require('postcss-simple-vars'),
         require('postcss-calc'),
-        require('postcss-nested'),
+        require('postcss-nested')
     ],
 
     resolve: {

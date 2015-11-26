@@ -3,7 +3,6 @@ import config from '../config/server-config';
 import api from '../../api';
 
 export default function ({ auth }, res) {
-    console.log('init session', auth);
     if (!auth) {
         res.status(200).send(JSON.stringify({
             token: null,
@@ -14,11 +13,16 @@ export default function ({ auth }, res) {
     }
 
     // TODO - pick member from decoded token
-    const id = '1';
+    const username = auth.member.username;
 
     // Get a graphql
-    api('query { member (id: "' + id + '") { id, name } }',
-        function ({ data }) {
+    api(`query { login (username: "${ username }", secret: "${ config.auth.secret }") { member { id, name } } }`,
+        function ({ errors, data }) {
+            if (errors) {
+                return res.status(500)
+                    .send(errors);
+            }
+
             // Check against DB
             res.status(200)
                 .send(JSON.stringify({

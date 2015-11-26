@@ -1,11 +1,13 @@
 import React from 'react';
 import { Route } from 'react-router';
 
-import Landing from '../components/Landing/Landing';
+import Page from '../containers/Page/Page';
+import Landing from '../containers/Landing/Landing';
+
 import Register from '../components/Register/Register';
 import Login from '../components/Login/Login';
 import GameList from '../components/GameList/GameList';
-import Page from '../components/Page/Page';
+import Account from '../components/Account/Account';
 
 export default function (store) {
 
@@ -25,9 +27,10 @@ export default function (store) {
 
     return (
         <Route component={ Page } >
+            <Route path="/" component={ Landing } />
             <Route onEnter={ requireAuth } >
-                <Route path="/" component={ Landing } />
                 <Route path="games" component={ GameList } />
+                <Route path="account" component={ Account } />
             </Route>
             <Route onEnter={ requireNoAuth } >
                 <Route path="login" component={ Login } />

@@ -1,0 +1,19 @@
+$height: 50px;
+$title-size: 2em;
+
+.base {
+    display: flex;
+    flex-flow: row wrap;
+
+    > * {
+        height: $height;
+        line-height: $height;
+    }
+}
+
+.title {
+    text-align: center;
+    flex-grow: 1;
+    margin: 0;
+    font-size: $title-size;
+}

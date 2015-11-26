@@ -1,0 +1,9 @@
+$purple: #7766ff;
+
+.purple-bg {
+    background: $purple;
+}
+
+.purple-text {
+    color: $purple;
+}

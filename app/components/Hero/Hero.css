@@ -1,0 +1,22 @@
+
+$padding-bottom: 10px;
+
+.base {
+    position: relative;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+
+    &::after {
+        content: '';
+        display: block;
+        padding-bottom: 60%;
+    }
+}
+
+.content {
+    position: absolute;
+    bottom: 0;
+    padding: $padding-bottom;
+    composes: purple-text from "../../styles/colours.css";
+}

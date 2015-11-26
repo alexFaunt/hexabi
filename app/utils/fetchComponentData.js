@@ -28,6 +28,7 @@ export default function fetchComponentData(dispatch, components, params) {
         addRequired(required, components[i]);
     }
 
+    console.log('Dispatching required actions', required);
     const promises = required.map(need => dispatch(need(params)));
     return Promise.all(promises);
 }

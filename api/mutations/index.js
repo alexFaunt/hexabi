@@ -4,6 +4,7 @@ import * as member from './Member'; append(member);
 import * as game from './Game'; append(game);
 import * as player from './Player'; append(player);
 import * as login from './Login'; append(login);
+import * as provider from './Provider'; append(provider);
 
 function append (model) {
     for (let endpoint in model) {

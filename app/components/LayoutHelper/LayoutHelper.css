@@ -1,0 +1,20 @@
+
+.base {
+    display: flex;
+}
+
+.inner {
+    flex-grow: 1;
+}
+
+.horizontal {
+    composes: base;
+    width: 100%;
+    flex-flow: row wrap;
+}
+
+.vertical {
+    composes: base;
+    height: 100%;
+    flex-flow: column wrap;
+}

@@ -13,12 +13,12 @@ import getClientRoutes from './routes/getClientRoutes';
 const store = createClientStore(makeRouteHooksSafe(getClientRoutes));
 
 const component = (
-    <ReduxRouter routes={getClientRoutes(store)} />
+    <ReduxRouter routes={ getClientRoutes(store) } />
 );
 
 ReactDOM.render(
-    <Provider store={store} key="provider">
-        {component}
+    <Provider store={ store } key="provider">
+        { component }
     </Provider>,
     document.getElementById('content')
 );

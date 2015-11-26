@@ -1,0 +1,16 @@
+$grid-spacing: 10px;
+
+.grid {
+    padding: $grid-spacing;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tile {
+    margin: $grid-spacing;
+    flex-direction: row;
+
+    &:last-child {
+        flex-grow: 1;
+    }
+}
