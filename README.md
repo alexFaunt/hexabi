@@ -13,6 +13,9 @@ It has in it...
 * GraphQL for the Api
 * PostgreSQL for the DB
 * Bookshelf & knex for the Models
+* CSS modules for css
+* webpack for bundling
+* postcss for not writing css.
 
 I've mashed it together from a lot of demo's and brute force. And there are few hacks.
 But at the time of writing it's bang up to date with the latest versions of everything.
