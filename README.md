@@ -47,6 +47,57 @@ To finally kill it.
 You might want server logs. I've not sorted the scripts for this properly yet,
 I just use __npm run-script watch__, and __npm run-script serve__ in a separate tab.
 
+## Structure
+server.js: express server creation & configuration.
+api/ - defining the api
+  database.js: knex config to connect to db
+  models: bookshelfjs models attached each represents a table in the DB
+  mutations: graphQL mutation definitions
+  query: graphQL query definitions
+  schema: GraphQL schema (basically graphQL's version of the models above
+  tables: PostgreSQL queries, just for me - could be used to generate DB in future
+app/ - front end app
+  index.html: index file for rendering into
+  index.js: entry point on client side
+  actions: redux action declarations
+  components: react components
+  containers: react containers - attached to redux-router via @connect
+  content: probably temporary, contains static declarations
+  middleware: run between actions + reducers allowing async operations to be fired (including all api calls)
+  reducers: redux reducers - essentially the stores representing the data in the app
+  routes: contains redux-router declarations, getRoutes in particular
+  services: async services for any need
+  stores: store creation utils for server and client
+  styles: global style declarations for importing into any component's css module
+  utils: helper methods re-used across the app
+server/ - express server
+  config: config for server
+  endpoints: endpoint handlers for express routes
+  middleware: middleware called pre-endpoint handler
+  utils: helper methods re-used across server
+  
+##
+Example flows
+
+### First visit
+ * user hits domain
+ * redux-router decides what route the url represents, and therefore what Containers are needed
+ * Containers are checked for required actions
+ * All actions are fired
+ * First action is always initSession, contributed by the Server Container (server side only)
+ * Actions fired go through middleware, including api + auth calls
+ * Upon all actions completing content is rendered + returned to user.
+ * index.js takes over and loads page.
+ * On transition to any page, the next page's required actions are fired to populate it
+
+### Login
+ * Login action is fired
+ * On auth async complete Login success action is fired
+ * session store is updated, change emitted
+ * Client container wrapper is listening to this.props.isLoggedIn
+ * Container decides to navigate
+ 
+
 ## TODO
 So much stuff.
 
