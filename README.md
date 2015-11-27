@@ -48,7 +48,7 @@ You might want server logs. I've not sorted the scripts for this properly yet,
 I just use __npm run-script watch__, and __npm run-script serve__ in a separate tab.
 
 ## Structure
-server.js: express server creation & configuration.
+ * server.js: express server creation & configuration.
  * api/ - defining the api
    * database.js: knex config to connect to db
    * models: bookshelfjs models attached each represents a table in the DB
