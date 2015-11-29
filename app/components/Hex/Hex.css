@@ -1,6 +1,5 @@
-$margin: 1%;
-$max-pos: calc(100% - $margin);
-$height-ratio: 0.85;
+@value margin: 1%;
+@value max-pos: calc(100% - margin);
 
 .base {
     transition: background 1s ease-in-out;
@@ -9,17 +8,17 @@ $height-ratio: 0.85;
     overflow: hidden;
     z-index: 1;
     clip-path: polygon(
-        25% $margin,
-        75% $margin,
-        $max-pos 50%,
-        75% $max-pos,
-        25% $max-pos,
-        $margin 50%);
+        25% margin,
+        75% margin,
+        max-pos 50%,
+        75% max-pos,
+        25% max-pos,
+        margin 50%);
 
     &::after {
         content: '';
         display: block;
-        padding-bottom: calc(100% * $height-ratio);
+        padding-bottom: calc(100% * 0.85);
     }
 }
 

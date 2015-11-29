@@ -1,13 +1,13 @@
-$height: 50px;
-$title-size: 2em;
+@value height: 50px;
+@value font-size: 2em;
 
 .base {
     display: flex;
     flex-flow: row wrap;
 
     > * {
-        height: $height;
-        line-height: $height;
+        height: height;
+        line-height: height;
     }
 }
 
@@ -15,5 +15,5 @@ $title-size: 2em;
     text-align: center;
     flex-grow: 1;
     margin: 0;
-    font-size: $title-size;
+    font-size: font-size;
 }

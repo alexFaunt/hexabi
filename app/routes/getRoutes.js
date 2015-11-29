@@ -6,7 +6,6 @@ import Landing from '../containers/Landing/Landing';
 
 import Register from '../components/Register/Register';
 import Login from '../components/Login/Login';
-import GameList from '../components/GameList/GameList';
 import Account from '../components/Account/Account';
 
 export default function (store) {
@@ -29,7 +28,6 @@ export default function (store) {
         <Route component={ Page } >
             <Route path="/" component={ Landing } />
             <Route onEnter={ requireAuth } >
-                <Route path="games" component={ GameList } />
                 <Route path="account" component={ Account } />
             </Route>
             <Route onEnter={ requireNoAuth } >

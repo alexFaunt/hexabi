@@ -1,5 +1,5 @@
-
-$padding-bottom: 10px;
+@value purple from '../../styles/colours.css';
+@value bottom-padding: 10px;
 
 .base {
     position: relative;
@@ -17,6 +17,6 @@ $padding-bottom: 10px;
 .content {
     position: absolute;
     bottom: 0;
-    padding: $padding-bottom;
-    composes: purple-text from "../../styles/colours.css";
+    padding: @value bottom-padding;
+    color: purple;
 }

@@ -1,16 +1,20 @@
-$grid-spacing: 10px;
+@value medium from "../../styles/breakpoints.css";
+@value grid-spacing: 10px;
 
 .grid {
-    padding: $grid-spacing;
+    padding: grid-spacing;
     display: flex;
     flex-wrap: wrap;
 }
 
 .tile {
-    margin: $grid-spacing;
+    margin: grid-spacing;
     flex-direction: row;
+    width: 100%;
+}
 
-    &:last-child {
-        flex-grow: 1;
+@media medium {
+    .tile {
+        width: calc(50% - (grid-spacing * 2));
     }
 }

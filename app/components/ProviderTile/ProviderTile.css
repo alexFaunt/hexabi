@@ -4,12 +4,7 @@
     border: 1px black solid;
     height: 100%;
     position: relative;
-
-    &::after {
-        content: '';
-        display: block;
-        padding-bottom: 100%;
-    }
+    min-height: 150px;
 }
 
 .content {
