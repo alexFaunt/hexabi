@@ -1,0 +1,7 @@
+@value max-content-width as max-width from '../../styles/layout.css';
+
+.base {
+    max-width: max-width;
+    margin: 0 auto;
+    position: relative;
+}

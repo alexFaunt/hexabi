@@ -1,0 +1,5 @@
+@value above-small: (min-width: 400px);
+@value above-medium: (min-width: 800px);
+@value above-large: (min-width: 1200px);
+
+@value max-content-width: 1180px;
