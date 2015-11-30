@@ -4,5 +4,7 @@ export default {
     tagLine: 'Treat yourself!',
     hairdressing: 'one',
     skinTreatments: 'two',
-    glamTreatments: 'three'
+    glamTreatments: 'three',
+    termsTitle: 'Terms and Conditions',
+    contactTitle: 'Contact us'
 };

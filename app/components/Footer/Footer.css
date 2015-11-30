@@ -1,3 +1,21 @@
+@value dark-grey from '../../styles/colours.css';
+
 .base {
-    
+    width: 100%;
+    padding: 20px;
+    background-color: dark-grey;
+    position: relative;
+}
+
+.link {
+    color: white;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.logo {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: white;
 }

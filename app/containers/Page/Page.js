@@ -11,7 +11,7 @@ export default class Page extends Component {
             <div className={ styles.base }>
                 <Header />
                 <main className={ styles.main }>
-                    {this.props.children}
+                    { this.props.children }
                 </main>
                 <Footer />
             </div>

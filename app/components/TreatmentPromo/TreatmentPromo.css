@@ -1,3 +1,17 @@
+@value above-small, above-medium from '../../styles/layout.css';
+
+.base {
+    padding: 10px 10px 0;
+    width: 90%;
+    margin: 0 auto;
+}
+
 .link {
     margin: 0 20px;
+}
+
+@media above-medium {
+    .base {
+        width: 70%;
+    }
 }

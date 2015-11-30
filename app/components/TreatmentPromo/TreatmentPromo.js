@@ -21,7 +21,7 @@ export default class TreatmentPromo extends Component {
         });
 
         return (
-            <LayoutHelper type="horizontal" hgap="10px">
+            <LayoutHelper className={ styles.base } type="horizontal" hgap="10px">
                 { links }
             </LayoutHelper>
         );

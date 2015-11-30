@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import Hero from '../../components/Hero/Hero';
+import Content from '../../components/Content/Content';
 import TreatmentPromo from '../../components/TreatmentPromo/TreatmentPromo';
 import ProviderList from '../../components/ProviderList/ProviderList';
 
@@ -27,9 +28,10 @@ export default class Landing extends Component {
                     <h2>{ lexums.tagLine }</h2>
                 </Hero>
 
-                <TreatmentPromo treatments={ treatments }/>
-
-                <ProviderList providers={ providers } { ...bindActionCreators(ProviderActions, dispatch) }/>
+                <Content>
+                    <TreatmentPromo treatments={ treatments }/>
+                    <ProviderList providers={ providers } { ...bindActionCreators(ProviderActions, dispatch) }/>
+                </Content>
             </div>
         );
     }

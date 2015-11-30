@@ -13,11 +13,13 @@ export default class LayoutHelper extends Component {
     }
 
     render () {
+        const { vgap, hgap, type, children, className } = this.props;
+
         const inlineStyles = {
-            margin: `${ this.props.vgap } ${ this.props.hgap }`
+            margin: `${ vgap } ${ hgap }`
         }
 
-        const content = this.props.children.map(function (child, i) {
+        const content = children.map(function (child, i) {
             return (
                 <div key={ i } className={ styles.inner } style={ inlineStyles }>
                     { child }
@@ -26,7 +28,7 @@ export default class LayoutHelper extends Component {
         });
 
         return (
-            <div className={ styles[this.props.type] }>
+            <div className={ `${ className } ${ styles[type] }`} >
                 { content }
             </div>
         );

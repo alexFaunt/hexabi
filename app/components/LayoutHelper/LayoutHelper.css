@@ -9,7 +9,6 @@
 
 .horizontal {
     composes: base;
-    width: 100%;
     flex-flow: row wrap;
 }
 

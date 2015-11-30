@@ -1,20 +1,50 @@
-@value medium from "../../styles/breakpoints.css";
+@value above-small, above-medium, above-large from "../../styles/layout.css";
 @value grid-spacing: 10px;
+@value width-two-col: 50%;
+@value width-three-col: 33.33%;
 
 .grid {
-    padding: grid-spacing;
     display: flex;
     flex-wrap: wrap;
+    margin-left: calc(grid-spacing * -1);
+    padding-top: grid-spacing;
 }
 
 .tile {
-    margin: grid-spacing;
+    margin-left: grid-spacing;
+    margin-bottom: grid-spacing;
     flex-direction: row;
     width: 100%;
 }
 
-@media medium {
+@media above-small {
+    .grid {
+        margin-left: 0;
+        padding-right: grid-spacing;
+    }
+
     .tile {
-        width: calc(50% - (grid-spacing * 2));
+        width: calc(width-two-col - grid-spacing);
+
+        &:last-child:nth-child(2n + 1) {
+            width: 100%;
+        }
+    }
+}
+
+@media above-medium {
+    .tile {
+        width: calc(width-three-col - grid-spacing);
+
+        &:last-child:nth-child(3n + 1) {
+            width: 100%;
+        }
+    }
+}
+
+@media above-large {
+    .grid {
+        margin-left: calc(grid-spacing * -1);
+        padding-right: 0;
     }
 }

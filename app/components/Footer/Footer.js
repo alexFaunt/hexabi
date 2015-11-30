@@ -1,16 +1,21 @@
 import styles from './Footer.css';
-import content from '../../content';
+import { lexums } from '../../content';
 
 import React, { Component } from 'react';
 import { Link } from 'react-router';
+
+import Content from '../Content/Content';
 
 export default class Footer extends Component {
 
     render () {
         return (
             <footer className={ styles.base }>
-                <Link to="/terms">Terms and Conditions</Link>
-                <Link to="/contact">Contact us</Link>
+                <Content>
+                    <Link to="/terms" className={ styles.link } >{ lexums.termsTitle }</Link>
+                    <Link to="/contact" className={ styles.link } >{ lexums.contactTitle }</Link>
+                    <div className={ styles.logo }key="logo">LOGO</div>
+                </Content>
             </footer>
         );
     }
