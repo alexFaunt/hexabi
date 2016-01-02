@@ -1,193 +1,92 @@
 {
-	"env": {
-		"browser": true,
-		"node": true
-	},
-
-
-
-	// Additional linting plugins. To find more plugins to use search on npm
-	// for the keyword `eslintplugin`.
-	"plugins": [
-
-	],
-
-	// When compiling for multiple environments having global conditionals
-	// replaced by webpack is handy (e.g. __CLIENT__, __SERVER__). Things
-	// like that should be listed here.
-	"globals": {
-
-	},
-
-	// For complete listing of rules and what they do, check out the docs.
-	// See: https://github.com/eslint/eslint/tree/master/docs/rules
-	"rules": {
-
-		// -----------------------------------------------------------------------
-		// Possible Errors
-		// -----------------------------------------------------------------------
-
-
-
-		// Enforce good documentation.
-		"valid-jsdoc": [2, {
-			"prefer": {
-				"return": "returns"
-			}
-		}],
-
-		// -----------------------------------------------------------------------
-		// Best Practices
-		// -----------------------------------------------------------------------
-
-		// Enforce a reasonable cap on functions spiralling out of control
-		// with many branches.
-		"complexity": [2, 10],
-
-		// If you have a switch block you should always cover all possible cases.
-		// Since Javascript has a shit type system we have to have a default case
-		// to check everything.
-		"default-case": 1,
-
-		// No one should be using for-in loops anyway.
-		"guard-for-in": 2,
-
-		// Don't allow people to do dumb things like "1." when they mean "1.0".
-		"no-floating-decimal": 2,
-
-		// Avoid funny things with parseInt.
-		// See: http://stackoverflow.com/questions/850341
-		"radix": 2,
-
-		// Since Javascript has fairly dumb scoping rules (functional scope instead
-		// of block scope) it's handy to know where your variables bleed into.
-		"vars-on-top": 2,
-
-		// Avoid pitfalls when trying to call a just-declared function.
-		"wrap-iife": 2,
-
-		// May the force be with you. Prevent accidental assignments.
-		"yoda": [0, "always"],
-
-		// -----------------------------------------------------------------------
-		// Strict Mode
-		// -----------------------------------------------------------------------
-
-		// Transpilers (webpack) deal with the effects of strict, so ignore it.
-		"strict": [2, "never"],
-
-		// -----------------------------------------------------------------------
-		// Variables
-		// -----------------------------------------------------------------------
-
-		// Common sense.
-		"no-use-before-define": 2,
-
-
-
-		// -----------------------------------------------------------------------
-		// Stylistic Issues
-		// -----------------------------------------------------------------------
-
-		// The one true brace style.
-		"brace-style": [2, "1tbs"],
-
-		// Enforce case guidelines used in Javascript. No variables_like_this or
-		// VariablesLikeThis.
-		"camelcase": 2,
-
-		// Searching a file for `this` will pickup `_this` but not `self`.
-		"consistent-this": [2, "_this"],
-
-		// Prevent abbreviated blocks for clarity.
-		"curly": 2,
-
-		// Prefer foo.x over foo['x']; static properties are always preferable
-		// to dynamic strings.
-		"dot-notation": 2,
-
-		// Just convention for a lot of tools; git in particular.
-		// See: http://stackoverflow.com/questions/729692
-		"eol-last": 2,
-
-		// Prevent people from naming their files in formats other than kebab-case.
-		// Rubyists have a bad habit of doing_this_for_js_files and others feel like
-		// variable naming conventionShouldMatchFiles. They're both wrong.
-		"filenames/filenames": [2, "^[a-z.-]+$"],
-
-		// Giving functions names makes them easier to debug and follow in stack
-		// traces. Instead of "<anonymous>" everywhere you have names.
-		"func-names": 2,
-
-		// Avoid use of var x = function() { ... }.
-		"func-style": [2, "declaration"],
-
-		// Use the one true indentation scheme which just so happens to be
-		// tabs.
-		// See: http://programmers.stackexchange.com/questions/57
-		"indent": [2, 4],
-
-		// Things look nice "{ like: this }" and not "{like:this}".
-		"key-spacing": [2, { "beforeColon": false, "afterColon": true }],
-
-		// Sometimes you need to create objects from weird places. Maybe this
-		// can be removed by default.
-		"new-cap": 0,
-
-		// Prevent pointlessly nested if statements because they're harder to read.
-		"no-lonely-if": 2,
-
-		// Who would do this? Honestly.
-		"no-mixed-spaces-and-tabs": [2, true],
-
-		// Keep things clean by avoiding unnecessary spacing.
-		"no-multiple-empty-lines": 2,
-
-		// Nested ternaries are just plain confusing. Avoiding them keeps the
-		// code readable.
-		"no-nested-ternary": 2,
-
-		// Don't allow people to do stupid looking things like: foo (a, b). They
-		// should look like foo(a, b).
-		"no-spaced-func": 2,
-
-		// Generally you should be returning `null` instead of undefined. If you
-		// need to check for undefined values use `_.isUndefined()`.
-		"no-undefined": 2,
-
-		// There are no such thing as "private" properties. Use closure
-		// variables if you really need isolation.
-		"no-underscore-dangle": 0,
-
-		// Single quotes are faster to type and seem to be a fairly general
-		// convention in the JS community.
-		"quotes": [2, "single"],
-
-		// Enforce whitespace for visual clarity.
-		"space-after-keywords": [2, "always"],
-
-		// Enforce whitespace because it looks nice.
-		"spaced-line-comment": 2,
-
-
-	},
-
-	"ecmaFeatures": {
-		"modules": true,
-		"binaryLiterals": false,                    // enable binary literals
-	    "blockBindings": true,                      // enable let and const (aka block bindings)
-	    "defaultParams": true,                     // enable default function parameters
-	    "forOf": false,                             // enable for-of loops
-	    "generators": true,                        // enable generators
-	    "objectLiteralComputedProperties": false,   // enable computed object literal property names
-	    "objectLiteralDuplicateProperties": false,  // enable duplicate object literal properties in strict mode
-	    "objectLiteralShorthandMethods": false,     // enable object literal shorthand methods
-	    "objectLiteralShorthandProperties": true,  // enable object literal shorthand properties
-	    "octalLiterals": false,                     // enable octal literals
-	    "regexUFlag": false,                        // enable the regular expression u flag
-	    "regexYFlag": false,                        // enable the regular expression y flag
-	    "templateStrings": true,                    // enable template strings
-	    "unicodeCodePointEscapes": false,           // enable code point escapes
-	    "jsx": true
-	}
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "plugins": [
+    "react"
+  ],
+  "ecmaFeatures": {
+    "arrowFunctions": true,
+    "binaryLiterals": true,
+    "blockBindings": true,
+    "classes": true,
+    "defaultParams": true,
+    "destructuring": true,
+    "forOf": true,
+    "generators": true,
+    "globalReturn": true,
+    "jsx": true,
+    "modules": true,
+    "objectLiteralComputedProperties": true,
+    "objectLiteralDuplicateProperties": true,
+    "objectLiteralShorthandMethods": true,
+    "objectLiteralShorthandProperties": true,
+    "octalLiterals": true,
+    "regexUFlag": true,
+    "regexYFlag": true,
+    "spread": true,
+    "superInFunctions": true,
+    "templateStrings": true,
+    "unicodeCodePointEscapes": true
+  },
+  "rules": {
+    "array-bracket-spacing": [2, "always", { "singleValue": true, "objectsInArrays": true, "arraysInArrays": true }],
+    "block-scoped-var": 2,
+    "brace-style": [2, "stroustrup"],
+    "comma-dangle": [2, "never"],
+    "comma-spacing": [2, { "before": false, "after": true }],
+    "comma-style": [2, "last"],
+    "computed-property-spacing": [2, "never"],
+    "consistent-return": 1,
+    "curly": [2, "all"],
+    "eol-last": 2,
+    "func-style": 0,
+    "guard-for-in": 2,
+    "indent": [2, "tab", {"SwitchCase": 1}],
+    "jsx-quotes": [1, "prefer-double"],
+    "no-else-return": 2,
+    "no-extra-semi": 2,
+    "no-floating-decimal": 2,
+    "no-irregular-whitespace": 2,
+    "no-mixed-requires": 2,
+    "no-mixed-spaces-and-tabs": 2,
+    "no-multi-spaces": 2,
+    "no-multiple-empty-lines": [ 2, { "max": 1 } ],
+    "no-spaced-func": 2,
+    "no-trailing-spaces": 2,
+    "no-undef": 2,
+    "no-underscore-dangle": 0,
+    "no-unexpected-multiline": 2,
+    "no-unused-expressions": 1,
+    "no-unused-vars": [2, { "vars": "all", "args": "after-used" }],
+    "object-curly-spacing": [2, "always", { "objectsInObjects": true, "arraysInObjects": true }],
+    "operator-linebreak": [2, "after"],
+    "quotes": [1, "single"],
+    "radix": 2,
+    "react/display-name": 1,
+    "react/jsx-boolean-value": 1,
+    "react/jsx-no-undef": 1,
+    "react/jsx-sort-props": 0,
+    "react/jsx-uses-react": 1,
+    "react/jsx-uses-vars": 1,
+    "react/no-did-mount-set-state": 1,
+    "react/no-did-update-set-state": 1,
+    "react/no-multi-comp": 1,
+    "react/no-unknown-property": 1,
+    "react/prop-types": 1,
+    "react/self-closing-comp": 1,
+    "react/wrap-multilines": 1,
+    "semi": [2, "always"],
+    "semi-spacing": [2, { "before": false, "after": true }],
+    "space-after-keywords": [2, "always"],
+    "space-before-blocks": 2,
+    "space-before-function-paren": [2, { "anonymous": "always", "named": "always" }],
+    "space-in-parens": [2, "never"],
+    "spaced-comment": [2, "always", { "exceptions": ["-"] }],
+    "strict": 0,
+    "vars-on-top": 2,
+    "wrap-iife": [2, "inside"]
+  }
 }

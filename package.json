@@ -8,7 +8,10 @@
     "stop": "forever stop hexabi",
     "serve": "webpack --config=webpack.server.js ; node build/server-bundle.js",
     "serve-debug": "webpack --config=webpack.server.js ; node-debug build/server-bundle.js",
-    "watch": "webpack --watch --config=webpack.server.js & webpack --watch --config=webpack.client.js"
+    "watch": "webpack --watch --config=webpack.server.js & webpack --watch --config=webpack.client.js",
+    "db-create": "babel-node api/scripts/tables.js up",
+    "db-drop": "babel-node api/scripts/tables.js down",
+    "db-pop": "babel-node api/scripts/tables.js pop"
   },
   "repository": {
     "type": "git",
@@ -31,6 +34,7 @@
     "bookshelf": "^0.8.2",
     "cookie-parser": "^1.4.0",
     "css-loader": "^0.23.0",
+    "eslint-plugin-react": "^3.12.0",
     "express-graphql": "^0.4.0",
     "extract-text-webpack-plugin": "^0.8.2",
     "graphql": "^0.4.9",

@@ -1,24 +1,23 @@
 const queries = {};
 
-import * as member from './Member'; append(member);
-import * as game from './Game'; append(game);
-import * as player from './Player'; append(player);
-import * as login from './Login'; append(login);
-import * as Provider from './Provider'; append(Provider);
+import * as Member from './Member'; append(Member);
+import * as Game from './Game'; append(Game);
+import * as Player from './Player'; append(Player);
+import * as Login from './Login'; append(Login);
 
 function append (model) {
-    for (let endpoint in model) {
-        if (!model.hasOwnProperty(endpoint)) {
-            continue;
-        }
+	for (let endpoint in model) {
+		if (!model.hasOwnProperty(endpoint)) {
+			continue;
+		}
 
-        // if it's already there then we have a problem.
-        if (queries.hasOwnProperty(endpoint)) {
-            throw 'ERROR! two queries points with same name. Not allowed...' + endpoint;
-        }
+		// if it's already there then we have a problem.
+		if (queries.hasOwnProperty(endpoint)) {
+			throw 'ERROR! two queries points with same name. Not allowed...' + endpoint;
+		}
 
-        queries[endpoint] = model[endpoint];
-    }
+		queries[endpoint] = model[endpoint];
+	}
 }
 
 export default queries;

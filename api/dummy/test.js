@@ -1,11 +1,4 @@
-export const up = function (table) {
-	table.increments();
-	table.text('name').notNullable();
-	table.text('avatar');
-	table.timestamps();
-};
-
-export const pop = [
+export default [
 	{ name: 'Chandler Bing' },
 	{ name: 'Rachel Green' },
 	{ name: 'Ross Geller' },
