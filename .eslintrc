@@ -65,7 +65,7 @@
     "operator-linebreak": [2, "after"],
     "quotes": [1, "single"],
     "radix": 2,
-    "react/display-name": 1,
+    "react/display-name": 0,
     "react/jsx-boolean-value": 1,
     "react/jsx-no-undef": 1,
     "react/jsx-sort-props": 0,
