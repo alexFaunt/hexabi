@@ -1,10 +1,17 @@
+import GameStatus from '../../enums/GameStatus';
+
 export default {
-    title: 'Title',
-    login: 'login',
-    tagLine: 'Treat yourself!',
-    hairdressing: 'one',
-    skinTreatments: 'two',
-    glamTreatments: 'three',
-    termsTitle: 'Terms and Conditions',
-    contactTitle: 'Contact us'
+	title: 'Hexabi',
+	tagLine: 'Some you win, some you lose.',
+
+	login: 'login',
+
+	termsTitle: 'Terms and Conditions',
+	contactTitle: 'Contact us',
+
+	gameStatus: {
+		[GameStatus.PENDING]: 'Pending',
+		[GameStatus.PLAYING]: 'Playing',
+		[GameStatus.FINISHED]: 'Finished'
+	}
 };

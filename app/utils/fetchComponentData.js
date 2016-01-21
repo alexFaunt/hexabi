@@ -1,34 +1,35 @@
 function addRequired (required, component) {
-    if (!component) {
-        return required;
-    }
+	if (!component) {
+		return required;
+	}
 
-    if (component.WrappedComponent) {
-        return addRequired(required, component.WrappedComponent);
-    }
+	if (component.WrappedComponent) {
+		return addRequired(required, component.WrappedComponent);
+	}
 
-    if (!component.required) {
-        return required;
-    }
+	if (!component.required) {
+		return required;
+	}
 
-    // only return unique things.
-    for (let i = 0; i < component.required.length; i += 1) {
-        if (required.indexOf(component.required[i]) === -1) {
-            required.push(component.required[i]);
-        }
-    }
+	// only return unique things.
+	for (let i = 0; i < component.required.length; i += 1) {
+		if (required.indexOf(component.required[i]) === -1) {
+			required.push(component.required[i]);
+		}
+	}
 
-    return required;
+	return required;
 }
 
 export default function fetchComponentData(dispatch, components, params) {
-    let required = [];
+	let required = [];
 
-    for (let i = 0; i < components.length; i += 1) {
-        addRequired(required, components[i]);
-    }
+	for (let i = 0; i < components.length; i += 1) {
+		console.log(components[i]);
+		addRequired(required, components[i]);
+	}
 
-    console.log('Dispatching required actions', required);
-    const promises = required.map(need => dispatch(need(params)));
-    return Promise.all(promises);
+	console.log('Dispatching required actions', required);
+	const promises = required.map(need => dispatch(need(params)));
+	return Promise.all(promises);
 }

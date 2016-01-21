@@ -8,15 +8,19 @@ import LoginForm from '../LoginForm/LoginForm';
 
 import * as SessionActions from '../../actions/Session';
 
+import Content from '../Content/Content';
+
 @connect(state => ({ session: state.Session }))
 export default class Login extends Component {
 
-    render () {
-        const { session, dispatch } = this.props;
+	render () {
+		const { session, dispatch } = this.props;
 
-        return (
-            <LoginForm session={session}
-                {...bindActionCreators(SessionActions, dispatch)} />
-        );
-    }
+		return (
+			<Content>
+				<LoginForm session={session}
+					{...bindActionCreators(SessionActions, dispatch)} />
+			</Content>
+		);
+	}
 };

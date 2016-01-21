@@ -10,7 +10,7 @@ import {
 export default new GraphQLObjectType({
 	name: 'TurnType',
 	description: 'Turns taken in a game',
-	fields: {
+	fields: () => ({
 		id: {
 			type: new GraphQLNonNull(GraphQLInt),
 			description: 'Id of the Turn'
@@ -31,5 +31,5 @@ export default new GraphQLObjectType({
 			type: PlayerType,
 			description: 'The player info given to'
 		}
-	}
+	})
 });

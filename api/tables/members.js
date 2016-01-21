@@ -6,10 +6,10 @@ export const up = function (table) {
 };
 
 export const pop = [
-	{ name: 'Chandler Bing' },
-	{ name: 'Rachel Green' },
-	{ name: 'Ross Geller' },
-	{ name: 'Monica Geller' },
-	{ name: 'Phoebe Buffay' },
-	{ name: 'Joey Tribbiani' }
+	{ id: 1, name: 'Chandler Bing' },
+	{ id: 2, name: 'Rachel Green' },
+	{ id: 3, name: 'Ross Geller' },
+	{ id: 4, name: 'Monica Geller' },
+	{ id: 5, name: 'Phoebe Buffay' },
+	{ id: 6, name: 'Joey Tribbiani' }
 ];

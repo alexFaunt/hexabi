@@ -8,7 +8,7 @@ import GameType from '../schema/GameType';
 
 const fetchProps = {
 	withRelated: [
-		'creator', 'players', 'players.member'
+		'creator', 'players', 'players.member', 'players'
 	]
 };
 
@@ -22,6 +22,7 @@ export const game = {
 		}
 	},
 	resolve: function (_, { id }) {
+		console.log('GETTING GAME QUERY');
 		return (new GameModel())
 			.where('id', id)
 			.fetch(fetchProps)

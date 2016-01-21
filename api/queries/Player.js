@@ -28,7 +28,21 @@ export const players = {
 	description: 'get all players',
 	resolve: function () {
 		return PlayerModel
-			.fetchAll({ withRelated: [ 'member' ] })
+			.fetchAll({ withRelated: [ 'member', 'game' ] })
 			.then((players) => players.toJSON());
+	}
+};
+
+export const myPlayers = {
+	type: new GraphQLList(PlayerType),
+	description: 'get all players',
+	resolve: function () {
+
+		return (new PlayerModel())
+
+			.fetchAll({ withRelated: [ 'game' ] })
+			.then(function (players) {
+				return players.toJSON();
+			});
 	}
 };

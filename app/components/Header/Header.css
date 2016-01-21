@@ -2,8 +2,8 @@
 @value font-size: 2em;
 
 .base {
-    display: flex;
-    flex-flow: row wrap;
+	position: relative;
+	box-shadow: 0 1px 4px -2px black;
 
     > * {
         height: height;
@@ -13,7 +13,25 @@
 
 .title {
     text-align: center;
-    flex-grow: 1;
-    margin: 0;
     font-size: font-size;
+	width: 100%;
+	margin: 0;
+}
+
+.button {
+	padding: 0 20px;
+}
+
+.left {
+	position: absolute;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+
+.right {
+	position: absolute;
+	height: 100%;
+	top: 0;
+	right: 0;
 }

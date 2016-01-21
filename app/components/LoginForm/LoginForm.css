@@ -1,2 +1,31 @@
+@value input-height from '../../styles/forms.css';
+
 .base {
+	max-width: 300px;
+	margin: auto;
+}
+
+.row {
+	width: 100%;
+	display: block;
+	height: input-height;
+	margin-bottom: 10px;
+}
+
+.label {
+	float: left;
+	height: input-height;
+	line-height: input-height;
+}
+
+.input {
+	height: input-height;
+	float: right;
+}
+
+.submit {
+	width: 60%;
+	display: block;
+	padding: 10px;
+	margin: auto;
 }

@@ -5,7 +5,7 @@ import Member from './Member';
 export default database.Model.extend({
 	tableName: 'games',
 	players: function () {
-		return this.belongsToMany(Player);
+		return this.hasMany(Player);
 	},
 	creator: function () {
 		return this.belongsTo(Member, 'creator');

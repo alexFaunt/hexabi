@@ -1,4 +1,3 @@
-import styles from './Landing.css';
 import { lexums } from '../../content';
 
 import React, { Component } from 'react';
@@ -16,7 +15,7 @@ export default class Landing extends Component {
 				</Hero>
 
 				<Content>
-
+					<p>Some content could go here!</p>
 				</Content>
 			</div>
 		);

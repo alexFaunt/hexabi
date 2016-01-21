@@ -1,8 +1,9 @@
+import GameStatus from '../../enums/GameStatus';
 
 export const up = function (table) {
 	table.increments();
 	table.integer('creator').notNullable().references('id').inTable('members');
-	table.integer('status').notNullable();
+	table.text('status').notNullable();
 	table.integer('score');
 	table.integer('lives');
 	table.integer('infos');
@@ -16,8 +17,9 @@ export const up = function (table) {
 
 export const pop = [
 	{
+		id: 1,
 		creator: 1,
-		status: 0,
+		status: GameStatus.PLAYING,
 		score: 0,
 		lives: 3,
 		infos: 8,
@@ -28,8 +30,9 @@ export const pop = [
 		secret: 'password'
 	},
 	{
+		id: 2,
 		creator: 2,
-		status: 0,
+		status: GameStatus.PLAYING,
 		score: 0,
 		lives: 3,
 		infos: 8,
@@ -40,8 +43,9 @@ export const pop = [
 		secret: null
 	},
 	{
+		id: 3,
 		creator: 1,
-		status: 0,
+		status: GameStatus.PENDING,
 		score: 0,
 		lives: 3,
 		infos: 8,

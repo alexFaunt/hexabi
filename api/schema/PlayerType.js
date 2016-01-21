@@ -3,15 +3,17 @@ import {
 	GraphQLNonNull,
 	GraphQLObjectType,
 	GraphQLString,
-	GraphQLBoolean
+	GraphQLBoolean,
+	GraphQLList
 } from 'graphql';
 
 import MemberType from './MemberType';
+import GameType from './GameType';
 
 export default new GraphQLObjectType({
 	name: 'Player',
 	description: 'Player type object thing',
-	fields: {
+	fields: () => ({
 		id: {
 			type: new GraphQLNonNull(GraphQLInt),
 			description: 'The id of the player.'
@@ -19,6 +21,10 @@ export default new GraphQLObjectType({
 		member: {
 			type: MemberType,
 			description: 'The member who is this player.'
+		},
+		game: {
+			type: GameType,
+			description: 'The game who is this player.'
 		},
 		position: {
 			type: GraphQLInt,
@@ -36,5 +42,5 @@ export default new GraphQLObjectType({
 			type: GraphQLBoolean,
 			description: 'The finished of this player.'
 		}
-	}
+	})
 });

@@ -13,7 +13,7 @@ import {
 export default new GraphQLObjectType({
 	name: 'Game',
 	description: 'Game type object thing',
-	fields: {
+	fields: () => ({
 		id: {
 			type: new GraphQLNonNull(GraphQLInt),
 			description: 'The id of the game.'
@@ -27,7 +27,7 @@ export default new GraphQLObjectType({
 			description: 'The score of the game.'
 		},
 		status: {
-			type: GraphQLInt,
+			type: GraphQLString,
 			description: 'The status of the game.'
 		},
 		players: {
@@ -66,5 +66,5 @@ export default new GraphQLObjectType({
 			type: GraphQLString,
 			description: 'The secret passcode of the game'
 		}
-	}
+	})
 });

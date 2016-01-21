@@ -4,29 +4,29 @@ export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
 
 export function register (username, password, member) {
-    return {
-        type: REGISTER,
-        auth: { username, password, member }
-    };
-};
+	return {
+		type: REGISTER,
+		auth: { username, password, member }
+	};
+}
 
 export function login (username, password) {
-    return {
-        type: LOGIN,
-        auth: { username, password }
-    };
-};
+	return {
+		type: LOGIN,
+		auth: { username, password }
+	};
+}
 
 export function logout (username) {
-    return {
-        type: LOGOUT,
-        auth: { username }
-    };
-};
+	return {
+		type: LOGOUT,
+		auth: { username }
+	};
+}
 
 export function initSession () {
-    return {
-        type: INIT_SESSION,
-        auth: { }
-    };
-};
+	return {
+		type: INIT_SESSION,
+		auth: { }
+	};
+}

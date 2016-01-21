@@ -13,10 +13,10 @@ export default class Client extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (!this.props.session.isLoggedIn && nextProps.session.isLoggedIn) {
-            this.props.pushState(null, '/');
+            this.props.pushState(null, '/lobby');
         }
         else if (this.props.session.isLoggedIn && !nextProps.session.isLoggedIn) {
-            this.props.pushState(null, '/login');
+            this.props.pushState(null, '/');
         }
     }
 

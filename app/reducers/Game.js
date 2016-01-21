@@ -7,26 +7,26 @@ const defaultState = {};
 
 export default function gameReducer (state = defaultState, { type, status, data }) {
 
-    // Don't even care about pending / failures yet, but this is how you can access them.
-    if (status !== SUCCESS) {
-        return state;
-    }
+	// Don't even care about pending / failures yet, but this is how you can access them.
+	if (status !== SUCCESS) {
+		return state;
+	}
 
-    switch (type) {
-        case CREATE_GAME:
-            return Object.assign({}, state, {
-                [data.createGame.id]: data.createGame
-            });
+	switch (type) {
+		case CREATE_GAME:
+			return Object.assign({}, state, {
+				[data.createGame.id]: data.createGame
+			});
 
-        case GET_GAME:
-            return Object.assign({}, state, {
-                [data.game.id]: data.game
-            });
+		case GET_GAME:
+			return Object.assign({}, state, {
+				[data.game.id]: data.game
+			});
 
-        case GET_GAMES:
-            return toObject(data.games);
+		case GET_GAMES:
+			return toObject(data.games);
 
-        default:
-            return state;
-    }
+		default:
+			return state;
+	}
 }

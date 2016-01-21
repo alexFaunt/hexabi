@@ -37,7 +37,7 @@ function perform () {
 	let schema = database.schema;
 
 	let useSchema = true;
-	const proms = [];
+	let prom = Promise.resolve();
 
 	const methods = {
 		up: function (name, def) {
@@ -52,12 +52,17 @@ function perform () {
 				return schema;
 			}
 
-			data.forEach((item) => proms.push(database.insert(item).into(name)));
+			data.forEach((item) => {
+				prom = prom.then(function () {
+					return database.insert(item).into(name);
+				});
+			});
 			return schema;
 		}
 	};
 
 	for (const [ table, defs ] of tables) {
+		console.log(' DO UPDATE, ', table);
 		schema = methods[method](table, defs[method]);
 	}
 
@@ -73,8 +78,8 @@ function perform () {
 		});
 	}
 	else {
-		console.log('proms', proms);
-		Promise.all(proms).then(function () {
+		// console.log('proms', proms);
+		prom.then(function () {
 			console.log('done');
 			process.exit();
 		}, function (err) {

@@ -10,7 +10,7 @@ import MemberType from './MemberType';
 export default new GraphQLObjectType({
 	name: 'Login',
 	description: 'Login type object thing',
-	fields: {
+	fields: () => ({
 		id: {
 			type: new GraphQLNonNull(GraphQLInt),
 			description: 'The id of the login.'
@@ -27,5 +27,5 @@ export default new GraphQLObjectType({
 			type: GraphQLString,
 			description: 'The password of the member.'
 		}
-	}
+	})
 });

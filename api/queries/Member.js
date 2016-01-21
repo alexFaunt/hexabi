@@ -18,7 +18,16 @@ export const member = {
 	resolve: function (_, { id }) {
 		return MemberModel
 			.where('id', id)
-			.fetch()
+			.fetch({
+				withRelated: [
+					'players',
+					'players.game',
+					'players.game.creator',
+					'players.game.players',
+					'createdGames',
+					'playingGames'
+				]
+			})
 			.then((member) => member.toJSON());
 	}
 };
@@ -28,7 +37,11 @@ export const members = {
 	description: 'get all members',
 	resolve: function () {
 		return MemberModel
-			.fetchAll()
-			.then((members) => members.toJSON());
+			.fetchAll({
+				withRelated: [ 'players', 'players.game', 'createdGames', 'playingGames' ]
+			})
+			.then((members) => {
+				return members.toJSON();
+			});
 	}
 };

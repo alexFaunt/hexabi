@@ -2,13 +2,17 @@ import {
 	GraphQLInt,
 	GraphQLNonNull,
 	GraphQLObjectType,
-	GraphQLString
+	GraphQLString,
+	GraphQLList
 } from 'graphql';
+
+import PlayerType from './PlayerType';
+import GameType from './GameType';
 
 export default new GraphQLObjectType({
 	name: 'Member',
 	description: 'Member type object thing',
-	fields: {
+	fields: () => ({
 		id: {
 			type: new GraphQLNonNull(GraphQLInt),
 			description: 'The id of the member.'
@@ -20,11 +24,18 @@ export default new GraphQLObjectType({
 		avatar: {
 			type: GraphQLString,
 			description: 'The avatar of the member.'
+		},
+		players: {
+			type: new GraphQLList(PlayerType),
+			description: 'players'
+		},
+		createdGames: {
+			type: new GraphQLList(GameType),
+			description: 'games created by member'
+		},
+		playingGames: {
+			type: new GraphQLList(GameType),
+			description: 'games playing by member'
 		}
-		// ,
-		// score: { TODO - derive this form other data
-		// 	type: GraphQLInt,
-		// 	description: 'The score of the member.'
-		// }
-	}
+	})
 });
