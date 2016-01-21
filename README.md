@@ -21,19 +21,15 @@ I've mashed it together from a lot of demo's and brute force. And there are few 
 But at the time of writing it's bang up to date with the latest versions of everything.
 
 ## Getting Started
-Install node
-Install postgreSQL Server
-connect to it, and set it up with the tables
-You can find the raw SQL in api/tables/*
-Create a server-config.js from the example-server-config.js which connects to your db
-
-I will create DB scripts for this at some point...
-
-### Initial set up
-Standard set up
-
-__git clone this repo__
-__npm install__
+* Install node
+* Install postgreSQL Server
+* create a DB called hexabi
+* git clone https://github.com/alexFaunt/hexabi.git
+* cd hexabi
+* npm install
+* Create a server-config.js from the example-server-config.js which connects to your db
+* npm run-script db-create
+* npm run-script db-pop
 
 ### To run + dev
 __npm start__  
@@ -78,7 +74,7 @@ I just use __npm run-script watch__, and __npm run-script serve__ in a separate 
    * endpoints: endpoint handlers for express routes
    * middleware: middleware called pre-endpoint handler
    * utils: helper methods re-used across server
-  
+
 ##
 Example flows
 
@@ -99,7 +95,7 @@ Example flows
  * session store is updated, change emitted
  * Client container wrapper is listening to this.props.isLoggedIn
  * Container decides to navigate
- 
+
 
 ## TODO
 So much stuff.
