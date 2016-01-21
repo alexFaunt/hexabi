@@ -6,7 +6,6 @@ import { getCurrentMember } from '../../actions/Member';
 
 import GameTable from '../../components/GameTable/GameTable';
 
-
 @connect(
     state => ({
 		member: state.Member
@@ -33,10 +32,9 @@ export default class Lobby extends Component {
 	}
 
 	render () {
-
-
 		return (
 			<div>
+				<h3>Your Turn!</h3>
 				<GameTable games={ this.getFocusGames() } />
 			</div>
 		);

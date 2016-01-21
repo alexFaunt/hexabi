@@ -4,8 +4,7 @@ import React, { Component } from 'react';
 
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
-
-import { connect } from 'react-redux';
+import Overlay from '../../components/Overlay/Overlay';
 
 export default class Page extends Component {
 
@@ -17,6 +16,7 @@ export default class Page extends Component {
 					{ this.props.children }
 				</main>
 				<Footer />
+				<Overlay />
 			</div>
 		);
 	}

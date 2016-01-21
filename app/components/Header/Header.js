@@ -6,16 +6,22 @@ import { connect } from 'react-redux';
 
 import { Link } from 'react-router';
 
+import { openMenu } from '../../actions/Overlay';
+
 @connect(
 	state => ({ session: state.Session })
 )
 export default class Header extends Component {
 
+	openMenu = () => {
+		this.props.dispatch(openMenu());
+	}
+
 	render () {
 		const elements = [ <h1 key="title" className={ styles.title }>{ lexums.title }</h1> ];
 
 		if (this.props.session.isLoggedIn) {
-			elements.unshift(<div className={ styles.left } key="menu">MENU BUTTON</div>);
+			elements.unshift(<div className={ styles.left } key="menu" onClick={ this.openMenu }>MENU BUTTON</div>);
 			elements.push(<div className={ styles.right } key="avatar">Avatar</div>);
 		}
 		else {
