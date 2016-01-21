@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { connect } from 'react-redux';
 
-import { getCurrentMember } from '../../actions/Member';
+import { getCurrentMember } from '../../actions/MemberActions';
 
 import GameTable from '../../components/GameTable/GameTable';
 

@@ -3,8 +3,8 @@ import {
 	GraphQLList
 } from 'graphql';
 
-import GameModel from '../models/Game';
-import GameType from '../schema/GameType';
+import GameModel from '../models/GameModel';
+import GameType from '../types/GameType';
 
 const fetchProps = {
 	withRelated: [

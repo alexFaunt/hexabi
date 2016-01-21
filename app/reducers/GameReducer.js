@@ -1,11 +1,11 @@
 import toObject from '../utils/toObject';
-import { GET_PLAYER, GET_PLAYERS, CREATE_PLAYER } from '../actions/Player';
+import { GET_GAME, GET_GAMES, CREATE_GAME } from '../actions/GameActions';
 import { SUCCESS } from '../constants/Response';
 
 // Decide on structure, is this the best way?
 const defaultState = {};
 
-export default function playerReducer (state = defaultState, { type, status, data }) {
+export default function gameReducer (state = defaultState, { type, status, data }) {
 
 	// Don't even care about pending / failures yet, but this is how you can access them.
 	if (status !== SUCCESS) {
@@ -13,18 +13,18 @@ export default function playerReducer (state = defaultState, { type, status, dat
 	}
 
 	switch (type) {
-		case CREATE_PLAYER:
+		case CREATE_GAME:
 			return Object.assign({}, state, {
-				[data.createPlayer.id]: data.createPlayer
+				[data.createGame.id]: data.createGame
 			});
 
-		case GET_PLAYER:
+		case GET_GAME:
 			return Object.assign({}, state, {
-				[data.player.id]: data.player
+				[data.game.id]: data.game
 			});
 
-		case GET_PLAYERS:
-			return toObject(data.players);
+		case GET_GAMES:
+			return toObject(data.games);
 
 		default:
 			return state;

@@ -1,4 +1,4 @@
-import { CREATE_MEMBER, GET_MEMBER, GET_MEMBERS } from '../actions/Member';
+import { CREATE_MEMBER, GET_MEMBER, GET_MEMBERS } from '../actions/MemberActions';
 import { SUCCESS } from '../constants/Response';
 
 // Need to decide what to do with this store.

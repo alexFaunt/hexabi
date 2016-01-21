@@ -1,13 +1,13 @@
 import database from '../database';
-import Member from './Member';
-import Game from './Game';
+import MemberModel from './MemberModel';
+import GameModel from './GameModel';
 
 export default database.Model.extend({
 	tableName: 'players',
 	member: function () {
-		return this.belongsTo(Member);
+		return this.belongsTo(MemberModel);
 	},
 	game: function () {
-		return this.belongsTo(Game);
+		return this.belongsTo(GameModel);
 	}
 });

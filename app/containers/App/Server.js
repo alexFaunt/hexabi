@@ -2,15 +2,15 @@
 
 import React, { Component } from 'react';
 
-import { initSession } from '../../actions/Session';
+import { initSession } from '../../actions/SessionActions';
 
 export default class Server extends Component {
 
-    static required = [
-        initSession
-    ]
+	static required = [
+		initSession
+	]
 
-    render () {
-        return this.props.children;
-    }
+	render () {
+		return this.props.children;
+	}
 };

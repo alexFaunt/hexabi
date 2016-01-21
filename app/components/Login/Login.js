@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import LoginForm from '../LoginForm/LoginForm';
 
-import * as SessionActions from '../../actions/Session';
+import * as SessionActions from '../../actions/SessionActions';
 
 import Content from '../Content/Content';
 

@@ -1,7 +1,7 @@
-export { default as Member } from './Member';
-export { default as Game } from './Game';
-export { default as Session } from './Session';
-export { default as Player } from './Player';
-export { default as Overlay } from './Overlay';
+export { default as Member } from './MemberReducer';
+export { default as Game } from './GameReducer';
+export { default as Session } from './SessionReducer';
+export { default as Player } from './PlayerReducer';
+export { default as Overlay } from './OverlayReducer';
 
 export { routerStateReducer as router } from 'redux-router';

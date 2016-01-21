@@ -3,8 +3,8 @@ import {
 	GraphQLList
 } from 'graphql';
 
-import PlayerType from '../schema/PlayerType';
-import PlayerModel from '../models/Player';
+import PlayerType from '../types/PlayerType';
+import PlayerModel from '../models/PlayerModel';
 
 export const player = {
 	type: PlayerType,

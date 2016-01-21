@@ -1,4 +1,4 @@
-import { INIT_SESSION, LOGIN, LOGOUT, REGISTER } from '../actions/Session';
+import { INIT_SESSION, LOGIN, LOGOUT, REGISTER } from '../actions/SessionActions';
 import { SUCCESS, FAILURE } from '../constants/Response';
 
 const defaultState = {

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import { Link } from 'react-router';
 
-import { openMenu } from '../../actions/Overlay';
+import { openMenu } from '../../actions/OverlayActions';
 
 @connect(
 	state => ({ session: state.Session })

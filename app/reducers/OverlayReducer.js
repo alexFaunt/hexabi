@@ -1,4 +1,4 @@
-import { SET_OVERLAYS } from '../actions/Overlay';
+import { SET_OVERLAYS } from '../actions/OverlayActions';
 
 const defaultState = {
 	menu: false

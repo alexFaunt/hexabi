@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 import RegisterForm from '../RegisterForm/RegisterForm';
 
-import * as SessionActions from '../../actions/Session';
+import * as SessionActions from '../../actions/SessionActions';
 
 @connect(state => ({ session: state.Session }))
 export default class Register extends Component {

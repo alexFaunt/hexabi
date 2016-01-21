@@ -3,8 +3,8 @@ import {
 	GraphQLSchema
 } from 'graphql';
 
-import queries from '../queries';
-import mutations from '../mutations';
+import queries from './queries';
+import mutations from './mutations';
 
 const query = new GraphQLObjectType({
 	name: 'Query',

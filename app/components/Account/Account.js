@@ -3,7 +3,7 @@ import styles from './Account.css';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import * as SessionActions from '../../actions/Session';
+import * as SessionActions from '../../actions/SessionActions';
 
 @connect(state => ({ session: state.Session }))
 export default class Account extends Component {

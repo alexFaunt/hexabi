@@ -3,8 +3,8 @@ import {
 	GraphQLList
 } from 'graphql';
 
-import MemberType from '../schema/MemberType';
-import MemberModel from '../models/Member';
+import MemberType from '../types/MemberType';
+import MemberModel from '../models/MemberModel';
 
 export const member = {
 	type: MemberType,

@@ -1,6 +1,6 @@
-import Player from './Player';
-import Member from './Member';
-import Game from './Game';
-import Login from './Login';
+import PlayerModel from './PlayerModel';
+import MemberModel from './MemberModel';
+import GameModel from './GameModel';
+import LoginModel from './LoginModel';
 
-export default { Member, Game, Player, Login };
+export default { MemberModel, GameModel, PlayerModel, LoginModel };

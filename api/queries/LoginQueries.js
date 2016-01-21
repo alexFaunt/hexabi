@@ -4,8 +4,8 @@ import {
 	GraphQLString
 } from 'graphql';
 
-import LoginType from '../schema/LoginType';
-import LoginModel from '../models/Login';
+import LoginType from '../types/LoginType';
+import LoginModel from '../models/LoginModel';
 
 export const login = {
 	type: LoginType,

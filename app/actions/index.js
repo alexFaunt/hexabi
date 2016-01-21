@@ -1,5 +1,5 @@
-export { default as Member } from './Member';
-export { default as Game } from './Game';
-export { default as Session } from './Session';
-export { default as Player } from './Player';
-export { default as Overlay } from './Overlay';
+export { default as MemberActions } from './MemberActions';
+export { default as GameActions } from './GameActions';
+export { default as SessionActions } from './SessionActions';
+export { default as PlayerActions } from './PlayerActions';
+export { default as OverlayActions } from './OverlayActions';
